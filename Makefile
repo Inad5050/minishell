@@ -3,80 +3,51 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+         #
+#    By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/08/14 12:10:41 by otboumeh          #+#    #+#              #
-#    Updated: 2024/08/28 18:40:48 by otboumeh         ###   ########.fr        #
+#    Created: 2024/08/30 19:01:54 by dani              #+#    #+#              #
+#    Updated: 2024/09/18 19:08:34 by dangonz3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pipex
+NAME = minishell
+CC = gcc
+CCFLAGS = -Wall -Wextra -Werror
 
-LIBFT_DIR = ./libft
-LIBFT = $(LIBFT_DIR)/libft.a
+#colors
+COLOR_GREEN = \033[0;32m
+COLOR_RESET = \033[0m
 
-PIPEX_LIB = ./includes/pipex.a
-PIPEX_BONUS_LIB = ./includes/pipex_bonus.a
+#sources
+SRC_DIR = ./sources/
+SRC_FILES = 
+SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJ = $(SRC:.c=.o)
 
-SRCS = $(wildcard sources/pipex*.c)
-SRCS_BONUS = $(wildcard sources_bonus/pipex*bonus.c)
+#headers
+INCLUDE = -I./includes/
 
-MAIN = main.c
-MAIN_BONUS = main_bonus.c
+#program
+all: $(NAME)
+	@echo "$(COLOR_GREEN)------------ PROCESS FINISHED ------------ $(COLOR_RESET)"
 
-OBJS = $(SRCS:.c=.o)
-OBJS_BONUS = $(SRCS_BONUS:.c=.o)
-
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-RM = rm -f
-
-GREEN = \033[0;32m
-BLUE = \033[0;34m
-YELLOW = \033[1;33m
-RESET = \033[0m
-
-
-$(NAME): $(LIBFT) $(PIPEX_LIB) $(MAIN)
-	@echo "$(YELLOW)Compiling ./pipex executable...$(RESET)"
-	$(CC) $(CFLAGS) -o $(NAME) $(MAIN) $(PIPEX_LIB) $(LIBFT)
-	@echo "$(GREEN)./pipex executable created successfully.$(RESET)"
-
-$(LIBFT): 
-	@make -C $(LIBFT_DIR)
-
-$(PIPEX_LIB): $(OBJS)
-	@echo "$(YELLOW)Compiling pipex.a library...$(RESET)"
-	@ar rcs $(PIPEX_LIB) $(OBJS)
-	@echo "$(GREEN)pipex.a created successfully.$(RESET)"
-
-$(PIPEX_BONUS_LIB): $(OBJS_BONUS)
-	@echo "$(YELLOW)Compiling pipex_bonus.a library...$(RESET)"
-	ar rcs $(PIPEX_BONUS_LIB) $(OBJS_BONUS)
-	@echo "$(GREEN)pipex_bonus.a created successfully.$(RESET)"
+$(NAME): $(OBJ)
+	$(CC) $(CCFLAGS) $(OBJ) -o $(NAME)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) -c $< -o $@ $(INCLUDE)
+	@echo "$(COLOR_GREEN)------------ MESSAGE: $@ COMPILED ------------ $(COLOR_RESET)"
 
-bonus : $(LIBFT) $(PIPEX_LIB) $(PIPEX_BONUS_LIB) $(MAIN_BONUS)
-	@echo "$(YELLOW)Compiling ./pipex bonus executable...$(RESET)"
-	$(CC) $(CFLAGS) -o $(NAME) $(MAIN_BONUS) $(PIPEX_LIB) $(PIPEX_BONUS_LIB) $(LIBFT)
-	@echo "$(GREEN)./pipex bonus executable created successfully.$(RESET)"
-
-all: bonus
-
+#additional
 clean:
-	@echo "$(YELLOW)Deleting all the object files...$(RESET)"
-	@$(RM) $(OBJS) $(OBJS_BONUS)
-	@make -C $(LIBFT_DIR) clean
-	@echo "$(GREEN)All the object files deleted succesfully.$(RESET)"
-
-fclean: clean
-	@echo "$(YELLOW)Deleting the object files, *.a and executable file...$(RESET)"
-	@$(RM) $(PIPEX_LIB) $(PIPEX_BONUS_LIB) $(NAME) 
-	@make -C $(LIBFT_DIR) fclean
-	@echo "$(GREEN)Everything deleted succesfully.$(RESET)"
+	rm -f $(OBJ)
+	@echo "$(COLOR_GREEN)------------ MESSAGE: CLEANING COMPLETED ------------ $(COLOR_RESET)"
+	
+fclean: 
+	rm -f $(OBJ)
+	rm -f $(NAME)
+	@echo "$(COLOR_GREEN)------------ MESSAGE: CLEANING COMPLETED ------------ $(COLOR_RESET)"
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY:	all clean fclean re

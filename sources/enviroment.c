@@ -6,13 +6,13 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 19:33:51 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/17 19:34:06 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:59:42 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_enviroment(char **argv, t_prompt *m)
+void	init_enviroment(char **argv, t_mini *m)
 {
 	m->cwd = get_cwd(NULL, 0); //consigue la ruta al CurrentWorkingDirectory y crea un string (alloc) para lojar la ruta
 	set_enviroment("PWD", m->envp, m); //PrintWorkingDirectory

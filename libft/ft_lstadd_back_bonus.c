@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:44:55 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/08/23 19:37:22 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:13:17 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new_node)
 		last->next = new_node;
 }
 
-int	main(void)
+/* int	main(void)
 {
 	t_list	*lst = NULL;
 	t_list	*nodo1 = ft_lstnew("nodo1");
@@ -44,4 +44,4 @@ int	main(void)
 		printf("%s\n", current->content);
 		current = current ->next;
 	}
-}
+} */

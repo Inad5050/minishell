@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/19 18:58:23 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:47:57 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ int	main(int argc, char **argv, char **envp)
 	m = ft_calloc(1, sizeof(m));
 	if (!m)
 		return(perror("Couldn't allocate memory for t_prompt m"), 1);
-	/* g_status = 0; */ //variable global para recepcion de señales y errores
-	if (argc && argv) //esto sobra es solo para poder compilar
-		init_struct(envp, m); //inicializa la estructura
+	g_status = 0; //variable global para recepcion de señales y errores
+	init_struct(envp, m); //inicializa las estructuras
 	while (argc && argv) //siempre deberia ser verdadera. Similar a poner (1), pero maneja el error improbable de que argv y/0argc no existan
 	{
 		signal(SIGINT, handle_sigint); //signal se usa para manejar señales. SIGINIT gestiona Ctrl+C. Normalmente se usa para interrumpir el proceso actual (si el segundo argumento de signal es SIG_DFL la señal hara us funcion habitual). handle_sigint es una funcion personalizada con la firma void (*)(int). Cuando reciba la señal del primer argumento el programa ejecutara la funcion del segundo argumento.
@@ -34,8 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!check_args(m)) //procesa el input del usuario para poder ejecutarlo
 			break ;
 	}
-	mini_exit(g_status); //el argumento de exit es el código de salida del programa. g_status es la variable global donde se almacenan los errores.
-
+	free_memory(m); //el argumento de exit es el código de salida del programa. g_status es la variable global donde se almacenan los errores.
 	return (0);
 }
 

@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment.c                                       :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 19:33:51 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/20 16:05:44 by dangonz3         ###   ########.fr       */
+/*   Created: 2024/09/20 16:33:23 by dangonz3          #+#    #+#             */
+/*   Updated: 2024/09/20 16:34:50 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	find_envp_variable(char *str, int size, t_mini *m) //busca una string que empiece por str (por ejemplo "PATH=") en envp, size es el tamaño de la string que le has pasado (para "PATH=" size = 5)
+void	m_error(char	*str, t_mini *m) //imprime un mensaje de error, pero no cierra la minishell. Probablemente lo uses tu Otman. No se si deberia hacer algo más que imprimir el error.
 {
-	int		i;
-	
-	i = 0;
-	while (m->envp[i])
-	{
-		if (ft_strncmp(m->envp[i], str, size))
-			return (i);
-		i++;
-	}
-	return (-1);
+	ft_putstr_fd(str, 2); //imprime el mensaje de error en la STDERR
+	ft_putstr_fd("\n", 2); //imprime el mensaje de error en la STDERR
 }

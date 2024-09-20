@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/19 19:13:31 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:00:20 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,25 @@ extern int g_status; //variable global, da cuenta de la gestión de errores. Si 
 
 typedef struct s_mini
 {
-	t_command	*cmds; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Linked list containing a t_mini node with all commands separated by pipes
+	t_command	*cmds; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Linked list containing a t_command node with all commands separated by pipes
 	char		**envp; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Up-to-date array containing keys and values for the shell environment
 	pid_t		pid; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Process ID of the minishell instance
 	
 	//dani
-	char	*cwd; //modify_envp_pwd
-	char	*prompt;
-	char	*input;
-	char	**split;
+	char		*prompt;
+	char		*input;
+	char		**split;
 
 	//otman
 }			t_mini;
 
 typedef struct s_command
 {
-	char	**full_cmd; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Equivalent of the typical argv, containing the command name and its parameters when needed
-	char	*full_path; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) If not a builtin, first available path for the executable denoted by argv[0] from the PATH variable
-	int		infile; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Which file descriptor to read from when running a command (defaults to stdin)
-	int		outfile; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Which file descriptor to write to when running a command (defaults to stdout)
+	char		**full_cmd; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Equivalent of the typical argv, containing the command name and its parameters when needed
+	char		*full_path; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) If not a builtin, first available path for the executable denoted by argv[0] from the PATH variable
+	int			infile; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Which file descriptor to read from when running a command (defaults to stdin)
+	int			outfile; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Which file descriptor to write to when running a command (defaults to stdout)
+	t_command	*next;
 }			t_command;
 
 /* //cmd_trim
@@ -51,7 +51,7 @@ static int	ft_count_words(const char *s, char *c, int i[2]);
 void		init_enviroment(char **argv, t_mini *m); */
 
 //exit
-void	m_exit(char	*str/* , t_mini *m */);
+void	m_exit(char	*str, t_mini *m);
 
 //init_structure
 void	init_struct(char **envp, t_mini *m);
@@ -60,5 +60,8 @@ void	mini_getpid(t_mini *m);
 
 //parsing
 void	*check_args(char *input, t_mini *m);
+
+//signals
+void	handle_sigint(int sig);
 
 #endif

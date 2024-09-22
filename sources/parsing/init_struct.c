@@ -6,18 +6,23 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 19:32:56 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/20 16:58:32 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/22 15:23:44 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_struct(char **envp, t_mini *m)
+t_mini	*init_struct(char **envp)
 {
-	int	i;
+	t_mini	*m;
+	int		i;
 	
 	i = 0;
-	while (envp[i]) 
+	g_status = 0; //variable global para recepcion de señales y errores
+	m = ft_calloc(1, sizeof(m));
+	if (!m)
+		return(perror("Couldn't allocate memory for t_prompt m"), NULL);
+	while (envp[i])
 		i++;
 	m->envp = ft_calloc(i + 1, sizeof(char *));
 	if (!m->envp[i])
@@ -25,6 +30,7 @@ void	init_struct(char **envp, t_mini *m)
 	envp[i] = NULL;
 	init_struct_envp(envp, m); //duplica envp para luego modificar la copia y crear la envp de la mini
 	init_struct_getpid(m); //usa fork para conseguir el pid del proceso padre. el hijo termna liberando toda su memoria
+	return (m);
 }
 
 void	init_struct_envp(char **envp, t_mini *m) //duplica las variables de entorno para poder modificar la copia durante la ejecución de los comandos

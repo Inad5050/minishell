@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:53:03 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/09/22 13:57:45 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/09/22 16:19:59 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,13 @@ static int	is_builtin(t_mini *mini)
 		return (1);
 	return (0);
 }
+
 void analizing_command(t_mini *mini)
 {	
 	t_command *cmd;
+	int i;
+	
+	i = 0;
 	cmd = mini->cmds;
 	if (!cmd || !cmd->full_cmd || !cmd->full_cmd[0])
 	{
@@ -49,5 +53,9 @@ void analizing_command(t_mini *mini)
 	else if (cmd->next == NULL)  // Check if there's only one command
 		execute_single_command(mini);
 	else
-		pipe_command(mini);
+	{
+		while (cmd->next)
+			i++;	
+		pipe_command(mini, i);
+	}
 }

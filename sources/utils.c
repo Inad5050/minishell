@@ -1,17 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmdtrim.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 17:24:48 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/18 17:25:20 by dangonz3         ###   ########.fr       */
+/*   Created: 2024/09/22 12:53:46 by otboumeh          #+#    #+#             */
+/*   Updated: 2024/09/22 12:53:55 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char		**ft_cmdtrim(char const *s, char *set);
-static char	**ft_fill_array(char **aux, char const *s, char *set, int i[3]);
-static int	ft_count_words(const char *s, char *c, int i[2]);

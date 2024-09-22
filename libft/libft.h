@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 13:16:24 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/07/08 13:15:47 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:30:57 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,8 @@ char		*ft_get_next_line(int fd);
 char		*gnl_excess(char *deposit);
 char		*gnl_cut_line(char *deposit);
 char		*gnl_strjoin(char *line, const char *buffer);
+
+/* FT_DPRINTF*/
+int	ft_dprintf(int fd, char const *s, ...);
 
 #endif

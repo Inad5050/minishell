@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/21 16:42:00 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:54:58 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,9 @@ void	handle_sigint(int sig);
 void builtin(t_mini *mini);
 void echo(t_command *cmd, int fd);
 void	env(t_mini *mini);
+
+//errors.c
+void	m_error(char	*str, t_mini *m); //imprime un mensaje de error, pero no cierra la minishell. Probablemente lo uses tu Otman. No se si deberia hacer algo más que imprimir el error.
+
 
 #endif

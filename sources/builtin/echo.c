@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 16:23:26 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/09/21 16:45:20 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:38:29 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void echo(t_command *cmd, int outfile)
     }
     while (cmd->full_cmd[i])
     {
-        printf("%s", cmd->full_cmd[i]);          // SAME ISSUE OF dprintf ??? do we need the outfile or not ???
+        ft_dprintf(outfile, "%s", cmd->full_cmd[i]);          // I modified the printf with a ft_dprintf !! 
         if (cmd->full_cmd[i + 1])
-            printf(" ");
+            ft_dprintf(outfile, " ");
         i++;
     }
     if (newline)
-        printf("\n");
+        ft_dprintf(outfile, "\n");
 }

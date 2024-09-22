@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:53:46 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/09/22 14:01:51 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/22 15:24:16 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,3 @@ int	find_envp_variable(char *str, int size, t_mini *m) //busca una string que em
 	}
 	return (-1);
 }
-

@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/20 17:00:20 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:36:20 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../libft/libft.h"
 #include "signal.h" //gestion de señales
 #include "sys/ioctl.h" //proporciona las definiciones necesarias para las llamadas a ioctl(), que permiten configurar y controlar dispositivos y terminales.
-
+#include <stdbool.h> // for boolean
 extern int g_status; //variable global, da cuenta de la gestión de errores. Si no usamos extern cada vez que otro archivo .c incluya este encabezado, se creará una copia independiente de la variable en cada archivo. 
 
 typedef struct s_mini
@@ -54,7 +54,7 @@ void		init_enviroment(char **argv, t_mini *m); */
 void	m_exit(char	*str, t_mini *m);
 
 //init_structure
-void	init_struct(char **envp, t_mini *m);
+t_mini	*init_struct(char **envp);
 void	duplicate_envp(char	**envp, t_mini *m);
 void	mini_getpid(t_mini *m);
 
@@ -63,5 +63,10 @@ void	*check_args(char *input, t_mini *m);
 
 //signals
 void	handle_sigint(int sig);
+
+//Builtin Otmane
+void builtin(t_mini *mini);
+void echo(t_command *cmd, int fd);
+void	env(t_mini *mini);
 
 #endif

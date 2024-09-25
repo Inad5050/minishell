@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/22 16:11:20 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/09/25 08:30:51 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 
 extern int g_status; //variable global, da cuenta de la gestión de errores. Si no usamos extern cada vez que otro archivo .c incluya este encabezado, se creará una copia independiente de la variable en cada archivo. 
 
+# define DQ 34
+# define SQ 39
+# define BACKSLASH 92
 typedef struct s_mini
 {
 	t_command	*cmds; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Linked list containing a t_command node with all commands separated by pipes
@@ -30,7 +33,10 @@ typedef struct s_mini
 	//dani
 	char		*prompt;
 	char		*input;
-	char		**split;
+	char		**input_split;
+	bool		in_squotes;
+	bool		in_dquotes;
+	bool		escaped;
 
 	//otman
 	
@@ -56,22 +62,65 @@ void		init_enviroment(char **argv, t_mini *m); */
 //exit
 void	m_exit(char	*str, t_mini *m);
 
-//init_structure
-void	init_struct(char **envp, t_mini *m);
-void	duplicate_envp(char	**envp, t_mini *m);
-void	mini_getpid(t_mini *m);
-
+//parsing(DANI)
+//envp_aux
+char	*return_envp_variable(char *str, t_mini *m);
+int		find_envp_variable(char *str, int size, t_mini *m);
+//getprompt
+void	getprompt(t_mini *m);
+//init_struct
+t_mini	*init_struct(char **envp);
+void	init_struct_envp(char **envp, t_mini *m);
+void	init_struct_getpid(t_mini *m);
 //parsing
-void	*check_args(char *input, t_mini *m);
+void	*parsing(t_mini *m);
+int		count_tokens(t_mini *m);
+void	fill_split(t_mini *m);
+//parsing_aux
+int		problematic_chars(char	c, t_mini *m);
+int		in_squotes(char	c, t_mini *m);
+int		in_dquotes(char	c, t_mini *m);
+int		escaped(char c, t_mini *m);
 
 //signals
 void	handle_sigint(int sig);
+
 //Builtin Otmane
-void builtin(t_mini *mini);
-void echo(t_command *cmd, int fd);
+void 	builtin(t_mini *mini);
+void 	echo(t_command *cmd, int fd);
 void	env(t_mini *mini);
 
 //errors.c
 void	m_error(char	*str, t_mini *m); //imprime un mensaje de error, pero no cierra la minishell. Probablemente lo uses tu Otman. No se si deberia hacer algo más que imprimir el error.
 
 #endif
+
+
+
+/* 
+Además de las comillas simples, dobles y el backslash, hay otros caracteres que podrían ser \
+relevantes al tokenizar una cadena de entrada en un estilo similar a Bash:
+Espacios: Se consideran delimitadores de tokens.
+Tabulaciones y nuevas líneas: También son delimitadores.
+Paréntesis y corchetes: (, ), {, }, [, ] pueden ser utilizados para agrupar expresiones.
+Signos de dólar ($): Utilizados para referirse a variables.
+Comillas invertidas (backticks): ` se utilizan en Bash para la expansión de comandos.
+Punto y coma (;): Puede usarse para separar comandos.
+Operadores de redirección: >, <, >>, << para la entrada/salida.
+Operadores lógicos y de comparación: &&, ||, ==, !=, <, >, <=, >= para expresiones condicionales. 
+*/
+
+/* 
+Comillas Dobles ("):
+
+Permiten la expansión de variables y el uso de caracteres especiales, como el signo de dólar ($).
+Los caracteres escapados con un backslash dentro de comillas dobles son interpretados literalmente (por ejemplo, \" se convierte en ").
+Comillas Simples ('):
+
+Todo el contenido dentro de las comillas simples se interpreta literalmente. No se realiza ninguna expansión de variables ni se procesan caracteres especiales.
+El backslash no tiene ningún efecto dentro de comillas simples; se interpreta como un carácter literal.
+Backslash (\):
+
+Se utiliza para escapar caracteres especiales, permitiendo que un carácter que normalmente tendría un significado especial sea tratado como un carácter literal. Por ejemplo, \" dentro de comillas dobles produce un ", pero \' dentro de comillas simples se interpreta como '.
+En Bash, el backslash también puede utilizarse para dividir una línea larga en varias líneas, permitiendo que el comando continúe en la siguiente línea.
+ */

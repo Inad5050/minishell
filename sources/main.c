@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/22 15:23:55 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/22 16:37:12 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGINT, handle_sigint); //signal se usa para manejar señales. SIGINIT gestiona Ctrl+C. Normalmente se usa para interrumpir el proceso actual (si el segundo argumento de signal es SIG_DFL la señal hara us funcion habitual). handle_sigint es una funcion personalizada con la firma void (*)(int). Cuando reciba la señal del primer argumento el programa ejecutara la funcion del segundo argumento.
 		signal(SIGQUIT, SIG_IGN); //SIG_IGN se usa para ignorar la señal del primer argumento.
 		getprompt(m); //consigue el prompt de la consola (la línea antes del input del usuario) al estilo de "guest@minishell $ "
-		if (m->prompt)
-			m->input = readline(m->prompt); //lee el input del usuario, recibe el promp inicial como argumento
-		else
-			m->input = readline("guest@minishell $ "); //si no consigue el prompt inicial usa uno generico
+		m->input = readline(m->prompt); //lee el input del usuario, recibe el promp inicial como argumento
 		if (!check_args(m)) //procesa el input del usuario para poder ejecutarlo
 			break ;
 	}

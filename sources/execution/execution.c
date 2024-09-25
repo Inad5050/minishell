@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:53:03 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/09/22 16:19:59 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/09/25 10:41:42 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,31 @@ static int	is_builtin(t_mini *mini)
 	return (0);
 }
 
+static void handle_builtin(t_mini *mini)
+{
+	if (is_builtin(mini))
+	{
+		builtin(mini);
+		return;
+	}
+}
+
+static void handle_single_command(t_mini *mini)
+{
+	t_command *cmd = mini->cmds;
+
+	if (cmd->next == NULL)
+	{
+		execute_single_command(mini);
+		return;
+	}
+}
+
 void analizing_command(t_mini *mini)
 {	
 	t_command *cmd;
 	int i;
-	
+
 	i = 0;
 	cmd = mini->cmds;
 	if (!cmd || !cmd->full_cmd || !cmd->full_cmd[0])
@@ -48,14 +68,27 @@ void analizing_command(t_mini *mini)
 		m_error("Error: No command provided", mini);
 		return;
 	}
-	if (is_builtin(mini))
-		builtin(mini);
-	else if (cmd->next == NULL)  // Check if there's only one command
-		execute_single_command(mini);
-	else
+
+	handle_builtin(mini);               // Handle built-in commands
+	handle_single_command(mini);         // Handle single commands
+
+	while (cmd->next)					// calcul the number of commands
 	{
-		while (cmd->next)
-			i++;	
-		pipe_command(mini, i);
+    	cmd = cmd->next;
+    	i++;
 	}
+	handle_multiple_command(mini, i);	//handle multiple commads with pipe				
+}
+
+char *get_path_from_env(t_mini *mini)
+{
+    char *path_var;
+
+    path_var = return_envp_variable("PATH=", mini);
+    if (!path_var)
+    {
+        m_error("Error: PATH not found in environment variables", mini);
+        return (NULL);
+    }
+    return (path_var);
 }

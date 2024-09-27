@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/22 20:14:21 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/27 19:04:10 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@
 # include "signal.h" //gestion de señales
 # include "sys/ioctl.h" //proporciona las definiciones necesarias para las llamadas a ioctl(), que permiten configurar y controlar dispositivos y terminales.
 # include <stdbool.h> // for boolean
+# include <readline/readline.h>
+# include <readline/history.h>
+
 
 extern int g_status; //variable global, da cuenta de la gestión de errores. Si no usamos extern cada vez que otro archivo .c incluya este encabezado, se creará una copia independiente de la variable en cada archivo. 
 
 # define DQ 34
 # define SQ 39
 # define BACKSLASH 92
+
+typedef struct s_command	t_command;
 typedef struct s_mini
 {
 	t_command	*cmds; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Linked list containing a t_command node with all commands separated by pipes
@@ -31,8 +36,10 @@ typedef struct s_mini
 	
 	//dani
 	char		*prompt;
-	char		*input;
-	char		**input_split;
+	
+	char		*input; //getprompt
+	char		**tokens; //create_tokens
+	
 	bool		in_squotes;
 	bool		in_dquotes;
 	bool		escaped;
@@ -71,15 +78,17 @@ void	getprompt(t_mini *m);
 t_mini	*init_struct(char **envp);
 void	init_struct_envp(char **envp, t_mini *m);
 void	init_struct_getpid(t_mini *m);
-//parsing
-void	*parsing(t_mini *m);
+//lexer
+int		lexer(t_mini *m);
 int		count_tokens(t_mini *m);
 void	fill_split(t_mini *m);
-//parsing_aux
+char	*ft_strndup(const char *src, size_t n);
+//lexer_aux
 int		problematic_chars(char	c, t_mini *m);
 int		in_squotes(char	c, t_mini *m);
 int		in_dquotes(char	c, t_mini *m);
 int		escaped(char c, t_mini *m);
+void	free_lexer(t_mini *m);
 
 //signals
 void	handle_sigint(int sig);

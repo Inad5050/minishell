@@ -6,11 +6,11 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 19:32:56 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/22 16:51:49 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:34:13 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 t_mini	*init_struct(char **envp)
 {
@@ -45,7 +45,7 @@ void	init_struct_envp(char **envp, t_mini *m) //duplica las variables de entorno
 		while (envp[i][j])
 			j++;
 		m->envp[i] = ft_calloc(j + 1, sizeof(char));
-		if (!m->envp[i])
+		if (!m->envp)
 			m_exit("Couldnt allocate memory for m->envp[i]", m);
 		j = 0;
 		while (envp[i][j])
@@ -69,5 +69,4 @@ void	init_struct_getpid(t_mini *m)
 		m_exit("Child process", m); //para eliminar al hijo, probablemente haya que crear una excepcion en m_exit para que no imprima nada cuando reciba la string "Child process"
 	else
 		m->pid = pid;
-	return (1);
 }

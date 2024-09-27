@@ -6,11 +6,11 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:53:46 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/09/22 16:36:24 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/27 19:34:45 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 void	getprompt(t_mini *m)
 {

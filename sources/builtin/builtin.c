@@ -6,15 +6,17 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 14:33:22 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/09/22 13:42:16 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/09/25 10:50:41 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void builtin(t_mini *mini)
+void	builtin(t_mini *mini)
 {
-	t_command *cmd = mini->cmds;
+	t_command	*cmd;
+
+	cmd = mini->cmds;
 
 	if (!cmd || !cmd->full_cmd || !cmd->full_cmd[0]) 			// Ensure the command exists
 		return;

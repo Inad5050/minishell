@@ -6,7 +6,7 @@
 #    By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 16:19:45 by dangonz3          #+#    #+#              #
-#    Updated: 2024/09/19 17:35:55 by dangonz3         ###   ########.fr        #
+#    Updated: 2024/09/27 17:58:04 by dangonz3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ OBJ = $(SRC:.c=.o)
 
 #headers
 INCLUDE = -I./includes/
+FLAGS = -lreadline -lncurses
 
 #LIBFT
 LIBFT_DIR = ./libft
@@ -36,7 +37,7 @@ all: $(LIBFT_LIB) $(NAME)
 	@echo "$(COLOR_GREEN)------------ PROCESS FINISHED ------------ $(COLOR_RESET)"
 
 $(NAME): $(OBJ)
-	$(CC) $(CCFLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME) $(INCLUDE)
+	$(CC) $(CCFLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME) $(INCLUDE) $(FLAGS)
 
 $(LIBFT_LIB):
 	$(MAKE) -C $(LIBFT_DIR) all -s
@@ -61,3 +62,5 @@ fclean:
 re: fclean all
 
 .PHONY:	all clean fclean re
+
+-lreadline -lncurses

@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:35:33 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/20 17:16:34 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:34:23 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,33 +63,6 @@ void	free_memory_commands(t_mini *m) //libera la memoria de cada commandm, y cie
 	}
 	free(m->cmds);
 }
-
-free_memory_parsing(t_mini *m)
-{
-	if (m->cwd)
-		free(m->cwd);
-	if (m->prompt)
-		free(m->cwd);	
-	if (m->cwd)
-		free(m->cwd);	
-}
-
-free_memory_execution(m);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* void	free_memory_commands(t_mini *m) //libera la memoria de cada commandm, y cierra los filedescriptors
 {

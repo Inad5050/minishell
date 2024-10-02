@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:37:07 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/27 21:04:23 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/02 21:13:15 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	**interprete_env_vars(char *lex_toks[])
 		lex_toks[i] = interprete_env_var(lex_toks[i]);
 		if (lex_toks[i] == NULL)
 			return (NULL);
-		if (ft_strstr(lex_toks[i], "&&") || ft_strstr(lex_toks[i], "||")) //esta parte del código se asegura de que la interpretación de variables de entorno se detenga si se encuentra un operador lógico (&& o ||).
+		if (ft_strstr(lex_toks[i], "&&") || ft_strstr(lex_toks[i], "||"))
 			break ;
 		i++;
 	}
@@ -106,29 +106,18 @@ int	parser(char *lexer_tokens[])
 	if (exit_code == EXIT_SYNTAX_ERROR)
 		return (EXIT_SUCCESS);
 	tokens = get_par_toks();
-	return (free_par_toks(tokens, expander(tokens)))
+	return (free_par_toks(tokens, expander(tokens)));
 }
 
+//---------------------------------------------
 
-int	parser(char **tokens, t_mini *m)
+int	parser(t_mini *m)
 {
 	int	i;
 
 	i = 0;
-	
-	while (tokens[i])
-		expand_env_variable(i++, m);
-	
-	
-
-
-
-
-
-
-
-
-
+	while (m->tokens[i])
+		if (expand_var(i, m) == 2) //gestiona el caso "*\0". En este caso la tokens[i] tiene que expandirse de char * a char **.
 	
 }
 

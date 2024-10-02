@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/27 19:04:10 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/02 19:28:50 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdbool.h> // for boolean
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <dirent.h> //opendir, readdir y closedir
 
 
 extern int g_status; //variable global, da cuenta de la gestión de errores. Si no usamos extern cada vez que otro archivo .c incluya este encabezado, se creará una copia independiente de la variable en cada archivo. 
@@ -44,6 +45,8 @@ typedef struct s_mini
 	bool		in_dquotes;
 	bool		escaped;
 
+	
+
 	//otman
 	
 }			t_mini;
@@ -68,27 +71,32 @@ void		init_enviroment(char **argv, t_mini *m); */
 //exit
 void	m_exit(char	*str, t_mini *m);
 
-//parsing(DANI)
+//PARSER
+
+//env_vars
 //envp_aux
 char	*return_envp_variable(char *str, t_mini *m);
 int		find_envp_variable(char *str, int size, t_mini *m);
+//eror_code
 //getprompt
 void	getprompt(t_mini *m);
 //init_struct
 t_mini	*init_struct(char **envp);
 void	init_struct_envp(char **envp, t_mini *m);
 void	init_struct_getpid(t_mini *m);
-//lexer
-int		lexer(t_mini *m);
-int		count_tokens(t_mini *m);
-void	fill_split(t_mini *m);
-char	*ft_strndup(const char *src, size_t n);
 //lexer_aux
 int		problematic_chars(char	c, t_mini *m);
 int		in_squotes(char	c, t_mini *m);
 int		in_dquotes(char	c, t_mini *m);
 int		escaped(char c, t_mini *m);
 void	free_lexer(t_mini *m);
+//lexer
+int		lexer(t_mini *m);
+int		count_tokens(t_mini *m);
+void	fill_split(t_mini *m);
+char	*ft_strndup(const char *src, size_t n);
+//parser
+int		parser(t_mini *m);
 
 //signals
 void	handle_sigint(int sig);

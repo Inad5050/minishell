@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/02 19:28:50 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:10:08 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,23 @@ typedef struct s_mini
 	char		**envp; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Up-to-date array containing keys and values for the shell environment
 	pid_t		pid; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Process ID of the minishell instance
 	
-	//dani
-	char		*prompt;
-	
-	char		*input; //getprompt
-	char		**tokens; //create_tokens
-	
-	bool		in_squotes;
-	bool		in_dquotes;
-	bool		escaped;
+	char		*prompt; //getprompt (main)
+	char		*input; //readline (main)
 
-	
+	int			token_count; //ft_count_words (lexer)
+	int			in_quotes; //ft_count_words (lexer)
+	int			quote_type; //ft_count_words (lexer)
+	char		**tokens; //create_tokens (lexer)
+	int 		squote; //fill_tokens (lexer)
+	int 		dquote; //fill_tokens (lexer)
 
-	//otman
-	
 }			t_mini;
-
 typedef struct s_command
 {
 	char		**full_cmd; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Equivalent of the typical argv, containing the command name and its parameters when needed
 	char		*full_path; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) If not a builtin, first available path for the executable denoted by argv[0] from the PATH variable
 	int			infile; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Which file descriptor to read from when running a command (defaults to stdin)
 	int			outfile; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Which file descriptor to write to when running a command (defaults to stdout)
-	t_command	*next;
 }			t_command;
 
 /* //cmd_trim

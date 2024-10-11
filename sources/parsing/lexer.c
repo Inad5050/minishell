@@ -6,38 +6,11 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:54:28 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/09 21:13:48 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/11 18:38:03 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/* static char	**ft_fill_array(char **aux, char const *s, char *set, int i[3])
-{
-	int		s_len;
-	int		q[2];
-
-	q[0] = 0;
-	q[1] = 0;
-	s_len = ft_strlen(s);
-	while (s[i[0]])
-	{
-		while (ft_strchr(set, s[i[0]]) && s[i[0]] != '\0')
-			i[0]++;
-		i[1] = i[0];
-		while ((!ft_strchr(set, s[i[0]]) || q[0] || q[1]) && s[i[0]])
-		{
-			q[0] = (q[0] + (!q[1] && s[i[0]] == '\'')) % 2;
-			q[1] = (q[1] + (!q[0] && s[i[0]] == '\"')) % 2;
-			i[0]++;
-		}
-		if (i[1] >= s_len)
-			aux[i[2]++] = "\0";
-		else
-			aux[i[2]++] = ft_substr(s, i[1], i[0] - i[1]);
-	}
-	return (aux);
-} */
 
 void	fill_tokens(char *s, t_mini *m)
 {
@@ -97,7 +70,7 @@ void	ft_count_tokens(char *s, t_mini *m)
 	}
 }
 
-int	lexer(t_mini *m)
+int	lexer(t_mini *m) //se necesitan más comprobaciones despues de fill_tokens? O es suficiente con if (!m->input) y if (ft_strlen(m->input) > 0)?
 {
 	if (!m->input)
 		return (ft_printf("exit\n"), 0); //cuando el puntero del usuario es NULL terminamos la mini. Es este el comportamiento esperado?
@@ -108,6 +81,6 @@ int	lexer(t_mini *m)
 	if (!m->tokens)
 		m_exit("Cannot alocate memory in create_tokens", m);
 	fill_tokens(m->input, m); //llena los tokens con el contenido de m->input
-	m->tokens[m->token_count] = NULL;	
+	m->tokens[m->token_count] = NULL;
 	parser(m);
 }

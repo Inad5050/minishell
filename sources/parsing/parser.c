@@ -6,21 +6,33 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:37:07 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/09 16:58:56 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/11 22:39:22 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+//int	expand_var(int index, t_mini *m)
 
 int	parser(t_mini *m)
 {
 	int	i;
 
 	i = 0;
-	while (m->tokens[i])
-		if (expand_var(i, m) == 2) //gestiona el caso "*\0". En este caso la tokens[i] tiene que expandirse de char * a char **.
+	while(m->tokens[i])
+		expand_var(i, m); //hay que revisarlo
 	
+
+
+
+
+
+
+
+
+
+
+
 }
 
 /* 

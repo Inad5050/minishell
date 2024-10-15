@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/15 17:30:43 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:09:53 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ typedef struct s_command
 	char		*full_path; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) If not a builtin, first available path for the executable denoted by argv[0] from the PATH variable
 	int			infile; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Which file descriptor to read from when running a command (defaults to stdin)
 	int			outfile; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Which file descriptor to write to when running a command (defaults to stdout)
-	int			append; // Si es 1, es redirección con append (>>), si no, es >
 	
-	int			index; //posición del comando en la lista de **tokens.
+	int			append_in; // Si es 1, es redirección con append (<<), si es cero es <
+	int			append_out; // Si es 1, es redirección con append (>>), si es cero es >
 }			t_command;
 
 /* //cmd_trim

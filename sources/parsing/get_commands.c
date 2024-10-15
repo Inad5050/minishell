@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:29:21 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/15 17:53:06 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:06:35 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	get_commands(t_mini *m) //almacena los comandos en la lista de nodos m->cmd
 	while (m->tokens[i] && cmd_index <= m->cmd_count)
 	{
 		code = identify_token(m->tokens[i++], code, cmd_index, m);
-		if (code == 2)
+		if (code == 2) //si hemos encontrado un pipe
 			cmd_index++;
 	}
 }
@@ -50,8 +50,8 @@ void	get_commands(t_mini *m) //almacena los comandos en la lista de nodos m->cmd
 int	identify_token(char *tkn, int code, int cmd_index, t_mini *m)
 {
 	if (code == 2) //significa que el token anterior era un pipe y ahora tenemos que redirigir el input del comando actual (hemos pasado al siguiente comando al aumentar cmd_index).
-		m->cmds[cmd_index].infile = tkn;
-	else if (code > 2)
+		get_pipes(cmd_index, m);
+	else if (code > 2) //significa que el token anterior redirigia (input o output) al archivo actual.
 		return (assign_redirection(tkn, code, cmd_index, m), 0); //indica en la estructura t_command cual es el archivo al que se está redirigiendo.
 	else if (tkn == '|')
 		return (2);
@@ -83,37 +83,22 @@ void assign_redirection(char *tkn, int code, int cmd_index, t_mini *m)
 		m->cmds[cmd_index].outfile = tkn;
 	}
 	else
-		m_exit("Error indentyfing tokens in assign_redirection", m);	
+		m_exit("Error identifying tokens in assign_redirection", m);
 }
 
+void	open_file()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void	get_pipes(int cmd_index, t_mini *m)
+{
+	int	pipefd[2];
+	
+	if (cmd_index + 1 > m->cmd_count)
+		m_error("Incorrect pipe", m); //falta el segundo comando (hemos ca).
+	if (pipe(pipefd) < 0)
+		m_exit("Couldn't open pipe on get_pipes", m);
+	m->cmds[cmd_index + 1].infile = pipefd[0];
+	m->cmds[cmd_index].outfile = pipefd[1];
+}
 
 void	initiate_get_commands(t_mini *m) //consigue los valores de m->path y m->cmd_dirs. Aloja meoria para m->cmds.
 {

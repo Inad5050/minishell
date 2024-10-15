@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/14 18:48:01 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:30:43 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,11 @@ typedef struct s_mini
 	int			quote_type; //ft_count_words (lexer)
 	int 		squote; //fill_tokens (lexer)
 	int 		dquote; //fill_tokens (lexer)
-	char		*path; //is_it_command (get_commands)
-	char		**cmd_dirs; //is_it_command (get_commands)
-	char		*cmd_name; //is_it_command (get_commands)
-
+	
+	char		*path; // initiate_get_commands (get_commands)
+	char		**cmd_dirs; // initiate_get_commands (get_commands)
+	int			cmd_count; // initiate_get_commands (get_commands)
+	int			post_redirection; // initiate_get_commands (get_commands)
 }			t_mini;
 typedef struct s_command
 {
@@ -55,6 +56,7 @@ typedef struct s_command
 	char		*full_path; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) If not a builtin, first available path for the executable denoted by argv[0] from the PATH variable
 	int			infile; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Which file descriptor to read from when running a command (defaults to stdin)
 	int			outfile; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Which file descriptor to write to when running a command (defaults to stdout)
+	int			append; // Si es 1, es redirección con append (>>), si no, es >
 	
 	int			index; //posición del comando en la lista de **tokens.
 }			t_command;

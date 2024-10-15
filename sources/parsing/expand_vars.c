@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 19:33:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/02 21:10:46 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:25:38 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ int	expand_var(int index, t_mini *m)
 		return (get_env_var(tkn, index, m), 1);
 	}
 	else if (ft_strcmp(tkn, "*\0") && !ft_strchr(tkn, '\'') && !ft_strch(tkn, '\"')) //ninguno de los dos tipos de comillas permite la expansion del comodin. Este if verifica que el único carcater del token sea el asterisco y que no este entre comillas.
-		return (get_dir_items(index, m), 2); //POR_HACER
+		return (expand_dir_items(index, m), 2);
 }
+

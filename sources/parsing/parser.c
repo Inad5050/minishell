@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:37:07 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/14 16:30:36 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:47:50 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	parser(t_mini *m)
 	while(m->tokens[i])
 		expand_var(i++, m); //epande las variables de entorno $, $? y * .
 	i = 0;
-	get_commands(m); //llena la lista de nodos con los comandos
+	token_assign(m); //llena la lista de nodos con los comandos
 
 
 

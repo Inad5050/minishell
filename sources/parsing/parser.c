@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:37:07 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/18 18:14:46 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:56:36 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ int	parser(t_mini *m)
 		return (0);
 	if (!check_commands(m)); //comprueba si el comando existe y si es built_in
 		return (0);
-	free_lexer_parser(m); //libera toda la memoria asociada con el lexer y el parser.
-		
-	EXECUTE(m); //Otman hace su magia;
-
-	free_tcommand(m);
 	return (1);
 }
 

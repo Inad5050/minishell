@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:46:25 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/16 18:47:56 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:30:50 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	token_indentify(char *tkn, int code, int cmd_index, t_mini *m)
 		m->cmd_dirs[cmd_index].full_cmd[m->x_index] = ft_strdup(tkn);
 		if (!(m->cmd_dirs[cmd_index].full_cmd[m->x_index]))
 			m_exit("Could`t assign memory in identify_token", m);
-		m->x_index++; //necesitaba otro indice que mantuviera su valor entre llamadas a la funcion, pero identify_token() ya tiene 4 variables.
+		m->x_index++; //necesitaba otro indice que mantuviera su valor entre llamadas a la funcion, pero identify_token() ya tiene 4 variables, asi que m->x_index está dentro de la estructura.
 	}
 	return (0)
 }

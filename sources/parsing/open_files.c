@@ -6,25 +6,13 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 20:50:28 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/16 21:19:21 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:24:47 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void here_doc(char *file, int i, t_mini *m)
-{
-
-
-
-
-
-
-	
-	
-}
-
-int	here_doc(char *end, t_mini *m)
+void here_doc(char *end, int i, t_mini *m) //cuando usamos << el char * en lugar de ser el file_name es sl string que nos indica que debemos dejar de leer.
 {
 	int		pipefd[2];
 	char	*line;
@@ -32,23 +20,23 @@ int	here_doc(char *end, t_mini *m)
 
 	end_s = ft_strjoin(end, "\n");
 	if (!end_s)
-		m_exit("Couldn't allocate memory in here_doc", m);
+		m_exit("Ft_strjoin here_doc", m);
 	if (pipe(pipefd) < 0)
-		m_exit("Couldn't pipe in here_doc", m);
-	line = pi_get_next_line(0, end);
+		m_exit("Pipe here_doc", m);
+	line = m_get_next_line(0, end_s);
 	while (line && ft_strncmp(line, end_s, ft_strlen(end_s)))
 	{
 		ft_putstr_fd(line, pipefd[1]);
 		free(line);
-		line = pi_get_next_line(0, end_s);
+		line = m_get_next_line(0, end_s);
 	}
 	free(end_s);
 	free(line);
 	close(pipefd[1]);
-	return (pipefd[0]);
+	m->cmds[i].infile = pipefd[0];
 }
 
-char	*pi_get_next_line(int fd, char *end_s)
+char	*m_get_next_line(int fd, char *end_s)
 {
 	static char	*line;
 	char		buffer[BUFFER_SIZE +1];
@@ -70,12 +58,12 @@ char	*pi_get_next_line(int fd, char *end_s)
 	}
 	return_line = gnl_cut_line(line);
 	line = gnl_excess(line);
-	if (!pi_strncmp(return_line, end_s, ft_strlen(end_s)))
+	if (!m_strncmp(return_line, end_s, ft_strlen(end_s)))
 		free(line);
 	return (return_line);
 }
 
-int	pi_strncmp(const char *str1, const char *str2, size_t n)
+int	m_strncmp(const char *str1, const char *str2, size_t n)
 {
 	size_t	i;
 
@@ -91,14 +79,6 @@ int	pi_strncmp(const char *str1, const char *str2, size_t n)
 	return (0);
 }
 
-
-
-
-
-
-
-
-
 void	open_files_aux(char *file, int is_outfile, int i, t_mini *m)
 {
 	if (!is_outfile)
@@ -110,7 +90,7 @@ void	open_files_aux(char *file, int is_outfile, int i, t_mini *m)
 				m_exit("Couldn't open infile", m);
 		}
 		else if ((m->cmds[i].append))
-			here_doc(file, i, m);
+			here_doc(i, m);
 		return ;
 	}
 	if (is_outfile)

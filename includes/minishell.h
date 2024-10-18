@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/16 18:29:54 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:38:54 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_mini
 	int			post_redirection; //initiate_get_commands (get_commands)
 	int			x_index; //identify_token (get_commands)
 }			t_mini;
+
 typedef struct s_command
 {
 	char		**full_cmd; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Equivalent of the typical argv, containing the command name and its parameters when needed
@@ -62,6 +63,7 @@ typedef struct s_command
 	char		*outfile_name; //assign_redirection (get_commands)
 	int			append_in; // Si es 1, es redirección con append (<<), si es cero es <
 	int			append_out; // Si es 1, es redirección con append (>>), si es cero es >
+	int			is_builtin; //is_builtin (check_commands)
 }			t_command;
 
 /* //cmd_trim

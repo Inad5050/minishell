@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:29:21 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/16 18:48:08 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:26:01 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,27 +73,4 @@ void	initiate_get_commands(t_mini *m) //consigue los valores de m->path y m->cmd
 	if (!m->cmds)
 		m_exit("Cannot allocate memory in initiate_commands");
 	m->cmds[m->cmd_count] = NULL;
-}
-
-void	token_assign(t_mini *m) //almacena los comandos en la lista de nodos m->cmds.
-{
-	int	i;
-	int	code; //Su valor varia en función de que era el token anterior. Informa de que debería ser el token actual. Una redirección debería ir seguida de un archivo etc... si es un argumento 0, si es un comando 1, si es un pipe 2 si es una redireccion ... 
-	int	cmd_index; //Indica a que comando pertenecen los tokens. Cambia cuando encontramos un '|' .
-
-	i = 0;
-	code = 0;
-	cmd_index = 0;
-	initiate_get_commands(m);
-	initiate_command_structs(m);//inicializamos los full_cmd de las t_command.
-	while (m->tokens[i] && cmd_index < m->cmd_count)
-	{
-		code = token_indentify(m->tokens[i], code, cmd_index, m);
-		if (code == 2) //si hemos encontrado un pipe
-		{
-			m->x_index = 0;			
-			cmd_index++;
-		}
-		i++;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/18 16:38:54 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:47:40 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,18 @@ typedef struct s_command	t_command;
 typedef struct s_mini
 {
 	t_command	*cmds; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Linked list containing a t_command node with all commands separated by pipes
+	
 	char		**envp; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Up-to-date array containing keys and values for the shell environment
 	pid_t		pid; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Process ID of the minishell instance
 	
 	char		*prompt; //getprompt (main)
 	char		*input; //readline (main)
-
 	char		**tokens; //se usa a para almacenar el inpurt del usuario tras la tokenización del lexeo
 	int			token_count; //ft_count_words (lexer)
 	int			in_quotes; //ft_count_words (lexer)
 	int			quote_type; //ft_count_words (lexer)
 	int 		squote; //fill_tokens (lexer)
 	int 		dquote; //fill_tokens (lexer)
-	
 	char		*path; //initiate_get_commands (get_commands)
 	char		**cmd_dirs; //initiate_get_commands (get_commands)
 	int			cmd_count; //initiate_get_commands (get_commands)

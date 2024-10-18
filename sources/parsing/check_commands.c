@@ -6,13 +6,13 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:26:30 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/18 17:05:06 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:14:09 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo indica en is_builtin. Si no lo es comprueba si es uno de los comandos del sistema. Si lo es copia su ruta en full_path. Si no se da ninguno de los dos casos se considera que el comando no es valido.
+int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo indica en is_builtin. Si no lo es comprueba si es uno de los comandos del sistema. Si lo es copia su ruta en full_path. Si no se da ninguno de los dos casos se considera que el comando no es valido.
 {
 	int	i;
 	int	index;
@@ -24,20 +24,19 @@ void	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es l
 			m->cmds[i].is_builtin = 1;
 		else
 		{
-			index = get_cmd_path(m->cmds[i].full_cmd[0], m)
+			index = get_cmd_path(m->cmds[i].full_cmd[0], m); //si la funcion NO es built_in, consigue el path a la funcion y lo copia en full_path dentro de la estructura t_command que corresponda
 			if (index)
 				m->cmds[i].full_path = ft_strdup(m->cmd_dirs[index]);
 			else
-				m_error("Incorrect command", m);
+				return (m_error("Incorrect command", m), 0);
 		}
 		i++;
 	}
+	return (1);
 }
 
 int	is_builtin(char *cmd, t_mini *m)
 {
-	if (!cmd)
-		m_error("Missing command", m);
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
 	if (ft_strcmp(cmd, "pwd") == 0)

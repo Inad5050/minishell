@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:54:28 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/11 18:38:03 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:29:51 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,15 @@ void	fill_tokens(char *s, t_mini *m)
 	}
 }
 
-void	ft_count_tokens(char *s, t_mini *m)
+// m->in_quotes bolano, si estamos en comillas o no.
+// m->quote_type guarda el valor ascii del tipo de comilla.
+// m->token_count numero de palabras
+
+int	ft_count_tokens(char *s, t_mini *m)
 {
 	int		i;
 
 	i = 0;
-	m->in_quotes = 0; //bolano, si estamos en comillas o no.
-	m->quote_type = 0; //guarda el valor ascii del tipo de comilla.
-	m->token_count = 0; //numero de palabras
 	while (s[i])
 	{
 		if (!ft_strchr(" ", s[i])) //comprobamos si el caracter actual es un delimitador " ".
@@ -63,24 +64,27 @@ void	ft_count_tokens(char *s, t_mini *m)
 				i++;
 			}
 			if (m->in_quotes)
-				return (m_error("Unclosed quotes", m), -1);
+				return (m_error("Unclosed quotes", m), 0);
 		}
 		else
 			i++;
 	}
+	return (1);
 }
 
 int	lexer(t_mini *m) //se necesitan más comprobaciones despues de fill_tokens? O es suficiente con if (!m->input) y if (ft_strlen(m->input) > 0)?
 {
 	if (!m->input)
-		return (ft_printf("exit\n"), 0); //cuando el puntero del usuario es NULL terminamos la mini. Es este el comportamiento esperado?
+		return (ft_printf("exit\n"), -1); //cuando el puntero del usuario es NULL terminamos la mini. Es este el comportamiento esperado?
 	if (ft_strlen(m->input) > 0)
 		add_history(m->input); //función del sistema relacinada con la gestión de read_line. Añade el argumento a la lista del historial de read_line. Se usa write_history para guardar el historial en el archivo seleccionado. Y read_history para leerlo.
-	ft_count_tokens(m->input, m); //calcula la cantidad de tokens
+	if (!ft_count_tokens(m->input, m)) //calcula la cantidad de tokens
+		return (0);
 	m->tokens = ft_calloc(m->token_count + 1, sizeof(char *));
 	if (!m->tokens)
 		m_exit("Cannot alocate memory in create_tokens", m);
 	fill_tokens(m->input, m); //llena los tokens con el contenido de m->input
 	m->tokens[m->token_count] = NULL;
-	parser(m);
+	if (!parser(m));
+		return (0);
 }

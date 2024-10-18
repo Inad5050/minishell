@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/27 17:40:15 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:30:06 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGQUIT, SIG_IGN); //SIG_IGN se usa para ignorar la señal del primer argumento.
 		getprompt(m); //consigue el prompt de la consola (la línea antes del input del usuario) al estilo de "guest@minishell $ "
 		m->input = readline(m->prompt); //lee el input del usuario, recibe el promp inicial como argumento
-		if (!lexer(m)) //procesa el input del usuario para poder ejecutarlo
+		if (lexer(m) == -1) //procesa el input del usuario para poder ejecutarlo
 			break ;
 	}
 	free_memory(m); //el argumento de exit es el código de salida del programa. g_status es la variable global donde se almacenan los errores.

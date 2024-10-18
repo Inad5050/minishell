@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:37:07 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/18 16:26:58 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:14:46 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,22 @@ int	parser(t_mini *m)
 
 	i = 0;
 	while(m->tokens[i])
-		expand_var(i++, m); //epande las variables de entorno "$" y "$?""
-	i = 0;
-	token_assign(m); //llena las estructuras t_command con sus valores correspondientes.
-	open_files(m); //intenta abrir o crear los archivos de las redirecciones + here_doc
-	check_commands(m); //comprueba si el comando existe y si es built_in
-	get_path(m); //si la funcion NO es built_in, consigue el path a la funcion y lo copia en full_path dentro de la estructura t_command que corresponda
+	{
+		if (!expand_var(i++, m)) //epande las variables de entorno "$" y "$?""
+			return (0);
+	}
+	if (!token_assign(m)); //llena las estructuras t_command con sus valores correspondientes.
+		return (0);
+	if (!open_files(m)); //intenta abrir o crear los archivos de las redirecciones + here_doc
+		return (0);
+	if (!check_commands(m)); //comprueba si el comando existe y si es built_in
+		return (0);
 	free_lexer_parser(m); //libera toda la memoria asociada con el lexer y el parser.
+		
+	EXECUTE(m); //Otman hace su magia;
 
-	EXECUTE(m); //Otman hace sus cosas;	
+	free_tcommand(m);
+	return (1);
 }
 
 /* 

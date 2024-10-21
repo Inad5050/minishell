@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/18 17:47:40 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:56:00 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,58 +65,74 @@ typedef struct s_command
 	int			is_builtin; //is_builtin (check_commands)
 }			t_command;
 
-/* //cmd_trim
-char		**ft_cmdtrim(char const *s, char *set);
-static char	**ft_fill_array(char **aux, char const *s, char *set, int i[3]);
-static int	ft_count_words(const char *s, char *c, int i[2]);
-
-//enviroment
-void		init_enviroment(char **argv, t_mini *m); */
-
-//exit
-void	m_exit(char	*str, t_mini *m);
-
 //PARSER
 
-//env_vars
+//check_commands
+int		check_commands(t_mini *m);
+int		is_builtin(char *cmd, t_mini *m);
+int		get_cmd_path(char *cmd_name, t_mini *m);
+char	*cmd_path(char **cmd_name, t_mini *m);
+
 //envp_aux
-char	*return_envp_variable(char *str, t_mini *m);
-int		find_envp_variable(char *str, int size, t_mini *m);
-//eror_code
+char	*return_envp_var(char *str, t_mini *m); 
+int		find_envp_var(char *str, int size, t_mini *m);
+
+//errors
+void	m_error(char *str, t_mini *m);
+void	m_exit(char *str, t_mini *m);
+
+//expand_vars
+char	*get_expanded_str(char *variable, char *var_name, char *tkn, t_mini *m);
+void	get_env_var(char *tkn, int index, t_mini *m);
+int		expand_var(int index, t_mini *m);
+
+//free_memory
+void	free_lexer_parser(t_mini *m);
+void	free_tcommand(t_mini *m);
+void	free_tmini(t_mini *m); 
+void	free_matrix(char **matrix);
+
 //getprompt
 void	getprompt(t_mini *m);
+
 //init_struct
 t_mini	*init_struct(char **envp);
 void	init_struct_envp(char **envp, t_mini *m);
 void	init_struct_getpid(t_mini *m);
-//lexer_aux
-int		problematic_chars(char	c, t_mini *m);
-int		in_squotes(char	c, t_mini *m);
-int		in_dquotes(char	c, t_mini *m);
-int		escaped(char c, t_mini *m);
-void	free_lexer(t_mini *m);
+
 //lexer
+void	fill_tokens(char *s, t_mini *m);
+int		ft_count_tokens(char *s, t_mini *m);
 int		lexer(t_mini *m);
-int		count_tokens(t_mini *m);
-void	fill_split(t_mini *m);
-char	*ft_strndup(const char *src, size_t n);
+
+//main
+int		main(int argc, char **argv, char **envp);
+int		manage_input(t_mini *m);
+void 	main_aux(t_mini *m);
+void 	superprinter(t_mini *m);
+
+//open_files
+void 	here_doc(char *end, int i, t_mini *m);
+char	*m_get_next_line(int fd, char *end_s);
+int		m_strncmp(const char *str1, const char *str2, size_t n);
+void	open_files_aux(char *file, int is_outfile, int i, t_mini *m);
+void	open_files(t_mini *m);
+
 //parser
-int		parser(t_mini *m);
+int	parser(t_mini *m);
 
-//signals
-void	handle_sigint(int sig);
+//token_aux
+int		identify_token_alt(char *tkn, int code, int cmd_index, t_mini *m);
+void	initiate_command_structs(t_mini *m);
+void	initiate_get_commands(t_mini *m);
 
-//Builtin Otmane
-void 	builtin(t_mini *mini);
-void 	echo(t_command *cmd, int fd);
-void	env(t_mini *mini);
-
-//errors.c
-void	m_error(char	*str, t_mini *m); //imprime un mensaje de error, pero no cierra la minishell. Probablemente lo uses tu Otman. No se si deberia hacer algo más que imprimir el error.
+//token_indentify
+int 	assign_redirection(char *tkn, int code, int cmd_index, t_mini *m)
+int		get_pipes(int cmd_index, t_mini *m);
+int		token_indentify(char *tkn, int code, int cmd_index, t_mini *m);
+int		token_assign(t_mini *m);
 
 #endif
-
-
 
 /* 
 Además de las comillas simples, dobles y el backslash, hay otros caracteres que podrían ser \

@@ -6,7 +6,7 @@
 #    By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 16:19:45 by dangonz3          #+#    #+#              #
-#    Updated: 2024/09/27 17:58:04 by dangonz3         ###   ########.fr        #
+#    Updated: 2024/10/21 19:52:09 by dangonz3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ COLOR_RESET = \033[0m
 
 #sources
 SRC_DIR = sources/
-SRC_FILES = exit.c main.c init_structure.c
+SRC_FILES = check_commands.c envp_aux.c errors.c expand_vars.c free_memory.c getprompt.c init_struct.c lexer.c main.c open_files.c parser.c token_aux.c token_indentify.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:.c=.o)
 
@@ -62,5 +62,3 @@ fclean:
 re: fclean all
 
 .PHONY:	all clean fclean re
-
--lreadline -lncurses

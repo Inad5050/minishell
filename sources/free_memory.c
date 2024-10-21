@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:33:18 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 19:52:37 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:21:18 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ void	free_tcommand(t_mini *m)
 	int	i;
 	
 	i = 0;
-	while (m->cmds[i])
+	while (i < m->cmd_count)
 	{
 		if(m->cmds[i].full_cmd)
 			free_matrix(m->cmds[i].full_cmd);
 		if(m->cmds[i].full_path)
 			free(m->cmds[i].full_path);
 		if(m->cmds[i].infile)
-			close(m->cmds[i].infile)
+			close(m->cmds[i].infile);
 		if(m->cmds[i].outfile)
-			close(m->cmds[i].outfile)
+			close(m->cmds[i].outfile);
 		if(m->cmds[i].infile_name)
 			free(m->cmds[i].infile_name);
 		if(m->cmds[i].outfile_name)

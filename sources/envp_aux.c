@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 19:33:51 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 19:52:31 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:48:25 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*return_envp_var(char *str, t_mini *m) //busca una string que empiece por s
 	str_size = 0;
 	while (str[str_size])
 		str_size++;
-	line = find_envp_variable(str, str_size, m);
+	line = find_envp_var(str, str_size, m);
 	if (line < 0)
 		return (NULL);
 	i = 0;

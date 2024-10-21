@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:26:30 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 19:55:31 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:47:32 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 	int	index;
 
 	i = 0;
-	while (m->cmds[i])
+	while (i < m->cmd_count)
 	{
-		if (is_builtin(m->cmds[i].full_cmd[0], m))
+		if (is_builtin(m->cmds[i].full_cmd[0]))
 			m->cmds[i].is_builtin = 1;
 		else
 		{
@@ -35,7 +35,7 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 	return (1);
 }
 
-int	is_builtin(char *cmd, t_mini *m)
+int	is_builtin(char *cmd)
 {
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
@@ -88,9 +88,9 @@ char	*cmd_path(char **cmd_name, t_mini *m)
 	cmd = ft_strjoin("/", cmd_name[0]);
 	if (!cmd)
 		return (NULL);
-	while (m->dirs[i])
+	while (i < m->cmd_count)
 	{
-		path = ft_strjoin(m->dirs[i], cmd);
+		path = ft_strjoin(m->cmd_dirs[i], cmd);
 		if (!path)
 			return (NULL);
 		if (access(path, X_OK) == 0)

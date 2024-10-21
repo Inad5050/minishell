@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 19:56:00 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/21 21:08:08 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_command
 
 //check_commands
 int		check_commands(t_mini *m);
-int		is_builtin(char *cmd, t_mini *m);
+int		is_builtin(char *cmd);
 int		get_cmd_path(char *cmd_name, t_mini *m);
 char	*cmd_path(char **cmd_name, t_mini *m);
 
@@ -115,19 +115,19 @@ void 	superprinter(t_mini *m);
 void 	here_doc(char *end, int i, t_mini *m);
 char	*m_get_next_line(int fd, char *end_s);
 int		m_strncmp(const char *str1, const char *str2, size_t n);
-void	open_files_aux(char *file, int is_outfile, int i, t_mini *m);
-void	open_files(t_mini *m);
+int		open_files_aux(char *file, int is_outfile, int i, t_mini *m);
+int		open_files(t_mini *m);
 
 //parser
-int	parser(t_mini *m);
+int		parser(t_mini *m);
 
 //token_aux
-int		identify_token_alt(char *tkn, int code, int cmd_index, t_mini *m);
+int		identify_token_alt(char *tkn, int code);
 void	initiate_command_structs(t_mini *m);
 void	initiate_get_commands(t_mini *m);
 
 //token_indentify
-int 	assign_redirection(char *tkn, int code, int cmd_index, t_mini *m)
+int 	assign_redirection(char *tkn, int code, int cmd_index, t_mini *m);
 int		get_pipes(int cmd_index, t_mini *m);
 int		token_indentify(char *tkn, int code, int cmd_index, t_mini *m);
 int		token_assign(t_mini *m);

@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 19:52:47 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:59:20 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 		if (manage_input(m) == -1) //procesa el input del usuario para poder ejecutarlo
 			break ;
 	}
-	free_memory(m); //el argumento de exit es el código de salida del programa. g_status es la variable global donde se almacenan los errores.
+	free_tmini(m); //el argumento de exit es el código de salida del programa. g_status es la variable global donde se almacenan los errores.
 	return (0);
 }
 
@@ -38,7 +38,7 @@ int	manage_input(t_mini *m)
 		add_history(m->input); //función del sistema relacinada con la gestión de read_line. Añade el argumento a la lista del historial de read_line. Se usa write_history para guardar el historial en el archivo seleccionado. Y read_history para leerlo.
 	if (!lexer(m))
 		return (0);
-	if (!parser(m));
+	if (!parser(m))
 		return (0);
 	free_lexer_parser(m); //libera toda la memoria asociada con el lexer y el parser.
 	
@@ -72,7 +72,7 @@ void superprinter(t_mini *m)
 		ft_printf("%s\n", "m->pid existe");
 	i = 0;
 	ft_printf("%s\n", "---CMDS---");
-	while (m->cmds[i])
+	while (i < m->cmd_count)
 	{
 		ft_printf("full_cmd\n");
 		x = 0;
@@ -91,7 +91,7 @@ void superprinter(t_mini *m)
 			ft_printf("append_out = %i\n", m->cmds[i].append_out);
 		if (m->cmds[i].is_builtin)
 			ft_printf("is_builtin = %i\n", m->cmds[i].is_builtin);
-		i++:
+		i++;
 		ft_printf("\nEND CMD\n");
 	}
 }

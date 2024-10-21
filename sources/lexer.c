@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:54:28 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 19:52:45 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:58:04 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	fill_tokens(char *s, t_mini *m)
 {
-	int		i;
-	int		start;
-	int		token_index;
+	size_t	i;
+	size_t	start;
+	size_t	token_index;
 	
 	m->squote = 0; // Bandera para ver si estamos dentro de comillas o no.
 	m->dquote = 0; // Almacena el valor ascii del tipo de comilla.

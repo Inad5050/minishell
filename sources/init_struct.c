@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 19:32:56 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 19:52:42 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/21 21:16:12 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_mini	*init_struct(char **envp)
 	int		i;
 	
 	i = 0;
-	g_status = 0; //variable global para recepcion de señales y errores
+	/* g_status = 0;  *///variable global para recepcion de señales y errores
 	m = ft_calloc(1, sizeof(m));
 	if (!m)
 		return(perror("Couldn't allocate memory in init_struct"), NULL);

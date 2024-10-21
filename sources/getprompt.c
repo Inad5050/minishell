@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:53:46 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/21 19:52:40 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:57:15 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	getprompt(t_mini *m)
 	char	*user;
 	char	*sufix;
 
-	user = return_envp_variable("USER=", m);
+	user = return_envp_var("USER=", m);
 	if (!user)
 	{
 		m->prompt = ft_strdup("guest@minishell $ ");

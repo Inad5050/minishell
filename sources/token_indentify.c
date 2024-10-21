@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:46:25 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 19:52:58 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/21 21:11:26 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int assign_redirection(char *tkn, int code, int cmd_index, t_mini *m) //rellena 
 	{
 		if (m->cmds[cmd_index].infile) //si tiene valor es que ya habia una redireccion
 			return (m_error("Double input redirection", m), 0);
-		m->cmds[cmd_index].infile = ft_strdup(tkn);
+		m->cmds[cmd_index].infile_name = ft_strdup(tkn);
 		if (!m->cmds[cmd_index].infile)
 			m_exit("Couldn't allocate memory in assign_redirection", m);
 		if (code == 4)
@@ -28,7 +28,7 @@ int assign_redirection(char *tkn, int code, int cmd_index, t_mini *m) //rellena 
 	{
 		if (m->cmds[cmd_index].outfile) //si tiene valor es que ya habia una redireccion
 			return (m_error("Double outfile redirection", m), 0);
-		m->cmds[cmd_index].outfile = ft_strdup(tkn);
+		m->cmds[cmd_index].outfile_name = ft_strdup(tkn);
 		if (!m->cmds[cmd_index].outfile)
 			m_exit("Couldn't allocate memory in assign_redirection", m); 
 		if (code == 6)
@@ -60,27 +60,24 @@ int	token_indentify(char *tkn, int code, int cmd_index, t_mini *m)
 		return (get_pipes(cmd_index, m));
 	else if (code > 2) //significa que el token anterior redirigia (input o output) al archivo actual.
 		return (assign_redirection(tkn, code, cmd_index, m)); //indica en la estructura t_command cual es el archivo al que se está redirigiendo.
-	else if (tkn == '|')
+	else if (!ft_strcmp(tkn, "|"))
 		return (2);
-	else if (tkn == '<')
+	else if (!ft_strcmp(tkn, "<"))
 		return (3);
-	else if (tkn == '<<')
+	else if (!ft_strcmp(tkn, "<<"))
 		return (4);
-	else if (tkn == '>')
+	else if (ft_strcmp(tkn, ">"))
 		return (5);
-	else if (tkn == '>>')
+	else if (!ft_strcmp(tkn, ">>"))
 		return (6);
 	else
 	{
-		if (!(m->cmd_dirs[cmd_index].full_cmd[m->x_index]))
-			m_exit("Error in identify_token, failure to assign \
-			memory in initiate_command_structs", m);
-		m->cmd_dirs[cmd_index].full_cmd[m->x_index] = ft_strdup(tkn);
-		if (!(m->cmd_dirs[cmd_index].full_cmd[m->x_index]))
+		m->cmds[cmd_index].full_cmd[m->x_index] = ft_strdup(tkn);
+		if (!(m->cmds[cmd_index].full_cmd[m->x_index]))
 			m_exit("Could`t assign memory in identify_token", m);
 		m->x_index++; //necesitaba otro indice que mantuviera su valor entre llamadas a la funcion, pero identify_token() ya tiene 4 variables, asi que m->x_index está dentro de la estructura.
 	}
-	return (1)
+	return (1);
 }
 
 int	token_assign(t_mini *m) //almacena los comandos en la lista de nodos m->cmds.

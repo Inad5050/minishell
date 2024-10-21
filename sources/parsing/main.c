@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/18 18:58:39 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:25:38 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ int	manage_input(t_mini *m)
 		return (0);
 	free_lexer_parser(m); //libera toda la memoria asociada con el lexer y el parser.
 	
-	if (!execution(m))
-		return (0);
+/* 	if (!execution(m))
+		return (0); */
+
+	superprinter(m);
 	
 	free_tcommand(m);
 	return (1);
@@ -51,7 +53,45 @@ int	manage_input(t_mini *m)
 
 void main_aux(t_mini *m)
 {
-	signal(SIGINT, handle_sigint); //signal se usa para manejar señales. SIGINIT gestiona Ctrl+C. Normalmente se usa para interrumpir el proceso actual (si el segundo argumento de signal es SIG_DFL la señal hara us funcion habitual). handle_sigint es una funcion personalizada con la firma void (*)(int). Cuando reciba la señal del primer argumento el programa ejecutara la funcion del segundo argumento.
-	signal(SIGQUIT, SIG_IGN); //SIG_IGN se usa para ignorar la señal del primer argumento.
+	/* signal(SIGINT, handle_sigint); */ //signal se usa para manejar señales. SIGINIT gestiona Ctrl+C. Normalmente se usa para interrumpir el proceso actual (si el segundo argumento de signal es SIG_DFL la señal hara us funcion habitual). handle_sigint es una funcion personalizada con la firma void (*)(int). Cuando reciba la señal del primer argumento el programa ejecutara la funcion del segundo argumento.
+	/* signal(SIGQUIT, SIG_IGN); */ //SIG_IGN se usa para ignorar la señal del primer argumento.
 	getprompt(m); //consigue el prompt de la consola (la línea antes del input del usuario) al estilo de "guest@minishell $ "
+}
+
+void superprinter(t_mini *m)
+{
+	int	i;
+	int	x;
+
+	i = 0;
+	ft_printf("%s\n", "SUPERPRINTER");
+	ft_printf("%s\n", "m->envp");
+	while (m->envp[i])
+		ft_printf("%s\n", m->envp[i++]);
+	if (m->pid)
+		ft_printf("%s\n", "m->pid existe");
+	i = 0;
+	ft_printf("%s\n", "---CMDS---");
+	while (m->cmds[i])
+	{
+		ft_printf("full_cmd\n");
+		x = 0;
+		while(m->cmds[i].full_cmd[x])
+			ft_printf("%s\n", m->cmds[i].full_cmd[x++]);
+		ft_printf("full_path = %s\n", m->cmds[i].full_path);
+		ft_printf("infile = %i\n", m->cmds[i].infile);
+		ft_printf("outfile = %i\n", m->cmds[i].outfile);
+		if (m->cmds[i].infile_name)
+			ft_printf("infile_name = %s\n", m->cmds[i].infile_name);
+		if (m->cmds[i].outfile_name)
+			ft_printf("outfile_name = %s\n", m->cmds[i].outfile_name);		
+		if (m->cmds[i].append_in)
+			ft_printf("append_in = %i\n", m->cmds[i].append_in);
+		if (m->cmds[i].append_out)
+			ft_printf("append_out = %i\n", m->cmds[i].append_out);
+		if (m->cmds[i].is_builtin)
+			ft_printf("is_builtin = %i\n", m->cmds[i].is_builtin);
+		i++:
+		ft_printf("\nEND CMD\n");
+	}
 }

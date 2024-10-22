@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:33:18 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 20:21:18 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:35:00 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,22 @@
 
 void	free_lexer_parser(t_mini *m)
 {
+	int	i;
+	
 	if (m->prompt)
 		free(m->prompt);
 	if (m->input)
 		free(m->input);
-	if (m->tokens)
-		free_matrix(m->tokens);
+	i = 0;
+
+	/* ft_printf("free_lexer_parser1 m->token_count = %i\n", m->token_count); */
+	
+	if (m->tokens && i < m->token_count)
+		free(m->tokens[i++]);
+	free(m->tokens);
+
+	/* ft_printf("free_lexer_parser2\n"); */
+	
 	m->token_count = 0;
 	m->in_quotes = 0;
 	m->quote_type = 0;
@@ -69,6 +79,6 @@ void	free_matrix(char **matrix)
 
 	i = 0;
 	while (matrix[i])
-		free(matrix[i]);
+		free(matrix[i++]);
 	free(matrix);	
 }

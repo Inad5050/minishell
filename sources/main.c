@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 20:59:20 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:41:27 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void superprinter(t_mini *m)
 	ft_printf("%s\n", "m->envp");
 	while (m->envp[i])
 		ft_printf("%s\n", m->envp[i++]);
-	if (m->pid)
-		ft_printf("%s\n", "m->pid existe");
+/* 	if (m->pid)
+		ft_printf("%s\n", "m->pid existe"); */
 	i = 0;
 	ft_printf("%s\n", "---CMDS---");
 	while (i < m->cmd_count)

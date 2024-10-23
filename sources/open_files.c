@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 20:50:28 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 21:02:09 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:39:10 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,9 @@ int	open_files_aux(char *file, int is_outfile, int i, t_mini *m)
 	}
 	if (is_outfile)
 	{
+		printf("file = %s ; m->cmds[i].infile_name = %s ; m->cmds[i].outfile_name = %s\n", file, m->cmds[i].infile_name, m->cmds[i].outfile_name);
+
+		
 		if (!(m->cmds[i].append_out))
 			m->cmds[i].outfile = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if ((m->cmds[i].append_out))
@@ -121,6 +124,7 @@ int	open_files(t_mini *m)
 			if(!(open_files_aux(m->cmds[i].outfile_name, 1, i, m)))
 				return (0);
 		}
+		i++;
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:33:18 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/22 17:35:00 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:17:15 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,12 @@ void	free_tcommand(t_mini *m)
 
 void	free_tmini(t_mini *m) //despues de llamar a free_lexer_parser y free_tcommand la única memoria alojada debería ser la de **envp. Dejo la función por si en el futuro tenemos que liberar otras cosas en este punto del programa.
 {
-	free_matrix(m->envp);	
+	if (m->envp)
+		free_matrix(m->envp);
+	if (m->prompt)
+		free(m->prompt);
+	if (m)
+		free(m);
 }
 
 void	free_matrix(char **matrix)

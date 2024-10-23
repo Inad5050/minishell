@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:46:25 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 21:11:26 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:05:13 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int assign_redirection(char *tkn, int code, int cmd_index, t_mini *m) //rellena 
 		if (m->cmds[cmd_index].infile) //si tiene valor es que ya habia una redireccion
 			return (m_error("Double input redirection", m), 0);
 		m->cmds[cmd_index].infile_name = ft_strdup(tkn);
-		if (!m->cmds[cmd_index].infile)
+		if (!m->cmds[cmd_index].infile_name)
 			m_exit("Couldn't allocate memory in assign_redirection", m);
 		if (code == 4)
 			m->cmds[cmd_index].append_in = 1;
@@ -29,7 +29,7 @@ int assign_redirection(char *tkn, int code, int cmd_index, t_mini *m) //rellena 
 		if (m->cmds[cmd_index].outfile) //si tiene valor es que ya habia una redireccion
 			return (m_error("Double outfile redirection", m), 0);
 		m->cmds[cmd_index].outfile_name = ft_strdup(tkn);
-		if (!m->cmds[cmd_index].outfile)
+		if (!m->cmds[cmd_index].outfile_name)
 			m_exit("Couldn't allocate memory in assign_redirection", m); 
 		if (code == 6)
 			m->cmds[cmd_index].append_out = 1;
@@ -56,6 +56,8 @@ int	get_pipes(int cmd_index, t_mini *m)
 
 int	token_indentify(char *tkn, int code, int cmd_index, t_mini *m)
 {
+	printf("m->cmds[cmd_index].full_cmd[m->x_index] = %s, cmd_index = %d, m->x_index = %d, tkn = %s\n", m->cmds[cmd_index].full_cmd[m->x_index], cmd_index, m->x_index, tkn);
+	
 	if (code == 2) //significa que el token anterior era un pipe y ahora tenemos que redirigir el input del comando actual (hemos pasado al siguiente comando al aumentar cmd_index).
 		return (get_pipes(cmd_index, m));
 	else if (code > 2) //significa que el token anterior redirigia (input o output) al archivo actual.
@@ -66,12 +68,12 @@ int	token_indentify(char *tkn, int code, int cmd_index, t_mini *m)
 		return (3);
 	else if (!ft_strcmp(tkn, "<<"))
 		return (4);
-	else if (ft_strcmp(tkn, ">"))
+	else if (!ft_strcmp(tkn, ">"))
 		return (5);
 	else if (!ft_strcmp(tkn, ">>"))
 		return (6);
 	else
-	{
+	{	
 		m->cmds[cmd_index].full_cmd[m->x_index] = ft_strdup(tkn);
 		if (!(m->cmds[cmd_index].full_cmd[m->x_index]))
 			m_exit("Could`t assign memory in identify_token", m);

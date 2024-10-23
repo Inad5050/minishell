@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/22 18:41:27 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:44:01 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	manage_input(t_mini *m)
 	
 /* 	if (!execution(m))
 		return (0); */
+
+	printf("OLAQUETAL\n");
 
 	superprinter(m);
 	

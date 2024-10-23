@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/22 16:56:44 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:58:44 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_mini
 	pid_t		pid; //VARIABLE ORIGINAL (no añadida por Dani, NO BORRAR!) Process ID of the minishell instance
 	
 	char		*prompt; //getprompt (main)
+	
 	char		*input; //readline (main)
 	char		**tokens; //se usa a para almacenar el inpurt del usuario tras la tokenización del lexeo
 	int			token_count; //ft_count_words (lexer)

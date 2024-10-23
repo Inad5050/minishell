@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:26:30 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/21 20:47:32 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:53:30 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 			m->cmds[i].is_builtin = 1;
 		else
 		{
-			index = get_cmd_path(m->cmds[i].full_cmd[0], m); //si la funcion NO es built_in, consigue el path a la funcion y lo copia en full_path dentro de la estructura t_command que corresponda
+			index = get_cmd_path(m->cmds[i].full_cmd[0], m); //si la funcion NO es built_in, consigue el path a la funcion y lo copia en full_path dentro de la estructura t_command que corresponda		
+			
+			printf("CHECK COMMANDS index = %d\n", index);
+			
 			if (index)
 				m->cmds[i].full_path = ft_strdup(m->cmd_dirs[index]);
 			else
@@ -64,9 +67,21 @@ int	get_cmd_path(char *cmd_name, t_mini *m)
 	cmd = ft_strjoin("/", cmd_name);
 	if (!cmd)
 		return (0);
+
+	printf("GET_CMD_PATH\n");
+	while (m->cmd_dirs[i])
+	{
+		printf("m->cmd_dirs[%d] = %s\n", i, m->cmd_dirs[i]);
+		i++;
+	}
+	i = 0;
+		
 	while (m->cmd_dirs[i])
 	{
 		path = ft_strjoin(m->cmd_dirs[i], cmd);
+
+		printf("GET_CMD_PATH path = %s\n", path);
+		
 		if (!path)
 			return (0);
 		if (!(access(path, X_OK)))

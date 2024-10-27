@@ -6,25 +6,31 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 19:32:56 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/20 16:58:32 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:06:35 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
-void	init_struct(char **envp, t_mini *m)
+t_mini	*init_struct(char **envp)
 {
-	int	i;
+	t_mini	*m;
+	int		i;
 	
+	/* g_status = 0;  *///variable global para recepcion de señales y errores
+	m = ft_calloc(1, sizeof(t_mini));
+	if (!m)
+		return(perror("Couldn't allocate memory in init_struct"), NULL);
 	i = 0;
-	while (envp[i]) 
-		i++;
+	while (envp[i])
+		i++;	
 	m->envp = ft_calloc(i + 1, sizeof(char *));
-	if (!m->envp[i])
+	if (!m->envp)
 		m_exit("Couldnt allocate memory for m->envp", m);
-	envp[i] = NULL;
+	m->envp[i] = NULL;
 	init_struct_envp(envp, m); //duplica envp para luego modificar la copia y crear la envp de la mini
-	init_struct_getpid(m); //usa fork para conseguir el pid del proceso padre. el hijo termna liberando toda su memoria
+	/* init_struct_getpid(m);  *///usa fork para conseguir el pid del proceso padre. el hijo termna liberando toda su memoria
+	return (m);
 }
 
 void	init_struct_envp(char **envp, t_mini *m) //duplica las variables de entorno para poder modificar la copia durante la ejecución de los comandos
@@ -37,7 +43,7 @@ void	init_struct_envp(char **envp, t_mini *m) //duplica las variables de entorno
 	{
 		j = 0;
 		while (envp[i][j])
-			j++;
+			j++;		
 		m->envp[i] = ft_calloc(j + 1, sizeof(char));
 		if (!m->envp[i])
 			m_exit("Couldnt allocate memory for m->envp[i]", m);
@@ -53,7 +59,7 @@ void	init_struct_envp(char **envp, t_mini *m) //duplica las variables de entorno
 	envp[i] = NULL;
 }
 
-void	init_struct_getpid(t_mini *m)
+/* void	init_struct_getpid(t_mini *m)
 {
 	pid_t	pid;
 	pid = fork();
@@ -63,5 +69,4 @@ void	init_struct_getpid(t_mini *m)
 		m_exit("Child process", m); //para eliminar al hijo, probablemente haya que crear una excepcion en m_exit para que no imprima nada cuando reciba la string "Child process"
 	else
 		m->pid = pid;
-	return (1);
-}
+} */

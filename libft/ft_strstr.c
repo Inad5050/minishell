@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment.c                                       :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 19:33:51 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/20 16:05:44 by dangonz3         ###   ########.fr       */
+/*   Created: 2024/09/27 20:39:42 by dangonz3          #+#    #+#             */
+/*   Updated: 2024/09/27 20:40:10 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	find_envp_variable(char *str, int size, t_mini *m) //busca una string que empiece por str (por ejemplo "PATH=") en envp, size es el tamaño de la string que le has pasado (para "PATH=" size = 5)
+char	*ft_strstr(char *hay, char *ndle)
 {
-	int		i;
-	
+	int	i;
+	int	j;
+
 	i = 0;
-	while (m->envp[i])
+	if (!ndle)
+		return (hay);
+	while (hay[i])
 	{
-		if (ft_strncmp(m->envp[i], str, size))
-			return (i);
+		j = 0;
+		while (hay[i + j] == ndle[j] && hay[i + j])
+			j++;
+		if (!ndle[j])
+			return (&hay[i]);
 		i++;
 	}
-	return (-1);
+	return (NULL);	
 }

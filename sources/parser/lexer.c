@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:54:28 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/18 18:55:35 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:53:38 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	fill_tokens(char *s, t_mini *m)
 {
-	int		i;
-	int		start;
-	int		token_index;
+	size_t	i;
+	size_t	start;
+	size_t	token_index;
 	
 	m->squote = 0; // Bandera para ver si estamos dentro de comillas o no.
 	m->dquote = 0; // Almacena el valor ascii del tipo de comilla.
@@ -81,5 +81,7 @@ int	lexer(t_mini *m) //se necesitan más comprobaciones despues de fill_tokens? 
 		m_exit("Cannot alocate memory in create_tokens", m);
 	fill_tokens(m->input, m); //llena los tokens con el contenido de m->input
 	m->tokens[m->token_count] = NULL;
+	if (m->squote || m->dquote) //si cualquiera de las comillas están abiertas el input es erroneo.
+		return (m_error("Invalid quotes", m), 0);
 	return (1);
 }

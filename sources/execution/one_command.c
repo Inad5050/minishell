@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:20:16 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/09/22 16:21:04 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/10/28 09:48:02 by tshiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
-static void handle_input_redirection(t_command *cmd, t_mini *mini)
+void handle_input_redirection(t_command *cmd, t_mini *mini)
 {
     if (cmd->infile != STDIN_FILENO)
     {
@@ -25,7 +25,7 @@ static void handle_input_redirection(t_command *cmd, t_mini *mini)
     }
 }
 
-static void handle_output_redirection(t_command *cmd, t_mini *mini)
+void handle_output_redirection(t_command *cmd, t_mini *mini)
 {
     if (cmd->outfile != STDOUT_FILENO)
     {

@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   expand_vars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 19:33:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/16 18:54:57 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:53:31 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+extern int	g_status;
+
 char	*get_expanded_str(char *variable, char *var_name, char *tkn, t_mini *m) //crea un string nueva que copia tkn y sustituye $VAR_NAME por la variable
 {
 	char	*str;
-	int		i;
-	int		j;
-	int		index;
+	size_t	i;
+	size_t	j;
+	size_t	index;
 
 	i = 0;
 	while (tkn[i] != '$' && tkn[i])
@@ -67,16 +69,13 @@ void	get_env_var(char *tkn, int index, t_mini *m) //consigue el nombre de la var
 int	expand_var(int index, t_mini *m)
 {
 	char	*tkn;
-	int		i;
-	char	*str;
 	
-	m->tokens[index] = tkn;
-	i = 0;
+	tkn = m->tokens[index];
 	if (ft_strchr(tkn, '$') && tkn[0] != '\'' && ft_strlen(tkn) > 1)  //es el signo de una variable local que debe ser expandida. No se expanden en comillas simples \'.
 	{
 		if (ft_strstr(tkn, "$?")) //$? es el signo que indica que se debe mostrar el estado de salida del último comando ejecutado.
-			return (get_err_code(m), 1); //POR_HACER
+			return (m->tokens[index] = ft_itoa(g_status), 1);
 		return (get_env_var(tkn, index, m), 1);
 	}
+	return (1);
 }
-

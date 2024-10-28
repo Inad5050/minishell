@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:37:07 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/18 18:56:36 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:53:42 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	parser(t_mini *m)
 		if (!expand_var(i++, m)) //epande las variables de entorno "$" y "$?""
 			return (0);
 	}
-	if (!token_assign(m)); //llena las estructuras t_command con sus valores correspondientes.
+	if (!token_assign(m)) //llena las estructuras t_command con sus valores correspondientes.
 		return (0);
-	if (!open_files(m)); //intenta abrir o crear los archivos de las redirecciones + here_doc
+	if (!open_files(m)) //intenta abrir o crear los archivos de las redirecciones + here_doc
 		return (0);
-	if (!check_commands(m)); //comprueba si el comando existe y si es built_in
+	if (!check_commands(m)) //comprueba si el comando existe y si es built_in
 		return (0);
 	return (1);
 }

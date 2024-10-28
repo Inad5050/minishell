@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   getprompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:53:46 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/18 18:06:44 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:53:33 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	getprompt(t_mini *m)
+int	getprompt(t_mini *m)
 {
 	char	*user;
 	char	*sufix;
 
-	user = return_envp_variable("USER=", m);
+	user = return_envp_var("USER=", m);
 	if (!user)
 	{
 		m->prompt = ft_strdup("guest@minishell $ ");
 		if (!m->prompt)
-			m_exit("Cannot allocate memory in getprompt 1", m);
+			return (m_exit("Cannot allocate memory in getprompt", m), 0);
 	}
 	else
 	{
 		sufix = ft_strdup("@minishell $ ");
 		if (!sufix)
-			m_exit("Cannot allocate memory in getprompt 2", m);
+			return (free(user), m_exit("Cannot allocate memory in getprompt", m), 0);
 		m->prompt = ft_strjoin(user, sufix);
-		if (!m->prompt)
-			m_exit("Cannot allocate memory in getprompt 3", m);
 		free(user);
 		free(sufix);	
+		if (!m->prompt)
+			return (m_exit("Cannot allocate memory in getprompt 3", m), 0);
 	}
 }

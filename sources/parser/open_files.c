@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 20:50:28 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/18 16:24:47 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:53:41 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,32 +79,32 @@ int	m_strncmp(const char *str1, const char *str2, size_t n)
 	return (0);
 }
 
-void	open_files_aux(char *file, int is_outfile, int i, t_mini *m)
+int	open_files_aux(char *file, int is_outfile, int i, t_mini *m)
 {
-	if (!is_outfile)
+	if (!is_outfile) //si no es outfile es infile
 	{
-		if (!(m->cmds[i].append))
+		if (!(m->cmds[i].append_in))
 		{
 			m->cmds[i].infile = open(file, O_RDONLY);
 			if (m->cmds[i].infile == -1)
-				m_exit("Couldn't open infile", m);
+				return (m_error("Couldn't open infile", m), 0);
 		}
-		else if ((m->cmds[i].append))
-			here_doc(i, m);
-		return ;
+		else if ((m->cmds[i].append_in))
+			here_doc(m->cmds[i].infile_name, i, m);
 	}
 	if (is_outfile)
 	{
-		if (!(m->cmds[i].append))
+		if (!(m->cmds[i].append_out))
 			m->cmds[i].outfile = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if ((m->cmds[i].append))
+		else if ((m->cmds[i].append_out))
 			m->cmds[i].outfile = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (m->cmds[i].outfile == -1)
-			m_exit("Couldn't open outfile", m);
+			return (m_error("Couldn't open outfile", m), 0);
 	}
+	return (1);
 }
 
-void	open_files(t_mini *m)
+int	open_files(t_mini *m)
 {
 	int i;
 
@@ -112,8 +112,16 @@ void	open_files(t_mini *m)
 	while (i < m->cmd_count)
 	{
 		if (m->cmds[i].infile_name)
-			open_files_aux(m->cmds[i].infile_name, 0, i, m);
+		{
+			if(!(open_files_aux(m->cmds[i].infile_name, 0, i, m)))
+				return (0);
+		}
 		if (m->cmds[i].outfile_name)
-			open_files_aux(m->cmds[i].outfile_name, 1, i, m);
+		{
+			if(!(open_files_aux(m->cmds[i].outfile_name, 1, i, m)))
+				return (0);
+		}
+		i++;
 	}
+	return (1);
 }

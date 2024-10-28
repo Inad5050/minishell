@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:53:03 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/09/25 10:41:42 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/10/28 09:47:15 by tshiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 static int	is_builtin(t_mini *mini)
 {
@@ -77,14 +77,14 @@ void analizing_command(t_mini *mini)
     	cmd = cmd->next;
     	i++;
 	}
-	handle_multiple_command(mini, i);	//handle multiple commads with pipe				
+	handle_multiple_command(mini);	//handle multiple commads with pipe		
 }
 
 char *get_path_from_env(t_mini *mini)
 {
     char *path_var;
 
-    path_var = return_envp_variable("PATH=", mini);
+    path_var = return_envp_var("PATH=", mini);
     if (!path_var)
     {
         m_error("Error: PATH not found in environment variables", mini);

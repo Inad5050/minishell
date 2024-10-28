@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+         #
+#    By: dani <dani@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 16:19:45 by dangonz3          #+#    #+#              #
-#    Updated: 2024/09/27 17:58:04 by dangonz3         ###   ########.fr        #
+#    Updated: 2024/10/28 18:40:17 by dani             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,12 @@ CCFLAGS = -Wall -Wextra -Werror
 COLOR_GREEN = \033[0;32m
 COLOR_RESET = \033[0m
 
-#sources
+#
 SRC_DIR = sources/
-SRC_FILES = exit.c main.c init_structure.c
+SRC_FILES = /execution/one_command.c /execution/multiple_commad.c /execution/execution.c \
+/builtin/unset.c /builtin/pwd.c /builtin/export.c /builtin/exit.c /builtin/env.c /builtin/echo.c /builtin/cd.c /builtin/builtin.c \
+/parser/check_commands.c /parser/envp_aux.c /parser/expand_vars.c /parser/getprompt.c /parser/init_struct.c /parser/lexer.c /parser/open_files.c /parser/parser.c /parser/token_aux.c /parser/token_indentify.c
+/errors.c /free_memory.c /main.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:.c=.o)
 
@@ -62,5 +65,3 @@ fclean:
 re: fclean all
 
 .PHONY:	all clean fclean re
-
--lreadline -lncurses

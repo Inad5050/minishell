@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   multiple_commad.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:32:06 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/09/25 11:13:18 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/10/28 09:47:36 by tshiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 static void handle_pipe_input(int prev_fd, t_mini *mini)
 {
@@ -69,7 +69,7 @@ static void fork_and_execute(t_command *cmd, int prev_fd, int pipes[2], t_mini *
         handle_pipe_output(cmd, pipes, mini);
         handle_input_redirection(cmd, mini);
         handle_output_redirection(cmd, mini);
-        execute_command(cmd, mini);
+        // execute_command(cmd, mini);
         exit(EXIT_FAILURE); // In case execve fails
     }
 }

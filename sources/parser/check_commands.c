@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:26:30 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/18 18:14:09 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:53:26 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 	int	index;
 
 	i = 0;
-	while (m->cmds[i])
+	while (i < m->cmd_count)
 	{
-		if (is_builtin(m->cmds[i].full_cmd[0], m))
+		if (is_builtinn(m->cmds[i].full_cmd[0]))
 			m->cmds[i].is_builtin = 1;
 		else
 		{
-			index = get_cmd_path(m->cmds[i].full_cmd[0], m); //si la funcion NO es built_in, consigue el path a la funcion y lo copia en full_path dentro de la estructura t_command que corresponda
+			index = get_cmd_path(m->cmds[i].full_cmd[0], m); //si la funcion NO es built_in, consigue el path a la funcion y lo copia en full_path dentro de la estructura t_command que corresponda		
 			if (index)
 				m->cmds[i].full_path = ft_strdup(m->cmd_dirs[index]);
 			else
@@ -35,7 +35,7 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 	return (1);
 }
 
-int	is_builtin(char *cmd, t_mini *m)
+int	is_builtinn(char *cmd)
 {
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
@@ -66,7 +66,7 @@ int	get_cmd_path(char *cmd_name, t_mini *m)
 		return (0);
 	while (m->cmd_dirs[i])
 	{
-		path = ft_strjoin(m->cmd_dirs[i], cmd);
+		path = ft_strjoin(m->cmd_dirs[i], cmd);		
 		if (!path)
 			return (0);
 		if (!(access(path, X_OK)))
@@ -78,7 +78,7 @@ int	get_cmd_path(char *cmd_name, t_mini *m)
 	return (0);	
 }
 
-char	*cmd_path(char **cmd_name, t_pipex *p)
+char	*cmd_path(char **cmd_name, t_mini *m)
 {
 	char	*cmd;
 	char	*path;
@@ -88,9 +88,9 @@ char	*cmd_path(char **cmd_name, t_pipex *p)
 	cmd = ft_strjoin("/", cmd_name[0]);
 	if (!cmd)
 		return (NULL);
-	while (p->dirs[i])
+	while (i < m->cmd_count)
 	{
-		path = ft_strjoin(p->dirs[i], cmd);
+		path = ft_strjoin(m->cmd_dirs[i], cmd);
 		if (!path)
 			return (NULL);
 		if (access(path, X_OK) == 0)

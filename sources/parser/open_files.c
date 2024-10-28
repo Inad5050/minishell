@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 20:50:28 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/25 17:23:57 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:53:41 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void here_doc(char *end, int i, t_mini *m) //cuando usamos << el char * en lugar de ser el file_name es sl string que nos indica que debemos dejar de leer.
 {

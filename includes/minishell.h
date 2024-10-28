@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/27 20:14:41 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:44:17 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ typedef struct s_command
 	t_command	*next;
 }			t_command;
 
-//PARSER
-
 //check_commands
 int		check_commands(t_mini *m);
 int		is_builtinn(char *cmd);
@@ -87,6 +85,7 @@ int		find_envp_var(char *str, int size, t_mini *m);
 //errors
 void	m_error(char *str, t_mini *m);
 void	m_exit(char *str, t_mini *m);
+void	m_exit_modified(char *str, t_mini *m);
 
 //expand_vars
 char	*get_expanded_str(char *variable, char *var_name, char *tkn, t_mini *m);
@@ -100,7 +99,7 @@ void	free_tmini(t_mini *m);
 void	free_matrix(char **matrix);
 
 //getprompt
-int	getprompt(t_mini *m);
+void	getprompt(t_mini *m);
 
 //init_struct
 t_mini	*init_struct(char **envp);
@@ -137,22 +136,24 @@ int 	assign_redirection(char *tkn, int code, int cmd_index, t_mini *m);
 int		get_pipes(int cmd_index, t_mini *m);
 int		token_indentify(char *tkn, int code, int cmd_index, t_mini *m);
 int		token_assign(t_mini *m);
+
 // execution
-char *get_path_from_env(t_mini *mini);
-void analizing_command(t_mini *mini);
-void handle_multiple_command(t_mini *mini);
-void execute_single_command(t_mini *mini);
-void handle_input_redirection(t_command *cmd, t_mini *mini);
-void handle_output_redirection(t_command *cmd, t_mini *mini);
+char 	*get_path_from_env(t_mini *mini);
+void 	analizing_command(t_mini *mini);
+void 	handle_multiple_command(t_mini *mini);
+void 	execute_single_command(t_mini *mini);
+void 	handle_input_redirection(t_command *cmd, t_mini *mini);
+void 	handle_output_redirection(t_command *cmd, t_mini *mini);
 
 //builtin
-void	builtin(t_mini *mini);
-int builtin_cd(t_command *cmd, t_mini *mini);
-int echo(t_command *cmd, int outfile);
-int	env(t_mini *mini, int outfile);
-int export_var(char *var_value, int outfile, t_mini *mini);
-int	built_pwd(int fd, char **envp);
+int		builtin(t_mini *mini);
+int 	builtin_cd(t_command *cmd, t_mini *mini);
+int 	echo(t_command *cmd, int outfile);
+int		env(t_mini *mini, int outfile);
+int 	export_var(char *var_value, int outfile, t_mini *mini);
+int		built_pwd(int fd, char **envp);
 char	*get_env(char **envp, char *name);
-int	unset(t_command *cmd, t_mini *mini);
+int		unset(t_command *cmd, t_mini *mini);
+int		exit_builtin(t_command *cmd, t_mini *mini);
 
 #endif

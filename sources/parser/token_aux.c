@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_aux.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:29:21 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/27 19:29:43 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:53:47 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	initiate_command_structs(t_mini *m) //su objetivo es alojar memoria para cada m->cmds[].full_cmd.
 {

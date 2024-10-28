@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:33:18 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/27 17:55:21 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:49:55 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,12 @@ void	free_lexer_parser(t_mini *m)
 {
 	int	i;
 	
-/* 	if (m->prompt)
-		free(m->prompt); */
 	if (m->input)
 		free(m->input);
 	i = 0;
-
-	/* ft_printf("free_lexer_parser1 m->token_count = %i\n", m->token_count); */
-	
 	if (m->tokens && i < m->token_count)
 		free(m->tokens[i++]);
 	free(m->tokens);
-
-	/* ft_printf("free_lexer_parser2\n"); */
-	
 	m->token_count = 0;
 	m->in_quotes = 0;
 	m->quote_type = 0;

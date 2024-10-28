@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/27 20:15:44 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:51:20 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ int	manage_input(t_mini *m)
 		return (0);
 	if (!parser(m))
 		return (0);
-	
 	/* superprinter(m); */
-	
 	free_lexer_parser(m); //libera toda la memoria asociada con el lexer y el parser.
  	analizing_command(m);
 	free_tcommand(m); 

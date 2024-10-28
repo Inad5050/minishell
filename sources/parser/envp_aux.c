@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   envp_aux.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 19:33:51 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/25 17:24:34 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:53:29 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	*return_envp_var(char *str, t_mini *m) //busca una string que empiece por str (por ejemplo "PATH=") en envp, size es el tamaño de la string que le has pasado (para "PATH=" size = 5)
 {

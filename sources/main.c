@@ -6,20 +6,23 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 18:51:20 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/28 20:36:15 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int g_status;
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	*m;
 
+	g_status = 0;
 	m = init_struct(envp); //inicializa las estructuras
 	if (!m)
 		return (1);
-	if (!getprompt(m));
+	if (!getprompt(m))
 		return (1);
 	while (argc && argv) //siempre deberia ser verdadera. Similar a poner (1), pero maneja el error improbable de que argv y/o argc no existan
 	{

@@ -1,8 +1,0 @@
-{
-	"files.associations": {
-		"libft.h": "c",
-		"ioctl.h": "c",
-		"cmath": "c"
-	},
-	"C_Cpp.errorSquiggles": "disabled"
-}

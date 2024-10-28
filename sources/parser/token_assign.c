@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:46:25 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 18:53:44 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/28 22:49:12 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int	token_assign(t_mini *m) //almacena los comandos en la lista de nodos m->cmds
 	i = 0;
 	code = 0;
 	cmd_index = 0;
-	initiate_get_commands(m);
-	/* initiate_command_structs(m); *///inicializamos los full_cmd de las t_command.
+	initiate_cmds_array(m);
+	initiate_command_structs(m);
 	while (m->tokens[i] && cmd_index < m->cmd_count)
 	{
 		code = token_indentify(m->tokens[i], code, cmd_index, m);

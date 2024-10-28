@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 18:44:17 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/28 22:48:25 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	m_exit_modified(char *str, t_mini *m);
 char	*get_expanded_str(char *variable, char *var_name, char *tkn, t_mini *m);
 void	get_env_var(char *tkn, int index, t_mini *m);
 int		expand_var(int index, t_mini *m);
+char	*ft_strstr(char *hay, char *ndle);
 
 //free_memory
 void	free_lexer_parser(t_mini *m);
@@ -99,7 +100,7 @@ void	free_tmini(t_mini *m);
 void	free_matrix(char **matrix);
 
 //getprompt
-void	getprompt(t_mini *m);
+int		getprompt(t_mini *m);
 
 //init_struct
 t_mini	*init_struct(char **envp);
@@ -129,7 +130,7 @@ int		parser(t_mini *m);
 //token_aux
 int		identify_token_alt(char *tkn, int code);
 void	initiate_command_structs(t_mini *m);
-void	initiate_get_commands(t_mini *m);
+void	initiate_cmds_array(t_mini *m);
 
 //token_indentify
 int 	assign_redirection(char *tkn, int code, int cmd_index, t_mini *m);

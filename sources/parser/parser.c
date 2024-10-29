@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:37:07 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 18:53:42 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/29 23:27:00 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	parser(t_mini *m)
 		if (!expand_var(i++, m)) //epande las variables de entorno "$" y "$?""
 			return (0);
 	}
-	if (!token_assign(m)) //llena las estructuras t_command con sus valores correspondientes.
+	if (!token_check(m))
+		return (0);
+	if (!t_commands(m)) //llena las estructuras t_command con sus valores correspondientes.
 		return (0);
 	if (!open_files(m)) //intenta abrir o crear los archivos de las redirecciones + here_doc
 		return (0);
@@ -38,3 +40,13 @@ En el contexto de un shell, "&&" y "||" son operadores lógicos:
 &&: Indica que el segundo comando se debe ejecutar solo si el primero tuvo éxito (es decir, devolvió un estado de salida de 0).
 ||: Indica que el segundo comando se debe ejecutar solo si el primero falló (es decir, devolvió un estado de salida diferente de 0). 
 */
+
+int	m_strlen(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}

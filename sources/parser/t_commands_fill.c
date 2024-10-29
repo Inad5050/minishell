@@ -1,16 +1,90 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_assign.c                                     :+:      :+:    :+:   */
+/*   t_commands_fill.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 18:46:25 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 22:49:12 by dani             ###   ########.fr       */
+/*   Created: 2024/10/29 23:16:16 by dani              #+#    #+#             */
+/*   Updated: 2024/10/30 00:21:31 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	t_commands_fill(t_command *c, t_mini *m)
+{
+	int	i;
+	int	x;
+	int	code;
+	
+	i = 0;
+	x = 0;
+	code = 0;
+	if (!allocate_full_cmd(c, m))
+		return (0);
+	while (c->tokens[i])
+	{
+		code = token_indentify(c->tokens[i], code, c, m);
+		if (i == 0 && code != 1)
+			return (m_error("First token should be a command", m), 0);
+		if (code == 2)
+			return (m_error("Incorrect pipe", m), 0);
+		if (code == 1)
+		{
+			c->full_cmd[x] = ft_strdup(c->tokens[i]);
+			if (!c->full_cmd[x])
+				return (m_exit("Couldn't alloc in fill_t_command", m), 0);
+			x++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	allocate_full_cmd(t_command *c, t_mini *m)
+{
+	int	i;
+	int	size;
+
+	i = 0;
+	size = 0;	
+	while (c->tokens[i])
+	{
+		if (!(!ft_strcmp(c->tokens[i], "|") || !ft_strcmp(c->tokens[i], "<") || \
+    	!ft_strcmp(c->tokens[i], "<<") || !ft_strcmp(c->tokens[i], ">") || \
+    	!ft_strcmp(c->tokens[i], ">>")))
+			size++;
+		i++;
+	}
+	if (!size)
+		return (m_error("There should be at least one command", m), 0);
+	c->full_cmd = ft_calloc(size + 1, sizeof(char *));
+	if (!c->full_cmd)
+		return (m_exit("Couldn't allocate memory in allocate_full_cmd", m), 0);
+	c->full_cmd[size] = NULL;
+	return (1);
+}
+
+int	token_indentify(char *tkn, int code, t_command *c, t_mini *m)
+{
+	if (code == 2)
+		return (get_pipes(c->cmd_index, m));
+	else if (code > 2)
+		return (assign_redirection(tkn, code, c->cmd_index, m));
+	else if (!ft_strcmp(tkn, "|"))
+		return (2);
+	else if (!ft_strcmp(tkn, "<"))
+		return (3);
+	else if (!ft_strcmp(tkn, "<<"))
+		return (4);
+	else if (!ft_strcmp(tkn, ">"))
+		return (5);
+	else if (!ft_strcmp(tkn, ">>"))
+		return (6);
+	else
+		return (1);
+}
 
 int assign_redirection(char *tkn, int code, int cmd_index, t_mini *m) //rellena infile_name y outfile_name en cada t_command. Más adelante los intentaremos abrir.
 {
@@ -51,57 +125,5 @@ int	get_pipes(int cmd_index, t_mini *m)
 	if ((m->cmds[cmd_index].outfile_name)) //si outfile_name tiene valor es que ya existia una redireccion del outfile. En este caso el input del user es incorrecto.
 		return (m_error("Double output redirection", m), 0);
 	m->cmds[cmd_index].outfile = pipefd[1];
-	return (1);
-}
-
-int	token_indentify(char *tkn, int code, int cmd_index, t_mini *m)
-{
-	if (code == 2) //significa que el token anterior era un pipe y ahora tenemos que redirigir el input del comando actual (hemos pasado al siguiente comando al aumentar cmd_index).
-		return (get_pipes(cmd_index, m));
-	else if (code > 2) //significa que el token anterior redirigia (input o output) al archivo actual.
-		return (assign_redirection(tkn, code, cmd_index, m)); //indica en la estructura t_command cual es el archivo al que se está redirigiendo.
-	else if (!ft_strcmp(tkn, "|"))
-		return (2);
-	else if (!ft_strcmp(tkn, "<"))
-		return (3);
-	else if (!ft_strcmp(tkn, "<<"))
-		return (4);
-	else if (!ft_strcmp(tkn, ">"))
-		return (5);
-	else if (!ft_strcmp(tkn, ">>"))
-		return (6);
-	else
-	{	
-		m->cmds[cmd_index].full_cmd[m->x_index] = ft_strdup(tkn);
-		if (!(m->cmds[cmd_index].full_cmd[m->x_index]))
-			m_exit("Could`t assign memory in identify_token", m);
-		m->x_index++; //necesitaba otro indice que mantuviera su valor entre llamadas a la funcion, pero identify_token() ya tiene 4 variables, asi que m->x_index está dentro de la estructura.
-	}
-	return (1);
-}
-
-int	token_assign(t_mini *m) //almacena los comandos en la lista de nodos m->cmds.
-{
-	int	i;
-	int	code; //Su valor varia en función de que era el token anterior. Informa de que debería ser el token actual. Una redirección debería ir seguida de un archivo etc... si es un argumento 0, si es un comando 1, si es un pipe 2 si es una redireccion ... 
-	int	cmd_index; //Indica a que comando pertenecen los tokens. Cambia cuando encontramos un '|' .
-
-	i = 0;
-	code = 0;
-	cmd_index = 0;
-	initiate_cmds_array(m);
-	initiate_command_structs(m);
-	while (m->tokens[i] && cmd_index < m->cmd_count)
-	{
-		code = token_indentify(m->tokens[i], code, cmd_index, m);
-		if (!code)
-			return (0);
-		if (code == 2) //si hemos encontrado un pipe
-		{
-			m->x_index = 0;			
-			cmd_index++;
-		}
-		i++;
-	}
 	return (1);
 }

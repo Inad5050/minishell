@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 12:22:22 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/28 20:02:18 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/29 09:53:37 by tshiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_env(char **envp, char *name)
 	return (NULL);
 }
 
-int built_pwd(int outfile, char **envp) // DANI 28-11-24 cambio esto porque si no no compila, si ves este comentario es que se me hja olvidado dejarlo como estaba
+int built_pwd(int outfile) // DANI 28-11-24 cambio esto porque si no no compila, si ves este comentario es que se me hja olvidado dejarlo como estaba
 {
     char cwd[PATH_MAX];
 

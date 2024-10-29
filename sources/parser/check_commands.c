@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:26:30 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 18:53:26 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/29 23:20:17 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,31 +76,4 @@ int	get_cmd_path(char *cmd_name, t_mini *m)
 	}
 	free(cmd);
 	return (0);	
-}
-
-char	*cmd_path(char **cmd_name, t_mini *m)
-{
-	char	*cmd;
-	char	*path;
-	int		i;
-
-	i = 0;
-	cmd = ft_strjoin("/", cmd_name[0]);
-	if (!cmd)
-		return (NULL);
-	while (i < m->cmd_count)
-	{
-		path = ft_strjoin(m->cmd_dirs[i], cmd);
-		if (!path)
-			return (NULL);
-		if (access(path, X_OK) == 0)
-		{
-			free(cmd);
-			return (path);
-		}
-		free(path);
-		i++;
-	}
-	free(cmd);
-	return (NULL);
 }

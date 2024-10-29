@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:33:18 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 18:49:55 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/30 00:17:06 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 
 void	free_lexer_parser(t_mini *m)
 {
-	int	i;
-	
-	if (m->input)
-		free(m->input);
-	i = 0;
-	if (m->tokens && i < m->token_count)
-		free(m->tokens[i++]);
-	free(m->tokens);
+/* 	if (m->input)
+		free(m->input); */ //al parecer no hay que liberar la memoria alojada por readline() ?
+	if (m->tokens)
+		free_matrix(m->tokens);
 	m->token_count = 0;
 	m->in_quotes = 0;
 	m->quote_type = 0;
@@ -54,6 +50,8 @@ void	free_tcommand(t_mini *m)
 			free(m->cmds[i].infile_name);
 		if(m->cmds[i].outfile_name)
 			free(m->cmds[i].outfile_name);
+		if(m->cmds[i].tokens)
+			free_matrix(m->cmds[i].tokens);		
 		i++;		
 	}
 	m->cmd_count = 0;
@@ -76,6 +74,10 @@ void	free_matrix(char **matrix)
 
 	i = 0;
 	while (matrix[i])
-		free(matrix[i++]);
+	{
+		if (matrix[i])
+			free(matrix[i]);
+		i++;
+	}
 	free(matrix);	
 }

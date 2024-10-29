@@ -6,7 +6,7 @@
 /*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 12:22:07 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/28 09:01:21 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/10/29 09:59:30 by tshiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	is_numeric(const char *str)
 
 int	exit_builtin(t_command *cmd, t_mini *mini)
 {
-	long exit_code;
+	int exit_code;
 
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (cmd->full_cmd[1] && !is_numeric(cmd->full_cmd[1]))
@@ -39,7 +39,7 @@ int	exit_builtin(t_command *cmd, t_mini *mini)
 	}
 	else if (cmd->full_cmd[1])
 	{
-		exit_code = ft_atol(cmd->full_cmd[1]);
+		exit_code = ft_atoi(cmd->full_cmd[1]);
 		if (exit_code < 0 || exit_code > 255)
 			exit_code = exit_code % 256;
 		g_status = (int)exit_code;

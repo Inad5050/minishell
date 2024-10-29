@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:53:46 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/28 18:53:33 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/28 20:20:40 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@ int	getprompt(t_mini *m)
 		if (!m->prompt)
 			return (m_exit("Cannot allocate memory in getprompt 3", m), 0);
 	}
+	return (1);
 }

@@ -3,96 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 10:55:19 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/27 19:45:02 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:21:34 by tshiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int find_env_var(char *var, t_mini *mini)
+extern int g_status;
+
+int update_env_var(char **envp, const char *arg, char *new_var, int len)
 {
     int i = 0;
-    size_t len = ft_strlen(var);
-    
-    while (mini->envp[i])
+
+    while (envp[i])
     {
-        if (ft_strncmp(mini->envp[i], var, len) == 0 && mini->envp[i][len] == '=')
-            return i;
-        i++;
-    }
-    return -1;
-}
-
-static void update_env_var(int var_idx, char *new_var, t_mini *mini)
-{
-    free(mini->envp[var_idx]);
-    mini->envp[var_idx] = new_var;
-}
-
-static char **create_new_env_array(t_mini *mini, char *new_var)
-{
-    int i = 0;
-    while (mini->envp[i])
-        i++;
-
-    char **new_envp = malloc(sizeof(char *) * (i + 2));
-    if (!new_envp)
-        return NULL;
-
-    for (int j = 0; j < i; j++)
-        new_envp[j] = mini->envp[j];
-
-    new_envp[i] = new_var;
-    new_envp[i + 1] = NULL;
-    return new_envp;
-}
-
-static int set_env_var(char *var_value, t_mini *mini)
-{
-    char *new_var = ft_strdup(var_value);
-    if (!new_var)
-        return(m_error("Memory allocation failed", mini),0);
-    int var_idx = find_env_var(var_value, mini);
-    if (var_idx >= 0)
-        update_env_var(var_idx, new_var, mini);
-    else
-    {
-        char **new_envp = create_new_env_array(mini, new_var);
-        if (!new_envp)
+        if (strncmp(envp[i], arg, len) == 0 && envp[i][len] == '=')
         {
-            free(new_var);
-            return(m_error("Memory allocation failed", mini),0);
+            free(envp[i]);
+            envp[i] = new_var;
+            return (0);
         }
-        free(mini->envp);
-        mini->envp = new_envp;
+        i++;
     }
+    return (1);
 }
 
-int export_var(char *var, int outfile, t_mini *mini)
+int add_new_env_var(t_mini *mini, char *new_var)
 {
-    if (var == NULL)
+    int i = 0;
+    char **new_envp;
+
+    while (mini->envp && mini->envp[i])
+        i++;
+    new_envp = realloc(mini->envp, (i + 2) * sizeof(char *));
+    if (!new_envp)
     {
-        for (int i = 0; mini->envp[i] != NULL; i++)
+        free(new_var);
+        return (1);
+    }
+    mini->envp = new_envp;
+    mini->envp[i] = new_var;
+    mini->envp[i + 1] = NULL;
+    return (0);
+}
+
+int add_or_update_env(const char *arg, t_mini *mini)
+{
+    char *equal_sign = strchr(arg, '=');
+    char *new_var;
+
+    if (!equal_sign)
+        return (0);
+    new_var = strdup(arg);
+    if (!new_var)
+        return (1);
+    if (update_env_var(mini->envp, arg, new_var, equal_sign - arg) == 0)
+        return (0);
+    return (add_new_env_var(mini, new_var));
+}
+
+int export_var(const char *arg, int outfile, t_mini *mini)
+{
+    int i = 0;
+
+    if (arg == NULL)
+    {
+        while (mini->envp && mini->envp[i])
         {
-            dprintf(outfile, "%s\n", mini->envp[i]);
+            dprintf(outfile, "declare -x %s\n", mini->envp[i]);
+            i++;
         }
         g_status = 0;
-        return g_status;
-    }  
-    if (ft_strchr(var, '=') == NULL)
-    {
-        ft_dprintf(STDERR_FILENO, "export: `%s': not a valid identifier\n", var);
+    }
+    else if (add_or_update_env(arg, mini) == 0)
+        g_status = 0;
+    else
         g_status = 1;
-        return g_status;
-    }   
-    char *name = ft_strndup(var, ft_strchr(var, '=') - var);
-    char *value = ft_strdup(ft_strchr(var, '=') + 1); 
-    update_env_variable(mini->envp, name, value); 
-    free(name);
-    free(value);  
-    g_status = 0; 
     return (g_status);
 }

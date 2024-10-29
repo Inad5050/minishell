@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:29:21 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 18:53:47 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/28 22:48:40 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	initiate_command_structs(t_mini *m) //su objetivo es alojar memoria para ca
 	m->cmds[cmd_index].full_cmd = ft_calloc(i - start, sizeof(char *));
 }
 
-void	initiate_get_commands(t_mini *m) //consigue los valores de m->path y m->cmd_dirs. Aloja meoria para m->cmds.
+void	initiate_cmds_array(t_mini *m) //consigue los valores de m->path y m->cmd_dirs. Aloja meoria para m->cmds.
 {
 	int	i;
 	int	x;

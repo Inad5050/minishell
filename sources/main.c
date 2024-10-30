@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 20:36:15 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/30 20:02:04 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,20 @@ int	manage_input(t_mini *m)
 		return (0);
 	if (!parser(m))
 		return (0);
-	/* superprinter(m); */
+	superprinter(m);
 	free_lexer_parser(m); //libera toda la memoria asociada con el lexer y el parser.
  	analizing_command(m);
 	free_tcommand(m); 
 	return (1);
 }
 
-/* void superprinter(t_mini *m) //para pruebas
+void superprinter(t_mini *m) //para pruebas
 {
 	int	i;
 	int	x;
 
 	i = 0;
-	ft_printf("%s\n\n", "SUPERPRINTER\n\n");
+	ft_printf("-------------------SUPERPRINTER-------------------\n\n");
 	i = 0;
 	ft_printf("%s\n", "---CMDS---");
 
@@ -82,6 +82,6 @@ int	manage_input(t_mini *m)
 		if (m->cmds[i].is_builtin)
 			ft_printf("is_builtin = %d\n", m->cmds[i].is_builtin);
 		i++;
-		ft_printf("\nEND CMD\n");
+		ft_printf("-------------------END-------------------\n\n");
 	}
-} */
+}

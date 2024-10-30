@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:33:18 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/30 00:17:06 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/30 20:36:12 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ void	free_lexer_parser(t_mini *m)
 /* 	if (m->input)
 		free(m->input); */ //al parecer no hay que liberar la memoria alojada por readline() ?
 	if (m->tokens)
+	{
+		ft_printf("OLA1\n");
 		free_matrix(m->tokens);
+		m->tokens = NULL; //es necesario para evitar que el programa vuelva a intentar libera la memoria tras if(!m->tokens)
+	}
 	m->token_count = 0;
 	m->in_quotes = 0;
 	m->quote_type = 0;
@@ -26,7 +30,11 @@ void	free_lexer_parser(t_mini *m)
 	if (m->path)
 		free(m->path);
 	if (m->cmd_dirs)
+	{
+		ft_printf("OLA2\n");
 		free_matrix(m->cmd_dirs);
+		m->cmd_dirs = NULL; //es necesario para evitar que el programa vuelva a intentar libera la memoria tras if(!m->cmd_dirs)
+	}
 	m->post_redirection = 0;
 	m->x_index = 0;
 }
@@ -79,5 +87,5 @@ void	free_matrix(char **matrix)
 			free(matrix[i]);
 		i++;
 	}
-	free(matrix);	
+	free(matrix);
 }

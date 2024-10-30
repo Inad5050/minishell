@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:26:30 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/29 23:20:17 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/30 23:08:49 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 	int	index;
 
 	i = 0;
+	get_envp_cmd_dirs(m);
 	while (i < m->cmd_count)
 	{
 		if (is_builtinn(m->cmds[i].full_cmd[0]))
@@ -29,6 +30,8 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 				m->cmds[i].full_path = ft_strdup(m->cmd_dirs[index]);
 			else
 				return (m_error("Incorrect command", m), 0);
+			if (!sum_path_to_cmd(&(m->cmds[i]), m))
+				return (0);
 		}
 		i++;
 	}
@@ -63,9 +66,9 @@ int	get_cmd_path(char *cmd_name, t_mini *m)
 	i = 0;
 	cmd = ft_strjoin("/", cmd_name);
 	if (!cmd)
-		return (0);
+		return (0);	
 	while (m->cmd_dirs[i])
-	{
+	{		
 		path = ft_strjoin(m->cmd_dirs[i], cmd);		
 		if (!path)
 			return (0);
@@ -76,4 +79,35 @@ int	get_cmd_path(char *cmd_name, t_mini *m)
 	}
 	free(cmd);
 	return (0);	
+}
+
+void	get_envp_cmd_dirs(t_mini *m)
+{
+	char	*dirs;
+	
+	dirs = return_envp_var("PATH=", m);
+	m->cmd_dirs = ft_split(dirs, ':');
+	free(dirs);
+	if (!m->cmd_dirs)
+		m_exit("Couldn't allocate memory in get_envp_cmd_dirs", m);	
+}
+
+int	sum_path_to_cmd(t_command *c, t_mini *m)
+{
+	char	*cmd_plus_slash;
+	char	*cmd_plus_path;
+	char	*tmp;
+	
+	cmd_plus_slash = ft_strjoin("/", c->full_cmd[0]);
+	if (!cmd_plus_slash)
+		return (m_exit("Couldn't alloc in sum_path_to_cmd", m), 0);
+	cmd_plus_path = ft_strjoin(c->full_path, cmd_plus_slash);
+	if (!cmd_plus_path)
+		return (m_exit("Couldn't alloc in sum_path_to_cmd", m), 0);
+	tmp = c->full_cmd[0];
+	c->full_cmd[0] = cmd_plus_path;
+	free(tmp);
+	free(cmd_plus_slash);
+	free(cmd_plus_path);
+	return (1);	
 }

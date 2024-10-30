@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/30 00:04:17 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/30 22:57:32 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ typedef struct s_command
 int		check_commands(t_mini *m);
 int		is_builtinn(char *cmd);
 int		get_cmd_path(char *cmd_name, t_mini *m);
+void	get_envp_cmd_dirs(t_mini *m);
+int		sum_path_to_cmd(t_command *c, t_mini *m);
 
 //envp_aux
 char	*return_envp_var(char *str, t_mini *m); 

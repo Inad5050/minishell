@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:20:16 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/28 09:48:02 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/10/30 22:48:49 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,16 @@ void handle_output_redirection(t_command *cmd, t_mini *mini)
 
 static void execute_command(t_command *cmd, t_mini *mini)
 {
+    int i = 0;
+    ft_printf("cmd->full_path = %s\n", cmd->full_path);
+    while (cmd->full_cmd[i])
+    {
+        ft_printf("cmd->full_cmd[%i] = %s\n", i, cmd->full_cmd[i]);
+        i++;
+        if (cmd->full_cmd[i] == NULL)
+            ft_printf("terminado en NULL\n");
+    }
+    
     if (execve(cmd->full_path, cmd->full_cmd, mini->envp) == -1)
     {
         m_error("Command execution failed", mini);

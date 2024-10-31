@@ -17,6 +17,8 @@ int g_status;
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	*m;
+	(void)argv;
+	(void)argc;
 
 	g_status = 0;
 	m = init_struct(envp); //inicializa las estructuras
@@ -24,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	if (!getprompt(m))
 		return (1);
-	while (argc && argv) //siempre deberia ser verdadera. Similar a poner (1), pero maneja el error improbable de que argv y/o argc no existan
+	while (1) //siempre deberia ser verdadera. Similar a poner (1), pero maneja el error improbable de que argv y/o argc no existan
 	{
 		m->input = readline(m->prompt); //lee el input del usuario, recibe el promp inicial como argumento
 		if (manage_input(m) == -1) //procesa el input del usuario para poder ejecutarlo

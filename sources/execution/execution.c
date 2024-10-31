@@ -36,24 +36,26 @@ static int	is_builtin(t_mini *mini)
 	return (0);
 }
 
-static void handle_builtin(t_mini *mini)
+static int handle_builtin(t_mini *mini)
 {
 	if (is_builtin(mini))
 	{
 		builtin(mini);
-		return;
+		return 1;
 	}
+	return 0;
 }
 
-static void handle_single_command(t_mini *mini)
+static int handle_single_command(t_mini *mini)
 {
 	t_command *cmd = mini->cmds;
 
 	if (cmd->next == NULL)
 	{
 		execute_single_command(mini);
-		return;
+		return 1;
 	}
+	return 0;
 }
 
 void analizing_command(t_mini *mini)
@@ -68,16 +70,20 @@ void analizing_command(t_mini *mini)
 		m_error("Error: No command provided", mini);
 		return;
 	}
-
-	handle_builtin(mini);               // Handle built-in commands
-	handle_single_command(mini);         // Handle single commands
-
-	while (cmd->next)					// calcul the number of commands
+	if(cmd->next == NULL)
 	{
-    	cmd = cmd->next;
-    	i++;
+	if(handle_builtin(mini))
+		return;
+	if(handle_single_command(mini))
+		return;
 	}
-	handle_multiple_command(mini);	//handle multiple commads with pipe		
+	else
+		while (cmd->next)
+		{
+    		cmd = cmd->next;
+    		i++;
+		}
+	handle_multiple_command(mini);	
 }
 
 char *get_path_from_env(t_mini *mini)

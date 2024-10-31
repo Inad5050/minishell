@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:20:16 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/30 22:48:49 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/31 18:51:27 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,8 @@ void handle_output_redirection(t_command *cmd, t_mini *mini)
     }
 }
 
-static void execute_command(t_command *cmd, t_mini *mini)
+void execute_command(t_command *cmd, t_mini *mini)
 {
-    int i = 0;
-    ft_printf("cmd->full_path = %s\n", cmd->full_path);
-    while (cmd->full_cmd[i])
-    {
-        ft_printf("cmd->full_cmd[%i] = %s\n", i, cmd->full_cmd[i]);
-        i++;
-        if (cmd->full_cmd[i] == NULL)
-            ft_printf("terminado en NULL\n");
-    }
-    
     if (execve(cmd->full_path, cmd->full_cmd, mini->envp) == -1)
     {
         m_error("Command execution failed", mini);
@@ -65,6 +55,7 @@ void execute_single_command(t_mini *mini)
     if (pid < 0)
     {
         m_error("Fork failed", mini);
+        g_status = 1;  // Set error code for fork failure
         return;
     }
     else if (pid == 0)
@@ -79,6 +70,9 @@ void execute_single_command(t_mini *mini)
             close(cmd->infile);
         if (cmd->outfile != STDOUT_FILENO)
             close(cmd->outfile);
-        wait(NULL);
+        
+        int status;
+        waitpid(pid, &status, 0);
+        g_status = WEXITSTATUS(status);  // Set g_status to child’s exit status
     }
 }

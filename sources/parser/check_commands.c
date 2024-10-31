@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:26:30 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/30 23:08:49 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/31 18:45:36 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 	get_envp_cmd_dirs(m);
 	while (i < m->cmd_count)
 	{
-		if (is_builtinn(m->cmds[i].full_cmd[0]))
+		if (is_builtin_alt(m->cmds[i].full_cmd[0]))
 			m->cmds[i].is_builtin = 1;
 		else
 		{
@@ -32,13 +32,14 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 				return (m_error("Incorrect command", m), 0);
 			if (!sum_path_to_cmd(&(m->cmds[i]), m))
 				return (0);
+			m->cmds[i].full_path = m->cmds[i].full_cmd[0];
 		}
 		i++;
 	}
 	return (1);
 }
 
-int	is_builtinn(char *cmd)
+int	is_builtin_alt(char *cmd)
 {
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
@@ -98,6 +99,8 @@ int	sum_path_to_cmd(t_command *c, t_mini *m)
 	char	*cmd_plus_path;
 	char	*tmp;
 	
+/* 	ft_printf("EMPIEZA sum_path_to_cmd\n"); */
+	
 	cmd_plus_slash = ft_strjoin("/", c->full_cmd[0]);
 	if (!cmd_plus_slash)
 		return (m_exit("Couldn't alloc in sum_path_to_cmd", m), 0);
@@ -106,8 +109,15 @@ int	sum_path_to_cmd(t_command *c, t_mini *m)
 		return (m_exit("Couldn't alloc in sum_path_to_cmd", m), 0);
 	tmp = c->full_cmd[0];
 	c->full_cmd[0] = cmd_plus_path;
+	c->full_path = cmd_plus_path;
+
+/* 	ft_printf("TERMINA sum_path_to_cmd\n");
+	ft_printf("cmd_plus_slash = %s \n", cmd_plus_slash);
+	ft_printf("cmd_plus_path = %s\n", cmd_plus_path);
+	ft_printf("NEW c->full_cmd[0] = %s\n", c->full_cmd[0]);
+	ft_printf("NEW m->cmds[0].full_cmd[0] = %s\n", m->cmds[0].full_cmd[0]); */
+
 	free(tmp);
 	free(cmd_plus_slash);
-	free(cmd_plus_path);
 	return (1);	
 }

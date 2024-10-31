@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/30 22:57:32 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/31 18:49:16 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_command
 
 //check_commands
 int		check_commands(t_mini *m);
-int		is_builtinn(char *cmd);
+int		is_builtin_alt(char *cmd);
 int		get_cmd_path(char *cmd_name, t_mini *m);
 void	get_envp_cmd_dirs(t_mini *m);
 int		sum_path_to_cmd(t_command *c, t_mini *m);
@@ -142,6 +142,7 @@ void 	handle_multiple_command(t_mini *mini);
 void 	execute_single_command(t_mini *mini);
 void 	handle_input_redirection(t_command *cmd, t_mini *mini);
 void 	handle_output_redirection(t_command *cmd, t_mini *mini);
+void 	execute_command(t_command *cmd, t_mini *mini);
 
 //builtin
 int		builtin(t_mini *mini);
@@ -163,6 +164,7 @@ void	m_exit_modified(char *str, t_mini *m);
 //free_memory
 void	free_lexer_parser(t_mini *m);
 void	free_tcommand(t_mini *m);
+void	free_tcommand_aux(int i, t_mini *m);
 void	free_tmini(t_mini *m); 
 void	free_matrix(char **matrix);
 

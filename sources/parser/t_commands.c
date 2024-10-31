@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_commands.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:38:59 by dani              #+#    #+#             */
-/*   Updated: 2024/10/30 20:42:41 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/31 19:09:46 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	t_commands(t_mini *m)
 	{
 		m->cmds[i].cmd_index = i;
 		m->cmds[i].outfile = 1;
+		if (i + 1 < m->cmd_count)
+			m->cmds[i].next = &(m->cmds[i + 1]);
 		t_commands_fill(&(m->cmds[i]), m);
 		i++;
 	}

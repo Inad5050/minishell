@@ -61,9 +61,7 @@ static int handle_single_command(t_mini *mini)
 void analizing_command(t_mini *mini)
 {	
 	t_command *cmd;
-	int i;
-
-	i = 0;
+	
 	cmd = mini->cmds;
 	if (!cmd || !cmd->full_cmd || !cmd->full_cmd[0])
 	{
@@ -74,16 +72,14 @@ void analizing_command(t_mini *mini)
 	{
 	if(handle_builtin(mini))
 		return;
-	if(handle_single_command(mini))
+	else if(handle_single_command(mini))
 		return;
 	}
 	else
-		while (cmd->next)
-		{
-    		cmd = cmd->next;
-    		i++;
-		}
-	handle_multiple_command(mini);	
+	{
+		handle_multiple_command(mini);
+		return;
+	}
 }
 
 char *get_path_from_env(t_mini *mini)

@@ -145,6 +145,8 @@ void 	handle_multiple_command(t_mini *mini);
 void 	execute_single_command(t_mini *mini);
 void 	handle_input_redirection(t_command *cmd, t_mini *mini);
 void 	handle_output_redirection(t_command *cmd, t_mini *mini);
+void execute_command(t_command *cmd, t_mini *mini);
+
 
 //builtin
 int		builtin(t_mini *mini);

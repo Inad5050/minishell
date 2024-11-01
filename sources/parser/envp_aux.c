@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_aux.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 19:33:51 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 18:53:29 by dani             ###   ########.fr       */
+/*   Updated: 2024/11/01 16:51:16 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*return_envp_var(char *str, t_mini *m) //busca una string que empiece por s
 		str_size++;
 	line = find_envp_var(str, str_size, m);
 	if (line < 0)
-		return (NULL);
+		return (m_error_env(ft_strdup(str), m), NULL);
 	i = 0;
 	while (m->envp[line][i + str_size])
 		i++;

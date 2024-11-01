@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 14:56:47 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 17:15:42 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int		find_envp_var(char *str, int size, t_mini *m);
 char	*get_expanded_str(char *variable, char *var_name, char *tkn, t_mini *m);
 void	get_env_var(char *tkn, int index, t_mini *m);
 int		expand_var(int index, t_mini *m);
-char	*ft_strstr(char *hay, char *ndle);
 
 //getprompt
 int		getprompt(t_mini *m);
@@ -111,10 +110,14 @@ int		lexer(t_mini *m);
 int		open_files_aux(char *file, int is_outfile, int i, t_mini *m);
 int		open_files(t_mini *m);
 
+//others
+int		check_user_input(t_mini *m);
+int		m_strlen(char **str);
+int		get_envp_cmd_dirs(t_mini *m);
+char	*ft_strstr(char *hay, char *ndle);
+
 //parser
 int		parser(t_mini *m);
-int		m_strlen(char **str);
-void	get_envp_cmd_dirs(t_mini *m);
 
 //t_commands_fill
 int		t_commands_fill(t_command *c, t_mini *m);
@@ -161,6 +164,7 @@ int		is_builtin(t_mini *mini);
 //errors
 void	m_error(char *str, t_mini *m);
 void	m_error_alt(char c, t_mini *m);
+void	m_error_env(char *str, t_mini *m);
 void	m_exit(char *str, t_mini *m);
 void	m_exit_modified(char *str, t_mini *m);
 

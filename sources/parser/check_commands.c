@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:26:30 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 14:53:14 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:56:30 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 	int	index;
 
 	i = 0;
-	get_envp_cmd_dirs(m);
+	if (!get_envp_cmd_dirs(m) && !is_builtin_alt(m->cmds[i].full_cmd[0]))
+		return (0);
 	while (i < m->cmd_count)
 	{
 		if (is_builtin_alt(m->cmds[i].full_cmd[0]))
@@ -65,7 +66,6 @@ int	check_cmd_plus_route(int i, t_mini *m)
 	char	*tmp;
 	char	*tmp_full_command;
 	
-	ft_printf("OLA\n");
 	if ((access(m->cmds[i].full_cmd[0], X_OK)))
 		return (0);
 	else

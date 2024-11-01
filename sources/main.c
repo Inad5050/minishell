@@ -6,13 +6,15 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 13:59:26 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 17:12:12 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int g_status;
+
+
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -38,24 +40,22 @@ int	manage_input(t_mini *m)
 {
 	if (!m->input)
 		return (ft_printf("exit\n"), -1); //cuando el puntero del usuario es NULL terminamos la mini. Es este el comportamiento esperado?
+	if (!check_user_input(m))
+		return (1);
 	if (ft_strlen(m->input) > 0)
 		add_history(m->input); //función del sistema relacinada con la gestión de read_line. Añade el argumento a la lista del historial de read_line. Se usa write_history para guardar el historial en el archivo seleccionado. Y read_history para leerlo.
 	if (!lexer(m))
 		return (0);
 	if (!parser(m))
 		return (0);
-	/* superprinter(m) */;
-	
+	/* superprinter(m); */
 	analizing_command(m);
-	
 	free_lexer_parser(m); //libera toda la memoria asociada con el lexer y el parser.
-	
 	free_tcommand(m);
-	
 	return (1);
 }
 
-/* void superprinter(t_mini *m) //para pruebas
+/* void superprinter(t_mini *m)
 {
 	int	i;
 	int	x;

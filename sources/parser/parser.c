@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:37:07 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 14:42:04 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:17:11 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,4 @@ int	parser(t_mini *m)
 	if (!check_commands(m)) //comprueba si el comando existe y si es built_in
 		return (0);
 	return (1);
-}
-
-int	m_strlen(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-void	get_envp_cmd_dirs(t_mini *m)
-{
-	char	*dirs;
-	
-	dirs = return_envp_var("PATH=", m);
-	m->cmd_dirs = ft_split(dirs, ':');
-	free(dirs);
-	if (!m->cmd_dirs)
-		m_exit("Couldn't allocate memory in get_envp_cmd_dirs", m);	
 }

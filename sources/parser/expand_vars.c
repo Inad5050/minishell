@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_vars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 19:33:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 20:25:58 by dani             ###   ########.fr       */
+/*   Updated: 2024/11/01 17:15:10 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	get_env_var(char *tkn, int index, t_mini *m) //consigue el nombre de la var
 	if (!var_name)
 		m_exit(var_name, m);
 	variable = return_envp_var(var_name, m);
+	
 	str = get_expanded_str(variable, var_name, tkn, m);
 	free(variable);
 	free(var_name);
@@ -78,24 +79,4 @@ int	expand_var(int index, t_mini *m)
 		return (get_env_var(tkn, index, m), 1);
 	}
 	return (1);
-}
-
-char	*ft_strstr(char *hay, char *ndle)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	if (!ndle)
-		return (hay);
-	while (hay[i])
-	{
-		j = 0;
-		while (hay[i + j] == ndle[j] && hay[i + j])
-			j++;
-		if (!ndle[j])
-			return (&hay[i]);
-		i++;
-	}
-	return (NULL);	
 }

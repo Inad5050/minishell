@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:26:30 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/31 18:45:36 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 13:58:12 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 				return (m_error("Incorrect command", m), 0);
 			if (!sum_path_to_cmd(&(m->cmds[i]), m))
 				return (0);
-			m->cmds[i].full_path = m->cmds[i].full_cmd[0];
 		}
 		i++;
 	}
@@ -98,8 +97,7 @@ int	sum_path_to_cmd(t_command *c, t_mini *m)
 	char	*cmd_plus_slash;
 	char	*cmd_plus_path;
 	char	*tmp;
-	
-/* 	ft_printf("EMPIEZA sum_path_to_cmd\n"); */
+	char	*tmp_full_path;
 	
 	cmd_plus_slash = ft_strjoin("/", c->full_cmd[0]);
 	if (!cmd_plus_slash)
@@ -109,14 +107,12 @@ int	sum_path_to_cmd(t_command *c, t_mini *m)
 		return (m_exit("Couldn't alloc in sum_path_to_cmd", m), 0);
 	tmp = c->full_cmd[0];
 	c->full_cmd[0] = cmd_plus_path;
-	c->full_path = cmd_plus_path;
-
-/* 	ft_printf("TERMINA sum_path_to_cmd\n");
-	ft_printf("cmd_plus_slash = %s \n", cmd_plus_slash);
-	ft_printf("cmd_plus_path = %s\n", cmd_plus_path);
-	ft_printf("NEW c->full_cmd[0] = %s\n", c->full_cmd[0]);
-	ft_printf("NEW m->cmds[0].full_cmd[0] = %s\n", m->cmds[0].full_cmd[0]); */
-
+	free(tmp);
+	tmp_full_path = ft_strdup(cmd_plus_path); //queremos que full_path tenga memoria aparte de full_cmd[0]
+	if (!tmp_full_path)
+		return (m_exit("Couldn't alloc in sum_path_to_cmd", m), 0);
+	tmp = c->full_path;
+	c->full_path = tmp_full_path;
 	free(tmp);
 	free(cmd_plus_slash);
 	return (1);	

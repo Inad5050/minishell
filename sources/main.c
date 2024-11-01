@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/31 19:13:20 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 13:59:26 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,18 @@ int	manage_input(t_mini *m)
 		return (0);
 	if (!parser(m))
 		return (0);
-	/* superprinter(m); */
+	/* superprinter(m) */;
+	
 	analizing_command(m);
+	
 	free_lexer_parser(m); //libera toda la memoria asociada con el lexer y el parser.
-	free_tcommand(m); 
+	
+	free_tcommand(m);
+	
 	return (1);
 }
 
-void superprinter(t_mini *m) //para pruebas
+/* void superprinter(t_mini *m) //para pruebas
 {
 	int	i;
 	int	x;
@@ -62,17 +66,17 @@ void superprinter(t_mini *m) //para pruebas
 	
 	while (i < m->cmd_count)
 	{
-		ft_printf("\n------------COMANDO %d-------------\n", i);
+		ft_printf("\n------------COMAND %d-------------\n", i);
 		x = -1;
 		while(m->cmds[i].full_cmd[++x])
 			ft_printf("full_cmd[%d] = %s\n", x, m->cmds[i].full_cmd[x]);
 		ft_printf("full_path = %s\n", m->cmds[i].full_path);
 		ft_printf("infile = %i\n", m->cmds[i].infile);
 		ft_printf("outfile = %i\n", m->cmds[i].outfile);
-		if (m->cmds[i].next->cmd_index)
+		if (m->cmds[i].next)
 			ft_printf("OLAA m->cmds[%i].next->cmd_index = %i\n", i, m->cmds[i].next->cmd_index);
 		else
-			ft_printf("OLAA m->cmds[%i].next->cmd_index = is NULL\n", i);
+			ft_printf("OLAA m->cmds[%i].next = is NULL\n", i);
 		if (m->cmds[i].infile_name)
 			ft_printf("infile_name = %s\n", m->cmds[i].infile_name);
 		if (m->cmds[i].outfile_name)
@@ -85,5 +89,5 @@ void superprinter(t_mini *m) //para pruebas
 			ft_printf("is_builtin = %d\n", m->cmds[i].is_builtin);
 		i++;
 	}
-	ft_printf("-------------------END-------------------\n\n");
-}
+	ft_printf("-------------SUPERPRINTER_END-------------------\n\n");
+} */

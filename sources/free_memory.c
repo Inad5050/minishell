@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:33:18 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/31 17:46:24 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 13:58:54 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,45 @@ void	free_lexer_parser(t_mini *m)
 void	free_tcommand(t_mini *m)
 {
 	int	i;
+	int	x;
 	
 	i = 0;
+/* 	ft_printf("OLA1\n");
+	printf("Dirección de full_cmd[0]: %p\n", (void *)m->cmds[0].full_cmd[0]);
+	printf("Dirección de full_path: %p\n", (void *)m->cmds[0].full_path);
+	ft_printf("1free_tcommand m->cmds[0].full_path = %s\n", m->cmds[0].full_path); */
 	while (i < m->cmd_count)
 	{
+		x = 0;
 		if(m->cmds[i].full_cmd)
 		{
-			free_matrix(m->cmds[i].full_cmd);
+/* 			printf("Dirección de full_cmd[0]: %p\n", (void *)m->cmds[0].full_cmd[0]);
+			printf("Dirección de full_path: %p\n", (void *)m->cmds[0].full_path);
+			ft_printf("2free_tcommand m->cmds[0].full_path = %s\n", m->cmds[0].full_path); */
+			while (m->cmds[i].full_cmd[x])
+				free(m->cmds[i].full_cmd[x++]);
+/* 			printf("Dirección de full_cmd[0]: %p\n", (void *)m->cmds[0].full_cmd[0]);
+			printf("Dirección de full_path: %p\n", (void *)m->cmds[0].full_path);
+			ft_printf("3free_tcommand m->cmds[0].full_path = %s\n", m->cmds[0].full_path); */
+			free(m->cmds[i].full_cmd);
+/* 			ft_printf("4free_tcommand m->cmds[0].full_path = %s\n", m->cmds[0].full_path); */
 			m->cmds[i].full_cmd = NULL;
+/* 			ft_printf("5free_tcommand m->cmds[0].full_path = %s\n", m->cmds[0].full_path); */
 		}
+/* 		ft_printf("OLA2\n"); */
+/* 		if (m->cmds[i].cmd_index)
+			ft_printf("m->cmds[%i].cmd_index EXISSTEEE\n", i); */
+/* 		ft_printf("m->cmds[%i].full_path = %s\n", i, m->cmds[i].full_path); */
 		if(m->cmds[i].full_path)
 			free(m->cmds[i].full_path);
+/* 		ft_printf("OLA3\n"); */
 		free_tcommand_aux(i, m);
+/* 		ft_printf("OLA4\n"); */
 		i++;		
 	}
 	m->cmd_count = 0;
 	free(m->cmds);
+/* 	ft_printf("OLA5\n"); */
 }
 
 void	free_tcommand_aux(int i, t_mini *m)
@@ -98,5 +121,6 @@ void	free_matrix(char **matrix)
 			free(matrix[i]);
 		i++;
 	}
-	free(matrix);
+	if (matrix)
+		free(matrix);
 }

@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:53:03 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/31 19:03:38 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 17:50:09 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void analizing_command(t_mini *mini)
 
     if (!cmd || !cmd->full_cmd || !cmd->full_cmd[0])
     {
-        m_error("Error: No command provided", mini);
+        m_err("Error: No command provided", 127, mini);
         return;
     }
 

@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:32:06 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/31 19:14:18 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 17:49:54 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void handle_input_redirectionn(t_command *cmd, t_mini *mini)
     {
         if (dup2(cmd->infile, STDIN_FILENO) == -1)
         {
-            m_error("Input redirection failed", mini);
+            m_err("Input redirection failed", 1, mini);
             exit(EXIT_FAILURE);
         }
         close(cmd->infile);
@@ -32,7 +32,7 @@ static void handle_output_redirectionn(t_command *cmd, t_mini *mini)
     {
         if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
         {
-            m_error("Output redirection failed", mini);
+            m_err("Output redirection failed", 1, mini);
             exit(EXIT_FAILURE);
         }
         close(cmd->outfile);
@@ -46,7 +46,7 @@ static void handle_pipe_input(int prev_fd, t_mini *mini)
     {
         if (dup2(prev_fd, STDIN_FILENO) == -1)
         {
-            m_error("Input redirection from pipe failed", mini);
+            m_err("Input redirection from pipe failed", 1, mini);
             exit(EXIT_FAILURE);
         }
         close(prev_fd);
@@ -60,7 +60,7 @@ static void handle_pipe_output(t_command *cmd, int pipes[2], t_mini *mini)
     {
         if (dup2(pipes[1], STDOUT_FILENO) == -1)
         {
-            m_error("Output redirection to pipe failed", mini);
+            m_err("Output redirection to pipe failed", 1, mini);
             exit(EXIT_FAILURE);
         }
         close(pipes[1]);
@@ -80,7 +80,7 @@ static int create_pipe(int pipes[2], t_mini *mini)
 {
     if (pipe(pipes) == -1)
     {
-        m_error("Pipe creation failed", mini);
+        m_err("Pipe creation failed", 1, mini);
         return (-1);
     }
     return (0); 

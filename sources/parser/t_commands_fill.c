@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_commands_fill.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:16:16 by dani              #+#    #+#             */
-/*   Updated: 2024/10/30 19:49:14 by dani             ###   ########.fr       */
+/*   Updated: 2024/11/01 17:41:33 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	t_commands_fill(t_command *c, t_mini *m)
 	{
 		code = token_indentify(c->tokens[i], code, c, m);
 		if (i == 0 && code != 1)
-			return (m_error("First token should be a command", m), 0);
+			return (m_err("First token should be a command", 127, m), 0);
 		if (code == 2)
-			return (m_error("Incorrect pipe", m), 0);
+			return (m_err("Incorrect pipe", 2, m), 0);
 		if (code == 1)
 		{
 			c->full_cmd[x] = ft_strdup(c->tokens[i]);
@@ -58,7 +58,7 @@ int	allocate_full_cmd(t_command *c, t_mini *m)
 		i++;
 	}
 	if (!size)
-		return (m_error("There should be at least one command", m), 0);
+		return (m_err("There should be at least one command", 127, m), 0);
 	c->full_cmd = ft_calloc(size + 1, sizeof(char *));
 	if (!c->full_cmd)
 		return (m_exit("Couldn't allocate memory in allocate_full_cmd", m), 0);
@@ -91,7 +91,7 @@ int assign_redirection(char *tkn, int code, int cmd_index, t_mini *m) //rellena 
 	if (code == 3 || code == 4)
 	{
 		if (m->cmds[cmd_index].infile) //si tiene valor es que ya habia una redireccion
-			return (m_error("Double input redirection", m), 0);
+			return (m_err("Double input redirection", 2, m), 0);
 		m->cmds[cmd_index].infile_name = ft_strdup(tkn);
 		if (!m->cmds[cmd_index].infile_name)
 			m_exit("Couldn't allocate memory in assign_redirection", m);
@@ -101,7 +101,7 @@ int assign_redirection(char *tkn, int code, int cmd_index, t_mini *m) //rellena 
 	else if (code == 5 || code == 6)
 	{
 		if (m->cmds[cmd_index].outfile) //si tiene valor es que ya habia una redireccion
-			return (m_error("Double outfile redirection", m), 0);
+			return (m_err("Double outfile redirection", 2, m), 0);
 		m->cmds[cmd_index].outfile_name = ft_strdup(tkn);
 		if (!m->cmds[cmd_index].outfile_name)
 			m_exit("Couldn't allocate memory in assign_redirection", m); 
@@ -118,12 +118,12 @@ int	get_pipes(int cmd_index, t_mini *m)
 	int	pipefd[2];
 	
 	if (cmd_index + 1 > m->cmd_count)
-		return (m_error("Incorrect pipe", m), 0); //falta el segundo comando.
+		return (m_err("Incorrect pipe", 1, m), 0); //falta el segundo comando.
 	if (pipe(pipefd) < 0)
 		m_exit("Couldn't open pipe on get_pipes", m);	
 	m->cmds[cmd_index + 1].infile = pipefd[0];
 	if ((m->cmds[cmd_index].outfile_name)) //si outfile_name tiene valor es que ya existia una redireccion del outfile. En este caso el input del user es incorrecto.
-		return (m_error("Double output redirection", m), 0);
+		return (m_err("Double output redirection", 1, m), 0);
 	m->cmds[cmd_index].outfile = pipefd[1];
 	return (1);
 }

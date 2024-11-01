@@ -12,6 +12,8 @@
 
 #include "../../includes/minishell.h"
 
+extern int g_status;
+
 static char *get_env_value(char **envp, char *var_name)
 {
     int i;
@@ -49,6 +51,7 @@ static void update_env_variable(char **envp, char *var_name, char *new_value)
         i++;
     }
 }
+
 int builtin_cd(t_command *cmd, t_mini *mini)
 {
     char *target_dir;
@@ -61,15 +64,19 @@ int builtin_cd(t_command *cmd, t_mini *mini)
     if (!target_dir)
     {
         ft_dprintf(STDERR_FILENO, "cd: HOME not set\n");
-        return 1;
+        g_status = 1; // Set g_status to indicate error
+        return g_status;
     }
     if (chdir(target_dir) == -1)
     {
         ft_dprintf(STDERR_FILENO, "cd: %s: No such file or directory\n", target_dir);
-        return 1;
+        g_status = 1; // Set g_status to indicate error
+        return g_status;
     }
     update_env_variable(mini->envp, "OLDPWD", oldpwd);
     if (getcwd(cwd, sizeof(cwd)))
         update_env_variable(mini->envp, "PWD", cwd);
-    return 0;
+    
+    g_status = 0; // Set g_status to indicate success
+    return g_status;
 }

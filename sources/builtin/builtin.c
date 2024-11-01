@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 14:33:22 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/29 10:06:36 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/01 17:50:26 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int execute_builtin_in_pipe(t_command *cmd, t_mini *mini)
     {
         if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
         {
-            m_error("Output redirection failed", mini);
+            m_err("Output redirection failed", 1, mini);
             return 1;
         }
     }

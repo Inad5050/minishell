@@ -16,12 +16,12 @@
 int echo(t_command *cmd, int outfile)
 {
     int i = 1;
+    int newline = 1;
 
-    if (!cmd->full_cmd[1])
+    if (cmd->full_cmd[i] && ft_strcmp(cmd->full_cmd[i], "-n") == 0)
     {
-        write(outfile, "\n", 1);
-        g_status = 0;
-        return (g_status);
+        newline = 0;
+        i++;
     }
     while (cmd->full_cmd[i])
     {
@@ -30,7 +30,9 @@ int echo(t_command *cmd, int outfile)
             write(outfile, " ", 1);
         i++;
     }
-    write(outfile, "\n", 1);
+    if (newline)
+        write(outfile, "\n", 1);
+
     g_status = 0;
     return (g_status);
 }

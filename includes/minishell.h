@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/31 18:49:16 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 14:56:47 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ typedef struct s_command
 //check_commands
 int		check_commands(t_mini *m);
 int		is_builtin_alt(char *cmd);
+int		check_cmd_plus_route(int i, t_mini *m);
 int		get_cmd_path(char *cmd_name, t_mini *m);
-void	get_envp_cmd_dirs(t_mini *m);
 int		sum_path_to_cmd(t_command *c, t_mini *m);
 
 //envp_aux
@@ -114,6 +114,7 @@ int		open_files(t_mini *m);
 //parser
 int		parser(t_mini *m);
 int		m_strlen(char **str);
+void	get_envp_cmd_dirs(t_mini *m);
 
 //t_commands_fill
 int		t_commands_fill(t_command *c, t_mini *m);
@@ -154,6 +155,8 @@ int 	built_pwd(int outfile) ;
 char	*get_env(char **envp, char *name);
 int		unset(t_command *cmd, t_mini *mini);
 int		exit_builtin(t_command *cmd, t_mini *mini);
+int		execute_builtin_in_pipe(t_command *cmd, t_mini *mini);
+int		is_builtin(t_mini *mini);
 
 //errors
 void	m_error(char *str, t_mini *m);

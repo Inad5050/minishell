@@ -6,13 +6,11 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:37:07 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 13:54:08 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 14:42:04 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-//int	expand_var(int index, t_mini *m)
 
 int	parser(t_mini *m)
 {
@@ -32,16 +30,8 @@ int	parser(t_mini *m)
 		return (0);
 	if (!check_commands(m)) //comprueba si el comando existe y si es built_in
 		return (0);
-	printf("check_commands Dirección de full_cmd[0]: %p\n", (void *)m->cmds[0].full_cmd[0]);
-	printf("check_commands Dirección de full_path: %p\n", (void *)m->cmds[0].full_path);
 	return (1);
 }
-
-/* 
-En el contexto de un shell, "&&" y "||" son operadores lógicos:
-&&: Indica que el segundo comando se debe ejecutar solo si el primero tuvo éxito (es decir, devolvió un estado de salida de 0).
-||: Indica que el segundo comando se debe ejecutar solo si el primero falló (es decir, devolvió un estado de salida diferente de 0). 
-*/
 
 int	m_strlen(char **str)
 {
@@ -51,4 +41,15 @@ int	m_strlen(char **str)
 	while (str[i])
 		i++;
 	return (i);
+}
+
+void	get_envp_cmd_dirs(t_mini *m)
+{
+	char	*dirs;
+	
+	dirs = return_envp_var("PATH=", m);
+	m->cmd_dirs = ft_split(dirs, ':');
+	free(dirs);
+	if (!m->cmd_dirs)
+		m_exit("Couldn't allocate memory in get_envp_cmd_dirs", m);	
 }

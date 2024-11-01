@@ -12,32 +12,62 @@
 
 #include "../../includes/minishell.h"
 
+static void handle_input_redirectionn(t_command *cmd, t_mini *mini)
+{
+    if (cmd->infile != STDIN_FILENO)
+    {
+        if (dup2(cmd->infile, STDIN_FILENO) == -1)
+        {
+            m_error("Input redirection failed", mini);
+            exit(EXIT_FAILURE);
+        }
+        close(cmd->infile);
+    }
+}
+
+// Handle output redirection for single command
+static void handle_output_redirectionn(t_command *cmd, t_mini *mini)
+{
+    if (cmd->outfile != STDOUT_FILENO)
+    {
+        if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
+        {
+            m_error("Output redirection failed", mini);
+            exit(EXIT_FAILURE);
+        }
+        close(cmd->outfile);
+    }
+}
+
+// Handle input redirection from previous pipe
 static void handle_pipe_input(int prev_fd, t_mini *mini)
 {
     if (prev_fd != STDIN_FILENO)
     {
         if (dup2(prev_fd, STDIN_FILENO) == -1)
         {
-            m_error("Input redirection failed", mini);
+            m_error("Input redirection from pipe failed", mini);
             exit(EXIT_FAILURE);
         }
         close(prev_fd);
     }
 }
 
+// Handle output redirection to current pipe
 static void handle_pipe_output(t_command *cmd, int pipes[2], t_mini *mini)
 {
     if (cmd->next)
     {
         if (dup2(pipes[1], STDOUT_FILENO) == -1)
         {
-            m_error("Output redirection failed", mini);
+            m_error("Output redirection to pipe failed", mini);
             exit(EXIT_FAILURE);
         }
         close(pipes[1]);
     }
 }
 
+// Close and clean up pipe ends in the parent process
 static void parent_cleanup(int prev_fd, int pipes[2])
 {
     if (prev_fd != STDIN_FILENO)
@@ -45,38 +75,61 @@ static void parent_cleanup(int prev_fd, int pipes[2])
     close(pipes[1]);
 }
 
+// Create a new pipe
 static int create_pipe(int pipes[2], t_mini *mini)
 {
     if (pipe(pipes) == -1)
     {
-        m_error("Pipe failed", mini);
+        m_error("Pipe creation failed", mini);
         return (-1);
     }
     return (0); 
 }
 
-static void fork_and_execute(t_command *cmd, int prev_fd, int pipes[2], t_mini *mini)
+// Fork, set up pipes, and execute command
+static void setup_and_fork(t_command *cmd, int prev_fd, int pipes[2], t_mini *mini)
 {
     pid_t pid = fork();
     if (pid < 0)
     {
         m_error("Fork failed", mini);
-        g_status = 1;  // Setting error status on fork failure
+        g_status = 1;
         return;
     }
-    else if (pid == 0)
+    else if (pid == 0) // In child process
     {
-        // In child process
-        handle_pipe_input(prev_fd, mini);
-        handle_pipe_output(cmd, pipes, mini);
-        handle_input_redirection(cmd, mini);
-        handle_output_redirection(cmd, mini);
-        execute_command(cmd, mini);  // Executing the command
-        exit(EXIT_FAILURE); // In case execve fails
+        handle_pipe_input(prev_fd, mini); // Redirect input from the previous command
+        if (cmd->next) // Only redirect output if there's a next command
+            handle_pipe_output(cmd, pipes, mini); // Redirect output to the next command
+
+        handle_input_redirectionn(cmd, mini); // Handle input redirection (if any)
+        handle_output_redirectionn(cmd, mini); // Handle output redirection (if any)
+
+        // Execute the command
+        if (is_builtin(mini)) // Check for built-in commands
+        {
+            exit(builtin(mini)); // Execute and exit with the status of the built-in
+        }
+        else
+        {
+            execute_command(cmd, mini); // Execute the command
+            exit(EXIT_FAILURE); // Exit if exec fails
+        }
     }
     // Parent process continues without setting exit status here
 }
 
+
+// Wait for all child processes to complete
+// static void wait_for_children()
+// {
+//     int status;
+//     pid_t pid;
+//     while ((pid = wait(&status)) > 0)
+//         g_status = WEXITSTATUS(status);
+// }
+
+// Main function to handle multiple commands
 void handle_multiple_command(t_mini *mini)
 {
     t_command *cmd = mini->cmds;
@@ -85,20 +138,18 @@ void handle_multiple_command(t_mini *mini)
 
     while (cmd)
     {
-		/* ft_printf("cmd->next->cmd_index = %i\n", cmd->next->cmd_index); */
-		
         if (cmd->next)
         {
-            if (create_pipe(pipes, mini) == -1) // Check for pipe creation success
+            if (create_pipe(pipes, mini) == -1) // Create a new pipe
                 return;
         }
-        fork_and_execute(cmd, prev_fd, pipes, mini);
+        setup_and_fork(cmd, prev_fd, pipes, mini);
         parent_cleanup(prev_fd, pipes); // Clean up the parent process
-        prev_fd = pipes[0]; // Setting prev_fd to the read end for the next iteration
-        cmd = cmd->next;
+        prev_fd = pipes[0]; // Set prev_fd to read end for next iteration
+        cmd = cmd->next; // Move to the next command
     }
 
-    // Wait for all processes to complete (add waitpid loop here for all pids if necessary)
+    // Wait for all child processes to complete
     int status;
     while (wait(&status) > 0)
         g_status = WEXITSTATUS(status); // Final g_status reflects the last command’s status

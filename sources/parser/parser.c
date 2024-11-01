@@ -32,8 +32,6 @@ int	parser(t_mini *m)
 		return (0);
 	if (!check_commands(m)) //comprueba si el comando existe y si es built_in
 		return (0);
-	printf("check_commands Dirección de full_cmd[0]: %p\n", (void *)m->cmds[0].full_cmd[0]);
-	printf("check_commands Dirección de full_path: %p\n", (void *)m->cmds[0].full_path);
 	return (1);
 }
 

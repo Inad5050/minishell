@@ -42,6 +42,6 @@ void	m_exit_modified(char *str, t_mini *m)
 	free_tcommand(m);
 	free_tmini(m);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("", 2);
 	exit(g_status);
 }

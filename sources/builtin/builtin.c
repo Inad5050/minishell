@@ -35,5 +35,26 @@ int builtin(t_mini *mini)
     else if (ft_strcmp(cmd->full_cmd[0], "exit") == 0)
         return (exit_builtin(cmd,mini));
 
-    return (1); // return a non-zero status if no valid command was found
+    return (1);
+}
+
+
+int execute_builtin_in_pipe(t_command *cmd, t_mini *mini)
+{
+    int saved_stdout = dup(STDOUT_FILENO);
+    if (cmd->outfile != STDOUT_FILENO)
+    {
+        if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
+        {
+            m_error("Output redirection failed", mini);
+            return 1;
+        }
+    }
+
+    int status = builtin(mini);
+
+    dup2(saved_stdout, STDOUT_FILENO); // Restore STDOUT
+    close(saved_stdout);
+
+    return status;
 }

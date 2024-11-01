@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:53:03 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/28 09:47:15 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/10/31 19:03:38 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	is_builtin(t_mini *mini)
+#include "../../includes/minishell.h"
+
+int	is_builtin(t_mini *mini)
 {
 	t_command	*cmd;
 
@@ -60,37 +62,21 @@ static int handle_single_command(t_mini *mini)
 
 void analizing_command(t_mini *mini)
 {	
-	t_command *cmd;
-	
-	cmd = mini->cmds;
-	if (!cmd || !cmd->full_cmd || !cmd->full_cmd[0])
-	{
-		m_error("Error: No command provided", mini);
-		return;
-	}
-	if(cmd->next == NULL)
-	{
-	if(handle_builtin(mini))
-		return;
-	else if(handle_single_command(mini))
-		return;
-	}
-	else
-	{
-		handle_multiple_command(mini);
-		return;
-	}
-}
+    t_command *cmd = mini->cmds;
 
-char *get_path_from_env(t_mini *mini)
-{
-    char *path_var;
-
-    path_var = return_envp_var("PATH=", mini);
-    if (!path_var)
+    if (!cmd || !cmd->full_cmd || !cmd->full_cmd[0])
     {
-        m_error("Error: PATH not found in environment variables", mini);
-        return (NULL);
+        m_error("Error: No command provided", mini);
+        return;
     }
-    return (path_var);
+
+    if (cmd->next == NULL) // Single command
+    {
+        if (handle_builtin(mini) || handle_single_command(mini))
+            return;
+    }
+    else // Pipeline (multiple commands)
+    {
+        handle_multiple_command(mini);
+    }
 }

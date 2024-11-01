@@ -6,7 +6,7 @@
 /*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 19:32:56 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 18:53:36 by dani             ###   ########.fr       */
+/*   Updated: 2024/10/29 23:23:24 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,3 @@ void	init_struct_envp(char **envp, t_mini *m) //duplica las variables de entorno
 	}
 	envp[i] = NULL;
 }
-
-/* void	init_struct_getpid(t_mini *m)
-{
-	pid_t	pid;
-	pid = fork();
-	if (pid < 0)
-		m_exit("Couldnt fork()", m);
-	if (pid == 0)
-		m_exit("Child process", m); //para eliminar al hijo, probablemente haya que crear una excepcion en m_exit para que no imprima nada cuando reciba la string "Child process"
-	else
-		m->pid = pid;
-} */

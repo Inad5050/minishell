@@ -6,7 +6,7 @@
 #    By: dani <dani@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 16:19:45 by dangonz3          #+#    #+#              #
-#    Updated: 2024/10/28 20:30:14 by dani             ###   ########.fr        #
+#    Updated: 2024/10/29 23:30:23 by dani             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ COLOR_RESET = \033[0m
 SRC_DIR = sources
 SRC_FILES = /execution/one_command.c /execution/multiple_commad.c /execution/execution.c \
 /builtin/unset.c /builtin/pwd.c /builtin/export.c /builtin/exit.c /builtin/env.c /builtin/echo.c /builtin/cd.c /builtin/builtin.c \
-/parser/check_commands.c /parser/envp_aux.c /parser/expand_vars.c /parser/getprompt.c /parser/init_struct.c /parser/lexer.c /parser/open_files.c /parser/parser.c /parser/token_aux.c /parser/token_assign.c \
+/parser/check_commands.c /parser/envp_aux.c /parser/expand_vars.c /parser/getprompt.c /parser/here_doc.c /parser/init_struct.c /parser/lexer.c /parser/open_files.c /parser/parser.c /parser/t_commands_fill.c /parser/t_commands.c /parser/token_check.c\
 /errors.c /free_memory.c /main.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:.c=.o)

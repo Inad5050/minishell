@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 18:25:57 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 20:06:42 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int		find_envp_var(char *str, int size, t_mini *m);
 char	*get_expanded_str(char *variable, char *var_name, char *tkn, t_mini *m);
 int		get_var_name_expand(char *tkn, int index, t_mini *m);
 int		expand_var(int index, t_mini *m);
+int		change_token_with_expansion(char *tkn, char *variable_alt, char *pre_pre_var_name, t_mini *m);
 
 //getprompt
 int		getprompt(t_mini *m);
@@ -115,6 +116,7 @@ int		check_user_input(t_mini *m);
 int		m_strlen(char **str);
 int		get_envp_cmd_dirs(t_mini *m);
 char	*ft_strstr(char *hay, char *ndle);
+char	*ft_strndup(const char *str, int n);
 
 //parser
 int		parser(t_mini *m);

@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 16:15:54 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 17:15:26 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 19:57:37 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,27 @@ char	*ft_strstr(char *hay, char *ndle)
 		i++;
 	}
 	return (NULL);	
+}
+
+char	*ft_strndup(const char *str, int n)
+{
+	int		i;
+	char	*ptr;
+
+	i = 0;
+	while (str[i])
+		i++;
+	if (i < n)
+		n = i;
+	ptr = (char *)malloc((n + 1) * sizeof(char));
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (str[i] && i < n)
+	{
+		ptr[i] = (char)str[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
 }

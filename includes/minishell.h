@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/03 00:19:36 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:41:31 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,13 @@ typedef struct s_mini
 	char		*new_tkn; //expand_vars
 
 	char		*tkn; //expand_vars
+
+	int			no_path;
 	
 	int			cmd_count; //initiate_get_commands (get_commands)   USE
+
+	int 		is_blocking;
+
 }			t_mini;
 
 typedef struct s_command
@@ -141,9 +146,13 @@ char	*ft_strndup(const char *str, int n);
 //parser
 int		parser(t_mini *m);
 
-//pipex
-int		pipex(t_mini *m);
-int		redirect_pipe(t_command *c1, t_command *c2, t_mini *m);
+//pre_check_commands
+int		pre_check_commands(t_mini *m);
+void	check_built_in(t_mini *m);
+int		is_builtin_alt(char *cmd);
+int		check_path_env(t_mini *m);
+int		is_path_avaiable(char *str, int size, t_mini *m);
+
 
 //t_commands_fill
 int		t_commands_fill(t_command *c, t_mini *m);

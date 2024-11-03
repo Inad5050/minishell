@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:53:03 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/01 17:50:09 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:35:45 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,12 @@ static int handle_single_command(t_mini *mini)
 void analizing_command(t_mini *mini)
 {	
     t_command *cmd = mini->cmds;
-
+    
     if (!cmd || !cmd->full_cmd || !cmd->full_cmd[0])
     {
         m_err("Error: No command provided", 127, mini);
         return;
     }
-
     if (cmd->next == NULL && is_builtin(cmd->full_cmd[0])) // Single built-in command
     {
         g_status = builtin(mini); // Directly execute and set the status
@@ -73,7 +72,9 @@ void analizing_command(t_mini *mini)
     else if (cmd->next == NULL) // Single non-built-in command
     {
         if (handle_single_command(mini))
-            return;
+        {
+          return;
+        }
     }
     else // Multiple commands (pipeline)
     {

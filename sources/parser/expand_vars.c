@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 19:33:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/02 23:03:38 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:35:19 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	exchange_token_expansion_aux(char *tkn, t_mini *m)
 {
 	m->variable_envp = return_envp_var(m->var_name, m);
 	if (!m->variable_envp)
-		return (m_err("Couldn't find env variable\n", 2, m), 0);
+		return (0);
 	m->variable = ft_strtrim(m->variable_envp, "=");
 	if (!m->variable)
 		return (m_exit("Couldn't alloc in exchange_token_expansion_aux", m), 0);

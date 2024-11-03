@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:37:07 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/03 00:36:26 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/03 14:17:37 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ int	parser(t_mini *m)
 		return (0);
 	if (!t_commands(m)) //llena las estructuras t_command con sus valores correspondientes.
 		return (0);
-/* 	if (!pipex(m))
-		return (0); */
 	if (!open_files(m)) //intenta abrir o crear los archivos de las redirecciones + here_doc
+		return (0);
+	if (!pre_check_commands(m))
 		return (0);
 	if (!check_commands(m)) //comprueba si el comando existe y si es built_in
 		return (0);
+/* 	if (!check_path_env(m))
+		return (0); */
 	if (!delete_quotes(m))
 		return (0);
 	return (1);

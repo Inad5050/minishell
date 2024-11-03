@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 18:20:56 by dani              #+#    #+#             */
-/*   Updated: 2024/10/30 19:45:47 by dani             ###   ########.fr       */
+/*   Updated: 2024/11/01 17:40:19 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	token_check(t_mini *m)
 	if (!check_problem_chars(m))
 		return (0);
 	if (!check_pipes(m))
-		return (m_error("Incorrect pipes", m), 0);
+		return (m_err("Incorrect pipes", 2, m), 0);
 	if (!check_redirections(m))
-		return (m_error("Incorrect redirections", m), 0);
+		return (m_err("Incorrect redirections", 2, m), 0);
 	return (1);
 }
 

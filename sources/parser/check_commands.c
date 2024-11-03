@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:26:30 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 16:56:30 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:28:04 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 	int	index;
 
 	i = 0;
-	if (!get_envp_cmd_dirs(m) && !is_builtin_alt(m->cmds[i].full_cmd[0]))
+	if (!get_envp_cmd_dirs(m))
 		return (0);
 	while (i < m->cmd_count)
 	{
@@ -32,7 +32,7 @@ int	check_commands(t_mini *m) //comprueba si el command es built_in, si lo es lo
 				if (index)
 					m->cmds[i].full_path = ft_strdup(m->cmd_dirs[index]);
 				else
-					return (m_error("Incorrect command", m), 0);
+					return (m_err("Incorrect command", 127, m), 0);
 				if (!sum_path_to_cmd(&(m->cmds[i]), m))
 					return (0);
 			}

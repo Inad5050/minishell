@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:33:18 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 15:48:40 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/03 00:28:33 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,29 @@ void	free_lexer_parser(t_mini *m)
 	}
 	m->post_redirection = 0;
 	m->x_index = 0;
+	free_lexer_parser_aux(m);
+}
+
+void	free_lexer_parser_aux(t_mini *m)
+{
+	if (m->var_name_with_dollar)
+		free(m->var_name_with_dollar);
+	if (m->var_name)
+		free(m->var_name);
+	if (m->var_name_envp)
+		free(m->var_name_envp);
+	if (m->variable_envp)
+		free(m->variable_envp);
+	if (m->variable)
+		free(m->variable);
+	if (m->str_pre_var_name)
+		free(m->str_pre_var_name);
+	if (m->str_post_var_name)
+		free(m->str_post_var_name);
+	if (m->str_pre_plus_var)
+		free(m->str_pre_plus_var);
+	if (m->new_tkn)
+		free(m->new_tkn);	
 }
 
 void	free_tcommand(t_mini *m)
@@ -64,16 +87,14 @@ void	free_tcommand(t_mini *m)
 
 void	free_tcommand_aux(int i, t_mini *m)
 {
-	if(m->cmds[i].infile_name)
-	{
+	if(m->cmds[i].infile != 0)
 		close(m->cmds[i].infile);
+	if(m->cmds[i].infile_name)
 		free(m->cmds[i].infile_name);
-	}
-	if(m->cmds[i].outfile_name)
-	{
+	if(m->cmds[i].outfile != 1)
 		close(m->cmds[i].outfile);
+	if(m->cmds[i].outfile_name)
 		free(m->cmds[i].outfile_name);
-	}
 	if(m->cmds[i].tokens)
 	{
 		free_matrix(m->cmds[i].tokens);

@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 17:12:12 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/02 23:37:30 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,43 @@ int g_status;
 
 
 
+// static int ctrl_c_flag = 0;
+
+// static void handle_true(int sig)
+// {
+// 	if (sig == SIGINT)
+// 	{
+// 		ctrl_c_flag = 1;
+// 		ft_putstr_fd("\n", STDOUT_FILENO);
+// 		rl_on_new_line();
+// 		rl_replace_line("", 0);
+// 	}
+// }
+
+// static void handler_false(int sig)
+// {
+// 	if (sig == SIGINT)
+// 	{
+// 		ft_putstr_fd("\n", STDOUT_FILENO);
+// 		rl_on_new_line();
+// 		rl_replace_line("", 0);
+// 		rl_redisplay();
+// 	}
+// }
+
+// void init_signals(int flag)
+// {
+// 	if (flag == 0)
+// 	{
+// 		signal(SIGINT, &handler_false);
+// 		signal(SIGQUIT, SIG_IGN);
+// 	}
+// 	else if (flag == 1)
+// 	{
+// 		signal(SIGINT, &handle_true);
+// 		signal(SIGQUIT, SIG_IGN);
+// 	}
+// } 
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	*m;
@@ -26,9 +63,15 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	if (!getprompt(m))
 		return (1);
+	// init_signals(1);
 	while (argc && argv) //siempre deberia ser verdadera. Similar a poner (1), pero maneja el error improbable de que argv y/o argc no existan
 	{
+		// ctrl_c_flag = 0;
 		m->input = readline(m->prompt); //lee el input del usuario, recibe el promp inicial como argumento
+		// if (ctrl_c_flag)
+		// {	
+		// 	continue; // Skip further processing if Ctrl-C was pressed
+		// }
 		if (manage_input(m) == -1) //procesa el input del usuario para poder ejecutarlo
 			break ;
 	}
@@ -48,20 +91,20 @@ int	manage_input(t_mini *m)
 		return (0);
 	if (!parser(m))
 		return (0);
-	/* superprinter(m); */
+	superprinter(m);
 	analizing_command(m);
 	free_lexer_parser(m); //libera toda la memoria asociada con el lexer y el parser.
 	free_tcommand(m);
 	return (1);
 }
 
-/* void superprinter(t_mini *m)
+void superprinter(t_mini *m)
 {
 	int	i;
 	int	x;
 
 	i = 0;
-	ft_printf("-------------------SUPERPRINTER-------------------\n");
+	ft_printf("\n-------------------SUPERPRINTER-------------------\n");
 	ft_printf("m->cmd_count = %d\n", m->cmd_count);
 	
 	while (i < m->cmd_count)
@@ -90,4 +133,4 @@ int	manage_input(t_mini *m)
 		i++;
 	}
 	ft_printf("-------------SUPERPRINTER_END-------------------\n\n");
-} */
+}

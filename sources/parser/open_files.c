@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 20:50:28 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/29 23:19:24 by dani             ###   ########.fr       */
+/*   Updated: 2024/11/01 17:52:49 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	open_files_aux(char *file, int is_outfile, int i, t_mini *m)
 		{
 			m->cmds[i].infile = open(file, O_RDONLY);
 			if (m->cmds[i].infile == -1)
-				return (m_error("Couldn't open infile", m), 0);
+				return (m_err("Couldn't open infile", 126, m), 0);
 		}
 		else if ((m->cmds[i].append_in))
 			here_doc(m->cmds[i].infile_name, i, m);
@@ -32,7 +32,7 @@ int	open_files_aux(char *file, int is_outfile, int i, t_mini *m)
 		else if ((m->cmds[i].append_out))
 			m->cmds[i].outfile = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (m->cmds[i].outfile == -1)
-			return (m_error("Couldn't open outfile", m), 0);
+			return (m_err("Couldn't open outfile", 126, m), 0);
 	}
 	return (1);
 }

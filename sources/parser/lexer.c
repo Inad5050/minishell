@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:54:28 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/10/28 18:53:38 by dani             ###   ########.fr       */
+/*   Updated: 2024/11/01 17:42:28 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_count_tokens(char *s, t_mini *m)
 				i++;
 			}
 			if (m->in_quotes)
-				return (m_error("Unclosed quotes", m), 0);
+				return (m_err("Unclosed quotes", 2, m), 0);
 		}
 		else
 			i++;
@@ -82,6 +82,6 @@ int	lexer(t_mini *m) //se necesitan más comprobaciones despues de fill_tokens? 
 	fill_tokens(m->input, m); //llena los tokens con el contenido de m->input
 	m->tokens[m->token_count] = NULL;
 	if (m->squote || m->dquote) //si cualquiera de las comillas están abiertas el input es erroneo.
-		return (m_error("Invalid quotes", m), 0);
+		return (m_err("Invalid quotes", 2, m), 0);
 	return (1);
 }

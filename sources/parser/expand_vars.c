@@ -6,77 +6,89 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 19:33:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 17:15:10 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/02 23:03:38 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-extern int	g_status;
-
-char	*get_expanded_str(char *variable, char *var_name, char *tkn, t_mini *m) //crea un string nueva que copia tkn y sustituye $VAR_NAME por la variable
-{
-	char	*str;
-	size_t	i;
-	size_t	j;
-	size_t	index;
-
-	i = 0;
-	while (tkn[i] != '$' && tkn[i])
-		i++;
-	j = 0;
-	while (tkn[i + j + ft_strlen(var_name)])
-		j++;
-	str = ft_calloc(i + j + ft_strlen(variable) + 1, sizeof(char));
-	if (!str)
-		m_exit("Cannot assign memory in expand_env_var", m);
-	index = -1;
-	while (++index < i)
-		str[index] = tkn[index];
-	while (++index < i + ft_strlen(variable))
-		str[index] = variable[index - i];
-	while (++index < i + ft_strlen(variable) + j)
-		str[index] = tkn[i + index + ft_strlen(variable)];
-	str[++index] = '\0';
-	return (str);
-}
-
-void	get_env_var(char *tkn, int index, t_mini *m) //consigue el nombre de la variable a expandir de tkn y se la pasa a return_envp_variable
-{
-	int		i;
-	int		j;
-	char	*var_name;
-	char	*variable;
-	char	*str;
-	
-	i = 0;
-	while (tkn[i++] != '$' && tkn[i])
-		i++;
-	j = 0;
-	while (ft_isalpha(tkn[i + j]) && tkn[i + j])
-		j++;
-	var_name = ft_calloc(j + 1, sizeof(char));
-	if (!var_name)
-		m_exit(var_name, m);
-	variable = return_envp_var(var_name, m);
-	
-	str = get_expanded_str(variable, var_name, tkn, m);
-	free(variable);
-	free(var_name);
-	free(m->tokens[index]);
-	m->tokens[index] = str;
-}
-
 int	expand_var(int index, t_mini *m)
 {
-	char	*tkn;
-	
-	tkn = m->tokens[index];
-	if (ft_strchr(tkn, '$') && tkn[0] != '\'' && ft_strlen(tkn) > 1)  //es el signo de una variable local que debe ser expandida. No se expanden en comillas simples \'.
-	{
-		if (ft_strstr(tkn, "$?")) //$? es el signo que indica que se debe mostrar el estado de salida del último comando ejecutado.
+	char	*tmp;
+
+	if (m->tokens[index][0] == '\'' && m->tokens[index][ft_strlen(m->tokens[index]) - 1] == '\'')
+		return (1);
+	if (ft_strstr(m->tokens[index], "$?")) //$? es el signo que indica que se debe mostrar el estado de salida del último comando ejecutado.
 			return (m->tokens[index] = ft_itoa(g_status), 1);
-		return (get_env_var(tkn, index, m), 1);
+	if (ft_strchr(m->tokens[index], '$') && ft_strlen(m->tokens[index]) > 1)  //es el signo de una variable local que debe ser expandida. No se expanden en comillas simples \'.
+	{				
+		if (!exchange_token_expansion(m->tokens[index], m))
+			return (0);
+		tmp = m->tokens[index];
+		m->tokens[index] = ft_strdup(m->new_tkn);
+		if (!m->tokens[index])
+			return (m_exit("Couldn't alloc in expand_var", m), 0);
+		free(tmp);		
 	}
+	return (1);
+}
+
+int	exchange_token_expansion(char *tkn, t_mini *m) //consigue el nombre de la variable a expandir de tkn y se la pasa a return_envp_variable
+{
+	int		i;
+		
+	i = 0;
+	m->str_var_name = ft_strstr(tkn, "$");
+	while (m->str_var_name[i])
+	{
+		if (m->str_var_name[i] == '\0' || (9 <= m->str_var_name[i] && m->str_var_name[i] <= 13) || \
+		m->str_var_name[i] == 32 || m->str_var_name[i] == 34)
+			break;
+		i++;
+	}
+	m->var_name_with_dollar = ft_strndup(m->str_var_name, i);
+	if (!m->var_name_with_dollar)
+		return (m_exit("Couldn't alloc in exchange_token_expansion", m), 0);
+	m->var_name = ft_strtrim(m->var_name_with_dollar, "$");
+	m->var_name_envp = ft_strjoin(m->var_name, "=");
+	if (!m->var_name_envp)
+		return (m_exit("Couldn't alloc in exchange_token_expansion", m), 0);
+	if (!exchange_token_expansion_aux(tkn, m))
+		return (0);
+	return (1);
+}
+
+int	exchange_token_expansion_aux(char *tkn, t_mini *m)
+{
+	m->variable_envp = return_envp_var(m->var_name, m);
+	if (!m->variable_envp)
+		return (m_err("Couldn't find env variable\n", 2, m), 0);
+	m->variable = ft_strtrim(m->variable_envp, "=");
+	if (!m->variable)
+		return (m_exit("Couldn't alloc in exchange_token_expansion_aux", m), 0);
+	if (!exchange_token_expansion_aux_aux(tkn, m))
+		return (0);
+	return (1);
+}
+
+int	exchange_token_expansion_aux_aux(char *tkn, t_mini *m)
+{
+	int		var_name_size;
+	
+	var_name_size = 0;
+	m->var_name_ptr = ft_strstr(tkn, m->var_name_with_dollar);
+	m->str_pre_var_name = ft_strndup(tkn, (int)(m->var_name_ptr - tkn));
+	if (!m->str_pre_var_name)
+		return (m_exit("Couldn't alloc in exchange_token_expansion_aux_aux", m), 0);
+	var_name_size = ft_strlen(m->var_name_with_dollar);
+	m->str_post_var_name = ft_strdup(m->var_name_ptr + var_name_size);
+	if (!m->str_post_var_name)
+		return (m_exit("Couldn't alloc in exchange_token_expansion_aux_aux", m), 0);
+	m->str_pre_plus_var = ft_strjoin(m->str_pre_var_name, m->variable);
+	if (!m->str_pre_plus_var)
+		return (m_exit("Couldn't alloc in exchange_token_expansion_aux_aux", m), 0);
+	m->new_tkn = ft_strjoin(m->str_pre_plus_var, m->str_post_var_name);
+	if (!m->new_tkn)
+		return (m_exit("Couldn't alloc in exchange_token_expansion_aux_aux", m), 0);
 	return (1);
 }

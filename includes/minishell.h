@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 17:15:42 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/03 00:19:36 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,21 @@ typedef struct s_mini
 	char		**cmd_dirs; //initiate_get_commands (get_commands)
 	int			post_redirection; //initiate_get_commands (get_commands)
 	int			x_index; //identify_token (get_commands)
+
+	char		*str_var_name; //expand_vars
+	char		*var_name_with_dollar; //expand_vars
+	char		*var_name; //expand_vars
+	char		*var_name_envp; //expand_vars
+	char		*variable_envp; //expand_vars
+	char		*variable; //expand_vars
+	char		*var_name_ptr; //expand_vars
+	char		*str_pre_var_name; //expand_vars
+	int			var_name_size; //expand_vars
+	char		*str_post_var_name; //expand_vars
+	char		*str_pre_plus_var; //expand_vars
+	char		*new_tkn; //expand_vars
+
+	char		*tkn; //expand_vars
 	
 	int			cmd_count; //initiate_get_commands (get_commands)   USE
 }			t_mini;
@@ -80,14 +95,20 @@ int		check_cmd_plus_route(int i, t_mini *m);
 int		get_cmd_path(char *cmd_name, t_mini *m);
 int		sum_path_to_cmd(t_command *c, t_mini *m);
 
+//delete_quotes
+int		delete_quotes(t_mini *m);
+int		delete_squotes(int i, t_mini *m);
+int		delete_dquotes(int i, t_mini *m);
+
 //envp_aux
 char	*return_envp_var(char *str, t_mini *m); 
 int		find_envp_var(char *str, int size, t_mini *m);
 
 //expand_vars
-char	*get_expanded_str(char *variable, char *var_name, char *tkn, t_mini *m);
-void	get_env_var(char *tkn, int index, t_mini *m);
 int		expand_var(int index, t_mini *m);
+int		exchange_token_expansion(char *tkn, t_mini *m);
+int		exchange_token_expansion_aux(char *tkn, t_mini *m);
+int		exchange_token_expansion_aux_aux(char *tkn, t_mini *m);
 
 //getprompt
 int		getprompt(t_mini *m);
@@ -115,9 +136,14 @@ int		check_user_input(t_mini *m);
 int		m_strlen(char **str);
 int		get_envp_cmd_dirs(t_mini *m);
 char	*ft_strstr(char *hay, char *ndle);
+char	*ft_strndup(const char *str, int n);
 
 //parser
 int		parser(t_mini *m);
+
+//pipex
+int		pipex(t_mini *m);
+int		redirect_pipe(t_command *c1, t_command *c2, t_mini *m);
 
 //t_commands_fill
 int		t_commands_fill(t_command *c, t_mini *m);
@@ -159,17 +185,20 @@ char	*get_env(char **envp, char *name);
 int		unset(t_command *cmd, t_mini *mini);
 int		exit_builtin(t_command *cmd, t_mini *mini);
 int		execute_builtin_in_pipe(t_command *cmd, t_mini *mini);
-int		is_builtin(t_mini *mini);
+int is_builtin(char *cmd_str);
+int 	handle_builtin(t_mini *mini);
 
 //errors
 void	m_error(char *str, t_mini *m);
 void	m_error_alt(char c, t_mini *m);
+void	m_err(char *str, int code, t_mini *m);
 void	m_error_env(char *str, t_mini *m);
 void	m_exit(char *str, t_mini *m);
 void	m_exit_modified(char *str, t_mini *m);
 
 //free_memory
 void	free_lexer_parser(t_mini *m);
+void	free_lexer_parser_aux(t_mini *m);
 void	free_tcommand(t_mini *m);
 void	free_tcommand_aux(int i, t_mini *m);
 void	free_tmini(t_mini *m); 

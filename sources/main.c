@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/03 16:45:42 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:51:08 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 int g_status;
 
-static bool flagg;
 
 static int ctrl_c_flag = 0;
-
+// void handler_ctrl_quit(int sig)
+// {
+// 	(void)sig;
+// 	if(flagg)
+// 	{
+// 		ft_putstr_fd("Quit\n", STDERR_FILENO);
+// 	}
+// }
 void handle_true(int sig)
 {
 	if (sig == SIGINT)
@@ -28,6 +34,31 @@ void handle_true(int sig)
 		rl_replace_line("", 0);
 	}
 }
+
+
+ void handler_false(int sig)
+{	
+	if (sig == SIGINT)
+	{	
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+void init_signals(int flag)
+{
+	if (flag == 0)
+	{	
+		signal(SIGINT, handler_false);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (flag == 1)
+	{
+		signal(SIGINT, handle_true);
+		signal(SIGQUIT, SIG_IGN);	
+	}
+} 
 
 int	main(int argc, char **argv, char **envp)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:33:18 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/03 16:32:38 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:52:09 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,22 @@ void	free_lexer_parser(t_mini *m)
 
 void	free_lexer_parser_aux(t_mini *m)
 {
-	ft_printf("PTR m->var_name_with_dollar = %p\n", m->var_name_with_dollar);
+
 	
 	if (m->var_name_with_dollar)
 		free(m->var_name_with_dollar);
 	
-	ft_printf("PTR m->var_name = %p\n", m->var_name);
+
 	
 	if (m->var_name)
 		free(m->var_name);
 	
-	ft_printf("PTR m->var_name_envp = %p\n", m->var_name_envp);
+
 	
 	if (m->var_name_envp)
 		free(m->var_name_envp);
 	
-	ft_printf("PTR m->variable_envp = %p\n", m->variable_envp);
+
 	
 	if (m->variable_envp)
 		free(m->variable_envp);

@@ -95,23 +95,23 @@ static void setup_and_fork(t_command *cmd, int prev_fd, int pipes[2], t_mini *mi
         g_status = 1;
         return;
     }
-    else if (pid == 0) // In child process
+    else if (pid == 0)
     {
-        handle_pipe_input(prev_fd, mini); // Redirect input from the previous command
-        if (cmd->next) // Only redirect output if there's a next command
-            handle_pipe_output(cmd, pipes, mini); // Redirect output to the next command
+        handle_pipe_input(prev_fd, mini);
+        if (cmd->next)
+            handle_pipe_output(cmd, pipes, mini);
 
-        handle_input_redirectionn(cmd, mini); // Handle input redirection (if any)
-        handle_output_redirectionn(cmd, mini); // Handle output redirection (if any)
-        if (cmd->is_builtin) // Execute built-in with proper redirection
+        handle_input_redirectionn(cmd, mini);
+        handle_output_redirectionn(cmd, mini);
+        if (cmd->is_builtin)
         {
-            g_status = handle_builtin(mini); // Execute built-in and set status
-            exit(g_status); // Exit to prevent further execution in child
+            g_status = handle_builtin(mini);
+            exit(g_status);
         }
         else
         {
-            execute_command(cmd, mini); // Execute the external command
-            exit(EXIT_FAILURE); // Exit if exec fails
+            execute_command(cmd, mini);
+            exit(EXIT_FAILURE);
         }
     }
 }

@@ -39,7 +39,7 @@ void handle_output_redirection(t_command *cmd, t_mini *mini)
 }
 
 void execute_command(t_command *cmd, t_mini *mini)
-{
+{   
     if (execve(cmd->full_path, cmd->full_cmd, mini->envp) == -1)
     {
         m_err("Command execution failed", 126, mini);

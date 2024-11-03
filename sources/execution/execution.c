@@ -65,19 +65,18 @@ void analizing_command(t_mini *mini)
         return;
     }
 
-    if (cmd->next == NULL) // Single command
+    if (cmd->next == NULL && is_builtin(cmd->full_cmd[0])) // Single built-in command
     {
-        if (handle_builtin(mini) || handle_single_command(mini))
+        g_status = builtin(mini); // Directly execute and set the status
+        return;
+    }
+    else if (cmd->next == NULL) // Single non-built-in command
+    {
+        if (handle_single_command(mini))
             return;
     }
-    else // Pipeline (multiple commands)
+    else // Multiple commands (pipeline)
     {
-        // Set `is_builtin` for each command before handling the pipeline
-        while (cmd)
-        {
-            cmd->is_builtin = is_builtin(cmd->full_cmd[0]);
-            cmd = cmd->next;
-        }
         handle_multiple_command(mini);
     }
 }

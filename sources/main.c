@@ -91,46 +91,46 @@ int	manage_input(t_mini *m)
 		return (0);
 	if (!parser(m))
 		return (0);
-	superprinter(m);
+	// superprinter(m);
 	analizing_command(m);
 	free_lexer_parser(m); //libera toda la memoria asociada con el lexer y el parser.
 	free_tcommand(m);
 	return (1);
 }
 
-void superprinter(t_mini *m)
-{
-	int	i;
-	int	x;
+// void superprinter(t_mini *m)
+// {
+// 	int	i;
+// 	int	x;
 
-	i = 0;
-	ft_printf("\n-------------------SUPERPRINTER-------------------\n");
-	ft_printf("m->cmd_count = %d\n", m->cmd_count);
+// 	i = 0;
+// 	ft_printf("\n-------------------SUPERPRINTER-------------------\n");
+// 	ft_printf("m->cmd_count = %d\n", m->cmd_count);
 	
-	while (i < m->cmd_count)
-	{
-		ft_printf("\n------------COMAND %d-------------\n", i);
-		x = -1;
-		while(m->cmds[i].full_cmd[++x])
-			ft_printf("full_cmd[%d] = %s\n", x, m->cmds[i].full_cmd[x]);
-		ft_printf("full_path = %s\n", m->cmds[i].full_path);
-		ft_printf("infile = %i\n", m->cmds[i].infile);
-		ft_printf("outfile = %i\n", m->cmds[i].outfile);
-		if (m->cmds[i].next)
-			ft_printf("OLAA m->cmds[%i].next->cmd_index = %i\n", i, m->cmds[i].next->cmd_index);
-		else
-			ft_printf("OLAA m->cmds[%i].next = is NULL\n", i);
-		if (m->cmds[i].infile_name)
-			ft_printf("infile_name = %s\n", m->cmds[i].infile_name);
-		if (m->cmds[i].outfile_name)
-			ft_printf("outfile_name = %s\n", m->cmds[i].outfile_name);		
-		if (m->cmds[i].append_in)
-			ft_printf("append_in = %d\n", m->cmds[i].append_in);
-		if (m->cmds[i].append_out)
-			ft_printf("append_out = %d\n", m->cmds[i].append_out);
-		if (m->cmds[i].is_builtin)
-			ft_printf("is_builtin = %d\n", m->cmds[i].is_builtin);
-		i++;
-	}
-	ft_printf("-------------SUPERPRINTER_END-------------------\n\n");
-}
+// 	while (i < m->cmd_count)
+// 	{
+// 		ft_printf("\n------------COMAND %d-------------\n", i);
+// 		x = -1;
+// 		while(m->cmds[i].full_cmd[++x])
+// 			ft_printf("full_cmd[%d] = %s\n", x, m->cmds[i].full_cmd[x]);
+// 		ft_printf("full_path = %s\n", m->cmds[i].full_path);
+// 		ft_printf("infile = %i\n", m->cmds[i].infile);
+// 		ft_printf("outfile = %i\n", m->cmds[i].outfile);
+// 		if (m->cmds[i].next)
+// 			ft_printf("OLAA m->cmds[%i].next->cmd_index = %i\n", i, m->cmds[i].next->cmd_index);
+// 		else
+// 			ft_printf("OLAA m->cmds[%i].next = is NULL\n", i);
+// 		if (m->cmds[i].infile_name)
+// 			ft_printf("infile_name = %s\n", m->cmds[i].infile_name);
+// 		if (m->cmds[i].outfile_name)
+// 			ft_printf("outfile_name = %s\n", m->cmds[i].outfile_name);		
+// 		if (m->cmds[i].append_in)
+// 			ft_printf("append_in = %d\n", m->cmds[i].append_in);
+// 		if (m->cmds[i].append_out)
+// 			ft_printf("append_out = %d\n", m->cmds[i].append_out);
+// 		if (m->cmds[i].is_builtin)
+// 			ft_printf("is_builtin = %d\n", m->cmds[i].is_builtin);
+// 		i++;
+// 	}
+// 	ft_printf("-------------SUPERPRINTER_END-------------------\n\n");
+// }

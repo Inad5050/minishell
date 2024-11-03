@@ -6,7 +6,7 @@
 /*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/03 16:41:31 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:47:06 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,11 @@ int		exit_builtin(t_command *cmd, t_mini *mini);
 int		execute_builtin_in_pipe(t_command *cmd, t_mini *mini);
 int is_builtin(char *cmd_str);
 int 	handle_builtin(t_mini *mini);
+//signals
+void handle_true(int sig);
+void handler_ctrl_quit(int sig);
+void handler_false(int sig);
+void init_signals(int flag);
 
 //errors
 void	m_error(char *str, t_mini *m);

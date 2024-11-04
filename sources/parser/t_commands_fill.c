@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:16:16 by dani              #+#    #+#             */
-/*   Updated: 2024/11/03 01:06:50 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/04 20:08:29 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ int	t_commands_fill(t_command *c, t_mini *m)
 	int	i;
 	int	x;
 	int	code;
-	
-	i = 0;
+
+	i = -1;
 	x = 0;
 	code = 0;
-	if (!allocate_full_cmd(c, m))
-		return (0);
-	while (c->tokens[i])
+	while (c->tokens[++i])
 	{
 		code = token_indentify(c->tokens[i], code, c, m);
 		if (code == 0)
@@ -39,7 +37,6 @@ int	t_commands_fill(t_command *c, t_mini *m)
 				return (m_exit("Couldn't alloc in fill_t_command", m), 0);
 			x++;
 		}
-		i++;
 	}
 	return (1);
 }
@@ -50,12 +47,12 @@ int	allocate_full_cmd(t_command *c, t_mini *m)
 	int	size;
 
 	i = 0;
-	size = 0;	
+	size = 0;
 	while (c->tokens[i])
 	{
 		if (!(!ft_strcmp(c->tokens[i], "|") || !ft_strcmp(c->tokens[i], "<") || \
-    	!ft_strcmp(c->tokens[i], "<<") || !ft_strcmp(c->tokens[i], ">") || \
-    	!ft_strcmp(c->tokens[i], ">>")))
+		!ft_strcmp(c->tokens[i], "<<") || !ft_strcmp(c->tokens[i], ">") || \
+		!ft_strcmp(c->tokens[i], ">>")))
 			size++;
 		i++;
 	}
@@ -92,28 +89,28 @@ int	token_indentify(char *tkn, int code, t_command *c, t_mini *m)
 		return (1);
 }
 
-int assign_redirection(char *tkn, int code, int cmd_index, t_mini *m) //rellena infile_name y outfile_name en cada t_command. Más adelante los intentaremos abrir.
+int	assign_redirection(char *tkn, int code, int cmd_index, t_mini *m)
 {
 	if (code == 4 || code == 5)
 	{
-		if (m->cmds[cmd_index].infile) //si tiene valor es que ya habia una redireccion
+		if (m->cmds[cmd_index].infile)
 			return (m_err("Double input redirection", 2, m), 0);
 		m->cmds[cmd_index].infile_name = ft_strdup(tkn);
 		if (!m->cmds[cmd_index].infile_name)
 			m_exit("Couldn't allocate memory in assign_redirection", m);
 		if (code == 5)
 			m->cmds[cmd_index].append_in = 1;
-	}		
+	}
 	else if (code == 6 || code == 7)
 	{
-		if (m->cmds[cmd_index].outfile_name) //si tiene valor es que ya habia una redireccion
+		if (m->cmds[cmd_index].outfile_name)
 			return (m_err("Double outfile redirection", 2, m), 0);
 		m->cmds[cmd_index].outfile_name = ft_strdup(tkn);
 		if (!m->cmds[cmd_index].outfile_name)
-			m_exit("Couldn't allocate memory in assign_redirection", m); 
+			m_exit("Couldn't allocate memory in assign_redirection", m);
 		if (code == 7)
 			m->cmds[cmd_index].append_out = 1;
-	}		
+	}
 	else
 		m_exit("Incorrect code in assign_redirection", m);
 	return (1);
@@ -122,13 +119,13 @@ int assign_redirection(char *tkn, int code, int cmd_index, t_mini *m) //rellena 
 int	get_pipes(int cmd_index, t_mini *m)
 {
 	int	pipefd[2];
-	
+
 	if (cmd_index + 1 > m->cmd_count)
-		return (m_err("Incorrect pipe", 1, m), 0); //falta el segundo comando.
+		return (m_err("Incorrect pipe", 1, m), 0);
 	if (pipe(pipefd) < 0)
-		m_exit("Couldn't open pipe on get_pipes", m);	
+		m_exit("Couldn't open pipe on get_pipes", m);
 	m->cmds[cmd_index + 1].infile = pipefd[0];
-	if ((m->cmds[cmd_index].outfile_name)) //si outfile_name tiene valor es que ya existia una redireccion del outfile. En este caso el input del user es incorrecto.
+	if ((m->cmds[cmd_index].outfile_name))
 		return (m_err("Double output redirection", 1, m), 0);
 	m->cmds[cmd_index].outfile = pipefd[1];
 	return (1);

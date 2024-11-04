@@ -6,19 +6,19 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 19:33:51 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/03 14:42:55 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/04 19:38:47 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*return_envp_var(char *str, t_mini *m) //busca una string que empiece por str (por ejemplo "PATH=") en envp, size es el tamaño de la string que le has pasado (para "PATH=" size = 5)
+char	*return_envp_var(char *str, t_mini *m)
 {
 	int		str_size;
 	int		line;
 	int		i;
 	char	*var;
-		
+
 	str_size = 0;
 	while (str[str_size])
 		str_size++;
@@ -33,14 +33,14 @@ char	*return_envp_var(char *str, t_mini *m) //busca una string que empiece por s
 		m_exit("Cannot allocate memory for envp_variable", m);
 	i = -1;
 	while (m->envp[line][++i + str_size])
-		var[i] = m->envp[line][i + str_size];	
+		var[i] = m->envp[line][i + str_size];
 	return (var);
 }
 
 int	find_envp_var(char *str, int size, t_mini *m)
 {
 	int		i;
-	
+
 	i = 0;
 	while (m->envp[i])
 	{

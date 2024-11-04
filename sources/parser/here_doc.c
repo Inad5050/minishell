@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:19:33 by dani              #+#    #+#             */
-/*   Updated: 2024/10/29 23:19:41 by dani             ###   ########.fr       */
+/*   Updated: 2024/11/04 19:43:10 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void here_doc(char *end, int i, t_mini *m) //cuando usamos << el char * en lugar de ser el file_name es sl string que nos indica que debemos dejar de leer.
+void	here_doc(char *end, int i, t_mini *m)
 {
 	int		pipefd[2];
 	char	*line;

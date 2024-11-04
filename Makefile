@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+         #
+#    By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 16:19:45 by dangonz3          #+#    #+#              #
-#    Updated: 2024/11/03 14:20:55 by dangonz3         ###   ########.fr        #
+#    Updated: 2024/11/04 22:51:56 by tshiki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,8 @@ COLOR_RESET = \033[0m
 SRC_DIR = sources
 SRC_FILES = /execution/one_command.c /execution/multiple_commad.c /execution/execution.c \
 /builtin/unset.c /builtin/pwd.c /builtin/export.c /builtin/exit.c /builtin/env.c /builtin/echo.c /builtin/cd.c /builtin/builtin.c \
-/parser/check_commands.c /parser/delete_quotes.c /parser/envp_aux.c /parser/expand_vars.c /parser/getprompt.c /parser/here_doc.c /parser/init_struct.c /parser/lexer.c /parser/open_files.c /parser/others.c /parser/parser.c  /parser/pre_check_commands.c /parser/t_commands_fill.c /parser/t_commands.c /parser/token_check.c\
-/errors.c /free_memory.c /main.c
+/parser/check_commands.c /parser/delete_quotes.c /parser/envp_aux.c /parser/expand_vars.c /parser/getprompt.c /parser/here_doc.c /parser/init_struct.c /parser/lexer.c /parser/open_files.c /parser/others.c /parser/parser.c  /parser/pre_check_commands.c /parser/t_commands_fill.c /parser/t_commands.c /parser/token_check.c /parser/utilities.c\
+/errors.c /free_memory_aux.c /free_memory.c /main.c /execution/helper_exec.c /builtin/helper_builtin.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(SRC:.c=.o)
 

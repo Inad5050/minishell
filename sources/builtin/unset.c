@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 12:21:38 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/27 19:57:06 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/04 22:56:22 by tshiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int var_name_len(char *env)
+static int	var_name_len(char *env)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (env[i] != '\0' && env[i] != '=')
 		i++;
 	return (i);
 }
 
-static void remove_variable(char **my_env, int index)
+static void	remove_variable(char **my_env, int index)
 {
 	free(my_env[index]);
 	while (my_env[index + 1])
@@ -31,16 +33,19 @@ static void remove_variable(char **my_env, int index)
 	my_env[index] = NULL;
 }
 
-static void do_unset(char *var, t_mini *mini)
+static void	do_unset(char *var, t_mini *mini)
 {
-	int i = 0;
-	int l = var_name_len(var);
-	char **my_env = mini->envp;
+	int		i;
+	int		l;
+	char	**my_env;
 
+	my_env = mini->envp;
+	l = var_name_len(var);
+	i = 0;
 	if (!var || strchr(var, '='))
 	{
 		g_status = 1;
-		return;
+		return ;
 	}
 	while (my_env[i])
 	{
@@ -48,7 +53,7 @@ static void do_unset(char *var, t_mini *mini)
 		{
 			remove_variable(my_env, i);
 			g_status = 0;
-			return;
+			return ;
 		}
 		i++;
 	}
@@ -56,10 +61,11 @@ static void do_unset(char *var, t_mini *mini)
 	g_status = 1;
 }
 
-int unset(t_command *cmd, t_mini *mini)
+int	unset(t_command *cmd, t_mini *mini)
 {
-	int i = 1;
+	int	i;
 
+	i = 1;
 	if (!cmd->full_cmd[1])
 	{
 		g_status = 1;

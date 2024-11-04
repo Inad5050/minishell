@@ -6,7 +6,7 @@
 /*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 12:22:07 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/10/29 09:59:30 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/04 22:49:51 by tshiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static int	is_numeric(const char *str)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	if (str[0] == '-' || str[0] == '+')
 		i++;
 	while (str[i])
@@ -28,12 +30,12 @@ static int	is_numeric(const char *str)
 
 int	exit_builtin(t_command *cmd, t_mini *mini)
 {
-	int exit_code;
+	int	exit_code;
 
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (cmd->full_cmd[1] && !is_numeric(cmd->full_cmd[1]))
 	{
-		ft_putstr_fd("minishell: exit: numeric argument required\n", STDERR_FILENO);
+		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);
 		g_status = 255;
 		return (1);
 	}
@@ -46,7 +48,6 @@ int	exit_builtin(t_command *cmd, t_mini *mini)
 	}
 	else
 		g_status = 0;
-
 	m_exit_modified("", mini);
 	exit(g_status);
 }

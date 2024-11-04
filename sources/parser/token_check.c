@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 18:20:56 by dani              #+#    #+#             */
-/*   Updated: 2024/11/01 17:40:19 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/04 19:54:01 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	check_problem_chars(t_mini *m)
 	int	x;
 	int	dquote;
 	int	squote;
-	
+
 	dquote = 0;
 	squote = 0;
 	i = 0;
@@ -45,10 +45,10 @@ int	check_problem_chars(t_mini *m)
 			if (!check_problem_chars_aux(m->tokens[i][x], dquote, squote, m))
 				return (0);
 			x++;
-		}	
+		}
 		i++;
 	}
-	return (1);	
+	return (1);
 }
 
 int	check_problem_chars_aux(char tkn, int dquote, int squote, t_mini *m)
@@ -77,9 +77,9 @@ int	check_pipes(t_mini *m)
 	{
 		if (!ft_strcmp(m->tokens[i], "|"))
 		{
-			if (previous_pipe) //dos pipes seguidas
+			if (previous_pipe)
 				return (0);
-			if (i == 0 || i == m_strlen(m->tokens)) //primer o último token es un pipe
+			if (i == 0 || i == m_strlen(m->tokens))
 				return (0);
 			previous_pipe = 1;
 		}
@@ -101,15 +101,15 @@ int	check_redirections(t_mini *m)
 		if (!ft_strcmp(m->tokens[i], "<") || !ft_strcmp(m->tokens[i], ">") || \
 		!ft_strcmp(m->tokens[i], ">>"))
 		{
-			if (previous_re) //dos redirecciones seguidas
+			if (previous_re)
 				return (0);
-			if (i == 0 || i == m_strlen(m->tokens)) //primer o último token es una redireccion
+			if (i == 0 || i == m_strlen(m->tokens))
 				return (0);
 			previous_re = 1;
 		}
 		else
 			previous_re = 0;
-		i++;		
+		i++;
 	}
 	return (1);
 }

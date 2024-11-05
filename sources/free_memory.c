@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:33:18 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/05 00:05:38 by dani             ###   ########.fr       */
+/*   Updated: 2024/11/05 18:02:34 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	free_tcommand(t_mini *m)
 		{
 			while (m->cmds[i].full_cmd[x])
 				m_free(&(m->cmds[i].full_cmd[x++]));
-			m_free(m->cmds[i].full_cmd);
+			free(m->cmds[i].full_cmd);
 			m->cmds[i].full_cmd = NULL;
 		}
 		if (m->cmds[i].full_path)

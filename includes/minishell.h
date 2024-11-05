@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/05 15:53:59 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:44:49 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_mini
 	int			g_status;
 	char		*prompt; //getprompt (main)
 	char		*input; //readline (main)
-	char		**tokens; //almacena la tokenización del lexeo
+	char		**tokens;
 	int			token_count; //ft_count_words (lexer)
 	int			in_quotes; //ft_count_words (lexer)
 	int			quote_type; //ft_count_words (lexer)
@@ -89,6 +89,7 @@ int		sum_path_to_cmd(t_command *c, t_mini *m);
 int		delete_quotes(t_mini *m);
 int		delete_squotes(int i, t_mini *m);
 int		delete_dquotes(int i, t_mini *m);
+int		check_export(int i, t_mini *m);
 
 //envp_aux
 char	*return_envp_var(char *str, t_mini *m);

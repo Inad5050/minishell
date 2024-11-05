@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 19:33:43 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/05 15:55:46 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:30:10 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	expand_var(int index, t_mini *m)
 		return (1);
 	if (ft_strstr(m->tokens[index], "$?"))
 		return (m->tokens[index] = ft_itoa(m->g_status), 1);
+	if (ft_strstr(m->tokens[index], "$$"))
+		return (m_err("$$ expansion not implemented", 2, m), 0);
 	if (ft_strchr(m->tokens[index], '$') && ft_strlen(m->tokens[index]) > 1)
 	{
 		if (!exchange_token_expansion(m->tokens[index], m))

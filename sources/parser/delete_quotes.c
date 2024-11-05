@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 23:07:45 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/04 20:06:03 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:47:09 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ int	delete_quotes(t_mini *m)
 {
 	int	i;	
 
-	i = -1;
-	while (++i < m->cmd_count)
+	i = 0;
+	while (i < m->cmd_count)
 	{
+		if (!check_export(i, m))
+			return (1);
 		if (!delete_squotes(i, m))
 			return (0);
 		if (!delete_dquotes(i, m))
 			return (0);
+		i++;
 	}
 	if (!dont_open_another_mini(m))
 		return (0);
@@ -84,5 +87,12 @@ int	delete_dquotes(int i, t_mini *m)
 			free(tmp);
 		}
 	}
+	return (1);
+}
+
+int	check_export(int i, t_mini *m)
+{
+	if (!ft_strcmp(m->cmds[i].full_cmd[0], "export"))
+		return (0);
 	return (1);
 }

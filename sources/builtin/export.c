@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 10:55:19 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/04 23:00:51 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/05 15:52:38 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_status;
 
 int	update_env_var(char **envp, const char *arg, char *new_var, int len)
 {
@@ -80,11 +78,11 @@ int	export_var(const char *arg, int outfile, t_mini *mini)
 			dprintf(outfile, "declare -x %s\n", mini->envp[i]);
 			i++;
 		}
-		g_status = 0;
+		mini->g_status = 0;
 	}
 	else if (add_or_update_env(arg, mini) == 0)
-		g_status = 0;
+		mini->g_status = 0;
 	else
-		g_status = 1;
-	return (g_status);
+		mini->g_status = 1;
+	return (mini->g_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 16:23:26 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/04 22:46:13 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/05 15:50:56 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	echo(t_command *cmd, int outfile)
 	}
 	if (newline)
 		write(outfile, "\n", 1);
-	g_status = 0;
-	return (g_status);
+	cmd->ptr_mini->g_status = 0;
+	return (cmd->ptr_mini->g_status);
 }

@@ -6,7 +6,7 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 16:38:59 by dani              #+#    #+#             */
-/*   Updated: 2024/11/04 20:08:01 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:48:22 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	t_commands(t_mini *m)
 	{
 		m->cmds[i].cmd_index = i;
 		m->cmds[i].outfile = 1;
+		m->cmds[i].ptr_mini = m;
 		if (i + 1 < m->cmd_count)
 			m->cmds[i].next = &(m->cmds[i + 1]);
 		if (!allocate_full_cmd(&(m->cmds[i]), m))

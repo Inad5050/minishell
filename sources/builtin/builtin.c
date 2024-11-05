@@ -6,13 +6,11 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 14:33:22 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/03 13:53:46 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:53:36 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_status;
 
 int	builtin(t_mini *mini)
 {
@@ -24,7 +22,7 @@ int	builtin(t_mini *mini)
 	if (ft_strcmp(cmd->full_cmd[0], "cd") == 0)
 		return (builtin_cd(cmd, mini));
 	else if (ft_strcmp(cmd->full_cmd[0], "pwd") == 0)
-		return (built_pwd(cmd->outfile));
+		return (built_pwd(cmd->outfile, mini));
 	else if (ft_strcmp(cmd->full_cmd[0], "export") == 0)
 		return (export_var(cmd->full_cmd[1], cmd->outfile, mini));
 	else if (ft_strcmp(cmd->full_cmd[0], "env") == 0)

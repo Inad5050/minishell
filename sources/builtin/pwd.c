@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 12:22:22 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/04 22:51:41 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/05 15:54:17 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_status;
 
 char	*get_env(char **envp, char *name)
 {
@@ -30,7 +28,7 @@ char	*get_env(char **envp, char *name)
 	return (NULL);
 }
 
-int	built_pwd(int outfile)
+int	built_pwd(int outfile, t_mini *mini)
 {
 	char	cwd[PATH_MAX];
 
@@ -38,12 +36,12 @@ int	built_pwd(int outfile)
 	{
 		if (outfile != -1)
 			dprintf(outfile, "%s\n", cwd);
-		g_status = 0;
+		mini->g_status = 0;
 	}
 	else
 	{
 		perror("pwd");
-		g_status = 1;
+		mini->g_status = 1;
 	}
-	return (g_status);
+	return (mini->g_status);
 }

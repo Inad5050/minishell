@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:53:03 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/04 22:31:34 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/05 15:55:06 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	analizing_command(t_mini *mini)
 	}
 	if (cmd->next == NULL && is_builtin(cmd->full_cmd[0]))
 	{
-		g_status = builtin(mini);
+		mini->g_status = builtin(mini);
 		return ;
 	}
 	else if (cmd->next == NULL)

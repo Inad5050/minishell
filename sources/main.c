@@ -6,13 +6,12 @@
 /*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/05 15:43:03 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:48:39 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int			g_status;
 static int	ctrl_c_flag;
 
 void	handle_true(int sig)
@@ -55,7 +54,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_mini	*m;
 
-	g_status = 0;
 	m = init_struct(envp);
 	if (!m)
 		return (1);

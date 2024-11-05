@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/05 00:07:06 by dani             ###   ########.fr       */
+/*   Updated: 2024/11/05 15:53:59 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # include <readline/history.h>
 # include <stdlib.h> 
 # include <sys/wait.h>
-
-extern int	g_status;
 
 # define DQ 34
 # define SQ 39
@@ -43,12 +41,14 @@ typedef struct s_command
 	char				**tokens;
 	int					cmd_index;
 	struct s_command	*next;
+	struct s_mini		*ptr_mini;
 }			t_command;
 
 typedef struct s_mini
 {
 	t_command	*cmds;
 	char		**envp;
+	int			g_status;
 	char		*prompt; //getprompt (main)
 	char		*input; //readline (main)
 	char		**tokens; //almacena la tokenización del lexeo
@@ -185,7 +185,7 @@ int		builtin_cd(t_command *cmd, t_mini *mini);
 int		echo(t_command *cmd, int outfile);
 int		env(t_mini *mini, int outfile);
 int		export_var(const char *arg, int outfile, t_mini *mini);
-int		built_pwd(int outfile);
+int		built_pwd(int outfile, t_mini *mini);
 char	*get_env(char **envp, char *name);
 int		unset(t_command *cmd, t_mini *mini);
 int		exit_builtin(t_command *cmd, t_mini *mini);

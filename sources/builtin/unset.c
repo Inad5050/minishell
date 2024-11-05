@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 12:21:38 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/04 22:56:22 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/05 15:55:01 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	do_unset(char *var, t_mini *mini)
 	i = 0;
 	if (!var || strchr(var, '='))
 	{
-		g_status = 1;
+		mini->g_status = 1;
 		return ;
 	}
 	while (my_env[i])
@@ -52,13 +52,13 @@ static void	do_unset(char *var, t_mini *mini)
 		if (ft_strncmp(my_env[i], var, l) == 0 && my_env[i][l] == '=')
 		{
 			remove_variable(my_env, i);
-			g_status = 0;
+			mini->g_status = 0;
 			return ;
 		}
 		i++;
 	}
 	ft_dprintf(STDERR_FILENO, "unset: `%s': not found\n", var);
-	g_status = 1;
+	mini->g_status = 1;
 }
 
 int	unset(t_command *cmd, t_mini *mini)
@@ -68,13 +68,13 @@ int	unset(t_command *cmd, t_mini *mini)
 	i = 1;
 	if (!cmd->full_cmd[1])
 	{
-		g_status = 1;
-		return (g_status);
+		mini->g_status = 1;
+		return (mini->g_status);
 	}
 	while (cmd->full_cmd[i])
 	{
 		do_unset(cmd->full_cmd[i], mini);
 		i++;
 	}
-	return (g_status);
+	return (mini->g_status);
 }

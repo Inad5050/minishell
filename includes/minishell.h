@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:31:01 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/04 22:44:27 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/05 00:07:06 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,33 @@
 # include "../libft/libft.h"
 # include "signal.h"
 # include "sys/ioctl.h"
-# include <stdbool.h> // for boolean
+# include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h> 
 # include <sys/wait.h>
 
-extern int	g_status; //variable global
+extern int	g_status;
 
 # define DQ 34
 # define SQ 39
 # define BACKSLASH 92
 # define PATH_MAX 4096 
 
-typedef struct s_command	t_command;
-
 typedef struct s_command
 {
-	char		**full_cmd;
-	char		*full_path;
-	int			infile;
-	int			outfile;
-	int			append_in;
-	int			append_out;
-	int			is_builtin;
-	char		*infile_name;
-	char		*outfile_name;
-	char		**tokens;
-	int			cmd_index;
-	t_command	*next;
+	char				**full_cmd;
+	char				*full_path;
+	int					infile;
+	int					outfile;
+	int					append_in;
+	int					append_out;
+	int					is_builtin;
+	char				*infile_name;
+	char				*outfile_name;
+	char				**tokens;
+	int					cmd_index;
+	struct s_command	*next;
 }			t_command;
 
 typedef struct s_mini
@@ -59,7 +57,6 @@ typedef struct s_mini
 	int			quote_type; //ft_count_words (lexer)
 	int			squote; //fill_tokens (lexer)
 	int			dquote; //fill_tokens (lexer)
-	char		*path; //initiate_get_commands (get_commands)
 	char		**cmd_dirs; //initiate_get_commands (get_commands)
 	int			post_redirection; //initiate_get_commands (get_commands)
 	int			x_index; //identify_token (get_commands)
@@ -80,22 +77,6 @@ typedef struct s_mini
 	int			no_path; //check_path_env
 	int			cmd_count; //initiate_get_commands (get_commands)
 }			t_mini;
-
-/* typedef struct s_command
-{
-	char		**full_cmd;
-	char		*full_path;
-	int			infile;
-	int			outfile;
-	int			append_in;
-	int			append_out;
-	int			is_builtin;
-	char		*infile_name;
-	char		*outfile_name;
-	char		**tokens;
-	int			cmd_index;
-	t_command	*next;
-}			t_command; */
 
 //check_commands
 int		check_commands(t_mini *m);
@@ -189,8 +170,8 @@ void	execute_single_command(t_mini *mini);
 void	handle_input_redirection(t_command *cmd, t_mini *mini);
 void	handle_output_redirection(t_command *cmd, t_mini *mini);
 void	execute_command(t_command *cmd, t_mini *mini);
-void 	c(t_command *cmd, int prev_fd, int pipes[2], t_mini *mini);
-void 	run_command(t_command *cmd, t_mini *mini);
+void	c(t_command *cmd, int prev_fd, int pipes[2], t_mini *mini);
+void	run_command(t_command *cmd, t_mini *mini);
 void	helper_one_command(t_command *cmd, t_mini *mini);
 void	s(t_command *cmd, int prev_fd, int pipes[2], t_mini *mini);
 void	handle_pipe_input(int prev_fd, t_mini *mini);
@@ -213,7 +194,6 @@ int		is_builtin(char *cmd_str);
 int		handle_builtin(t_mini *mini);
 void	print_cd_error(char *dir);
 
-
 //signals
 void	handle_true(int sig);
 void	handler_ctrl_quit(int sig);
@@ -229,7 +209,6 @@ void	m_exit_modified(char *str, t_mini *m);
 
 //free_memory_aux
 void	m_free(char **ptr);
-void	free_matrix(char ***matrix);
 
 //free_memory
 void	free_lexer_parser(t_mini *m);

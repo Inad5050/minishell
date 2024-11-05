@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:33:18 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/04 20:00:48 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/05 00:05:38 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,26 @@
 
 void	free_lexer_parser(t_mini *m)
 {
+	int	i;
+
 	if (m->input)
 		m_free(&(m->input));
 	if (m->tokens)
-		free_matrix(&(m->tokens));
-	m->token_count = 0;
-	m->in_quotes = 0;
-	m->quote_type = 0;
-	m->squote = 0;
-	m->dquote = 0;
-	m->no_path = 0;
-	if (m->path)
-		m_free(&(m->path));
+	{
+		i = 0;
+		while (m->tokens[i])
+			free(m->tokens[i++]);
+		free(m->tokens);
+		m->tokens = NULL;
+	}
 	if (m->cmd_dirs)
-		free_matrix(&(m->cmd_dirs));
+	{
+		i = 0;
+		while (m->cmd_dirs[i])
+			free(m->cmd_dirs[i++]);
+		free(m->cmd_dirs);
+		m->cmd_dirs = NULL;
+	}
 	m->post_redirection = 0;
 	m->x_index = 0;
 	free_lexer_parser_aux(m);
@@ -37,6 +43,12 @@ void	free_lexer_parser(t_mini *m)
 
 void	free_lexer_parser_aux(t_mini *m)
 {
+	m->token_count = 0;
+	m->in_quotes = 0;
+	m->quote_type = 0;
+	m->squote = 0;
+	m->dquote = 0;
+	m->no_path = 0;
 	if (m->var_name_with_dollar)
 		m_free(&(m->var_name_with_dollar));
 	if (m->var_name)
@@ -86,6 +98,8 @@ void	free_tcommand(t_mini *m)
 
 void	free_tcommand_aux(int i, t_mini *m)
 {
+	int	x;
+
 	if (m->cmds[i].infile != 0)
 		close(m->cmds[i].infile);
 	if (m->cmds[i].infile_name)
@@ -95,13 +109,27 @@ void	free_tcommand_aux(int i, t_mini *m)
 	if (m->cmds[i].outfile_name)
 		m_free(&(m->cmds[i].outfile_name));
 	if (m->cmds[i].tokens)
-		free_matrix(&(m->cmds[i].tokens));
+	{
+		x = 0;
+		while (m->cmds[i].tokens[x])
+			free(m->cmds[i].tokens[x++]);
+		free(m->cmds[i].tokens);
+		m->cmds[i].tokens = NULL;
+	}
 }
 
 void	free_tmini(t_mini *m)
 {
+	int	i;
+
 	if (m->envp)
-		free_matrix(&(m->envp));
+	{
+		i = 0;
+		while (m->envp[i])
+			free(m->envp[i++]);
+		free(m->envp);
+		m->envp = NULL;
+	}
 	if (m->prompt)
 		m_free(&(m->prompt));
 	if (m)

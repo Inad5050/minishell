@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/04 23:01:19 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/04 23:34:24 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,14 @@ int	manage_input(t_mini *m)
 		return (0);
 	if (!parser(m))
 		return (0);
-	// superprinter(m);
+	superprinter(m);
 	analizing_command(m);
 	free_lexer_parser(m);
 	free_tcommand(m);
 	return (1);
 }
 
-/* void superprinter(t_mini *m)
+void superprinter(t_mini *m)
 {
 	int	i;
 	int	x;
@@ -137,4 +137,4 @@ int	manage_input(t_mini *m)
 		i++;
 	}
 	ft_printf("-------------SUPERPRINTER_END-------------------\n\n");
-} */
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:27:59 by tshiki            #+#    #+#             */
-/*   Updated: 2024/11/04 22:31:59 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/05 15:55:11 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	run_command(t_command *cmd, t_mini *mini)
 {
 	if (cmd->is_builtin)
 	{
-		g_status = handle_builtin(mini);
-		exit(g_status);
+		mini->g_status = handle_builtin(mini);
+		exit(mini->g_status);
 	}
 	else
 	{

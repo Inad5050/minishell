@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:29:13 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/01 19:21:01 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/04 23:19:15 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*ft_strdup(const char *str)
 	ptr[i] = '\0';
 	return (ptr);
 }
-
 
 /* int	main(void)
 {

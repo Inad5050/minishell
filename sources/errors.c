@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 16:33:23 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/04 19:58:52 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:41:46 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	m_err(char *str, int code, t_mini *m)
 {
 	free_lexer_parser(m);
 	free_tcommand(m);
-	g_status = code;
+	m->g_status = code;
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("\n", 2);
 }
@@ -57,6 +57,9 @@ void	m_exit(char *str, t_mini *m)
 
 void	m_exit_modified(char *str, t_mini *m)
 {
+	int	g_status;
+
+	g_status = m->g_status;
 	free_lexer_parser(m);
 	free_tcommand(m);
 	free_tmini(m);

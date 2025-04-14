@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 12:22:12 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/11/04 22:44:36 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/05 15:50:06 by dangonz3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_status;
 
 static char	*get_env_value(char **envp, char *var_name)
 {
@@ -79,16 +77,16 @@ int	builtin_cd(t_command *cmd, t_mini *mini)
 	if (!target_dir)
 	{
 		ft_dprintf(STDERR_FILENO, "cd: HOME not set\n");
-		g_status = 1;
-		return (g_status);
+		mini->g_status = 1;
+		return (mini->g_status);
 	}
 	if (chdir(target_dir) == -1)
 	{
 		print_cd_error(target_dir);
-		g_status = 1;
-		return (g_status);
+		mini->g_status = 1;
+		return (mini->g_status);
 	}
 	update_pwd_variables(oldpwd, mini);
-	g_status = 0;
-	return (g_status);
+	mini->g_status = 0;
+	return (mini->g_status);
 }

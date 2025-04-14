@@ -3,59 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tshiki <tshiki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:29:53 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/04 23:01:19 by tshiki           ###   ########.fr       */
+/*   Updated: 2024/11/06 17:37:22 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int g_status;
-static int ctrl_c_flag = 0;
+static int	g_ctrl_c_flag;
 
-void handle_true(int sig)
+void	handle_true(int sig)
 {
 	if (sig == SIGINT)
-	{	
-		ctrl_c_flag = 1;
+	{
+		g_ctrl_c_flag = 1;
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 	}
 }
 
-
- void handler_false(int sig)
-{	
+void	handler_false(int sig)
+{
 	if (sig == SIGINT)
-	{	
+	{
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
-void init_signals(int flag)
+
+void	init_signals(int flag)
 {
 	if (flag == 0)
-	{	
+	{
 		signal(SIGINT, handler_false);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (flag == 1)
 	{
 		signal(SIGINT, handle_true);
-		signal(SIGQUIT, SIG_IGN);	
+		signal(SIGQUIT, SIG_IGN);
 	}
-} 
+}
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	*m;
 
-	g_status = 0;
 	m = init_struct(envp);
 	if (!m)
 		return (1);
@@ -64,11 +62,11 @@ int	main(int argc, char **argv, char **envp)
 	init_signals(1);
 	while (argc && argv)
 	{
-		ctrl_c_flag = 0;
+		g_ctrl_c_flag = 0;
 		m->input = readline(m->prompt);
-		if (ctrl_c_flag)
-		{	
-			continue;
+		if (g_ctrl_c_flag)
+		{
+			continue ;
 		}
 		if (manage_input(m) == -1)
 			break ;
@@ -89,14 +87,14 @@ int	manage_input(t_mini *m)
 		return (0);
 	if (!parser(m))
 		return (0);
-	// superprinter(m);
 	analizing_command(m);
+	superprinter(m);
 	free_lexer_parser(m);
 	free_tcommand(m);
 	return (1);
 }
 
-/* void superprinter(t_mini *m)
+void superprinter(t_mini *m)
 {
 	int	i;
 	int	x;
@@ -137,4 +135,4 @@ int	manage_input(t_mini *m)
 		i++;
 	}
 	ft_printf("-------------SUPERPRINTER_END-------------------\n\n");
-} */
+}

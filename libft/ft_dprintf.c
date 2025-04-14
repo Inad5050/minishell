@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 13:28:55 by otboumeh          #+#    #+#             */
-/*   Updated: 2024/09/22 13:32:18 by otboumeh         ###   ########.fr       */
+/*   Updated: 2024/11/04 23:20:39 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
 
 #define NUM "0123456789"
 #define HEX1 "0123456789abcdef"
@@ -22,7 +21,8 @@ static int	decimal_print(int fd, long int nbr, char *base)
 	if (nbr < 0)
 		return (write(fd, "-", 1) + decimal_print(fd, nbr * (-1), base));
 	if (nbr > 9)
-		return (decimal_print(fd, nbr / 10, base) + write(fd, &base[nbr % 10], 1));
+		return (decimal_print(fd, nbr / 10, base) + \
+		write(fd, &base[nbr % 10], 1));
 	return (write(fd, &base[nbr % 10], 1));
 }
 

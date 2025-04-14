@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   others.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otboumeh <otboumeh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 16:15:54 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/11/04 19:47:36 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:09:14 by otboumeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,5 @@ int	get_envp_cmd_dirs(t_mini *m)
 	free(dirs);
 	if (!m->cmd_dirs)
 		m_exit("Couldn't allocate memory in get_envp_cmd_dirs", m);
-	return (1);
-}
-
-int	dont_open_another_mini(t_mini *m)
-{
-	int	i;
-
-	i = 0;
-	while (i < m->cmd_count)
-	{
-		if (!ft_strcmp(m->cmds[i].full_cmd[0], "minishell") || \
-		!ft_strcmp(m->cmds[i].full_cmd[0], "./minishell"))
-			return (m_err("Cannot open a mishell \
-			inside another minishell", 2, m), 0);
-		i++;
-	}
 	return (1);
 }

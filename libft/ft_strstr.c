@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dangonz3 <dangonz3@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dani <dani@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 20:39:42 by dangonz3          #+#    #+#             */
-/*   Updated: 2024/09/27 20:40:10 by dangonz3         ###   ########.fr       */
+/*   Updated: 2024/11/04 23:21:21 by dani             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ char	*ft_strstr(char *hay, char *ndle)
 			return (&hay[i]);
 		i++;
 	}
-	return (NULL);	
+	return (NULL);
 }
